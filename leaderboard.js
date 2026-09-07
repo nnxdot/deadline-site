@@ -195,6 +195,90 @@ function renderLeaderboard() {
   host.innerHTML = `<table class="leaderboard-table">${head}<tbody>${body}</tbody></table>`;
 }
 
+/* Labels may move; data points always retain their exact chart coordinates. */
+function placeChartLabels(points, bounds) {
+  const gap = 6, placed = [];
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const overlaps = (a, b) => a.x < b.x + b.width + gap && a.x + a.width + gap > b.x &&
+    a.y < b.y + b.height + gap && a.y + a.height + gap > b.y;
+  const coversPoint = (box, p) => Math.hypot(p.x - clamp(p.x, box.x, box.x + box.width),
+    p.y - clamp(p.y, box.y, box.y + box.height)) < 15;
+  const crossesLabel = (ax, ay, bx, by, box) => {
+    let enter = 0, leave = 1;
+    for (const [start, delta, min, max] of [[ax, bx - ax, box.x - 2, box.x + box.width + 2],
+      [ay, by - ay, box.y - 2, box.y + box.height + 2]]) {
+      if (Math.abs(delta) < 1e-8) { if (start < min || start > max) return false; }
+      else {
+        const a = (min - start) / delta, b = (max - start) / delta;
+        enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
+        if (enter > leave) return false;
+      }
+    }
+    return true;
+  };
+  // Place from top to bottom, retaining stable order for coincident results.
+  const ordered = points.map((p, i) => ({...p, index: i})).sort((a, b) => a.y - b.y || a.x - b.x || a.index - b.index);
+  for (const p of ordered) {
+    let best = null, bestCost = Infinity;
+    const consider = (x, y) => {
+      const box = {x, y, width: p.width, height: p.height};
+      if (x < bounds.left || x + p.width > bounds.right || y < bounds.top || y + p.height > bounds.bottom ||
+          placed.some(other => overlaps(box, other)) || points.some(point => coversPoint(box, point))) return;
+      const edgeX = clamp(p.x, x, x + p.width), edgeY = clamp(p.y, y, y + p.height);
+      const dx = edgeX - p.x, dy = edgeY - p.y, length = Math.hypot(dx, dy);
+      const crossing = placed.some(other => crossesLabel(p.x, p.y, edgeX, edgeY, other) ||
+        crossesLabel(points[other.index].x, points[other.index].y, other.edgeX, other.edgeY, box));
+      const crossesPoint = length > 24 && points.some(point => {
+        if (Math.hypot(point.x - p.x, point.y - p.y) < 1) return false;
+        const t = clamp(((point.x - p.x) * dx + (point.y - p.y) * dy) / (length * length), 10 / length, 1);
+        return Math.hypot(point.x - p.x - t * dx, point.y - p.y - t * dy) < 13;
+      });
+      const cost = length + Math.abs(y + p.height / 2 - p.y) * .15 + (crossing || crossesPoint ? 10000 : 0);
+      if (cost < bestCost) { best = {...box, index: p.index, edgeX, edgeY}; bestCost = cost; }
+    };
+    const targetY = clamp(p.y - p.height / 2, bounds.top, bounds.bottom - p.height);
+    for (let distance = 0; distance <= bounds.bottom - bounds.top; distance += 6) {
+      for (const dy of distance ? [-distance, distance] : [0]) {
+        const y = clamp(targetY + dy, bounds.top, bounds.bottom - p.height);
+        for (let offset = 0; offset <= 144; offset += 24) {
+          consider(p.x + 17 + offset, y);
+          consider(p.x - 17 - p.width - offset, y);
+        }
+        consider(clamp(p.x - p.width / 2, bounds.left, bounds.right - p.width), y);
+      }
+    }
+    // Dense clusters may need horizontal displacement as well as vertical spacing.
+    if (!best || bestCost >= 10000) {
+      for (let y = bounds.top; y + p.height <= bounds.bottom; y += 2)
+        for (let x = bounds.left; x + p.width <= bounds.right; x += 4) consider(x, y);
+    }
+    if (!best) return null;
+    placed.push(best);
+  }
+  return placed.sort((a, b) => a.index - b.index);
+}
+
+function arrangeFrontierLabels(host, bounds) {
+  const groups = [...host.querySelectorAll(".pt")];
+  if (!groups.length) return;
+  const points = groups.map(group => {
+    const label = group.querySelector(".point-label"), box = label.getBBox();
+    return {x: Number(group.dataset.x), y: Number(group.dataset.y),
+      width: box.width, height: box.height, label, box, leader: group.querySelector(".label-leader")};
+  });
+  const placements = placeChartLabels(points, bounds);
+  if (!placements) return;
+  points.forEach((p, i) => {
+    const label = placements[i];
+    p.label.setAttribute("transform", `translate(${label.x - p.box.x},${label.y - p.box.y})`);
+    const length = Math.hypot(label.edgeX - p.x, label.edgeY - p.y);
+    const startX = p.x + (label.edgeX - p.x) * 10 / length;
+    const startY = p.y + (label.edgeY - p.y) * 10 / length;
+    p.leader.setAttribute("d", `M${startX},${startY} L${label.edgeX},${label.edgeY}`);
+    p.leader.style.display = length > 24 ? "" : "none";
+  });
+}
+
 /* ---- frontier chart with axis toggle and error whiskers ---- */
 function renderFrontier() {
   const host = document.getElementById("c-frontier");
@@ -207,7 +291,7 @@ function renderFrontier() {
       : `<div class="chart-empty"><div class="empty-mark" aria-hidden="true"><i></i><i></i><i></i></div>${EMPTY_BOARD}<p>Completed, verified runs will appear here.</p></div>`;
     return;
   }
-  const W = 980, H = 440, L = 50, R = 30, T = 26, B = 48;
+  const W = 980, H = Math.max(440, rows.length * 30 + 110), L = 50, R = 30, T = 26, B = 48;
   const maxV = Math.max(...rows.map(M.get)) * 1.12 || 1;
   const x = v => L + (W - L - R) * (M.invert ? 1 - v / maxV : v / maxV);
   const y = s => T + (H - T - B) * (1 - Math.max(0, Math.min(100, s)) / 100);
@@ -228,7 +312,7 @@ function renderFrontier() {
     const px = x(v), py = y(sc);
     const tip = `${esc(r.model)}${r.effort ? " [" + esc(r.effort) + "]" : ""} — ${COHORT_LABEL[cohortOf(r)]}
 Score ${fmtScore(sc)}${Number.isFinite(r.score_err) ? " ±" + r.score_err : ""} · ${M.label} ${metric === "cost" && r.cost_is_lower_bound ? "≥" : ["tokens", "eff"].includes(metric) && r.tokens_out_estimated ? "≈" : ""}${M.fmt(v)}`;
-    svg += `<g class="pt"><title>${tip}</title>`;
+    svg += `<g class="pt" data-x="${px}" data-y="${py}"><title>${tip}</title><path class="label-leader" fill="none" stroke="${p.color}" stroke-width="1" opacity=".45" pointer-events="none"/>`;
     if ((r.samples || 0) >= 3 && Number.isFinite(r.score_err) && r.score_err > 0) {
       const yTop = y(sc + r.score_err), yBot = y(sc - r.score_err);
       svg += `<g class="whisker" stroke="${p.color}" stroke-width="1.5" opacity="0.7">
@@ -242,13 +326,19 @@ Score ${fmtScore(sc)}${Number.isFinite(r.score_err) ? " ±" + r.score_err : ""} 
       : `<circle cx="${px}" cy="${py}" r="5.5" fill="var(--surface)" stroke="${p.color}" stroke-width="2.5"/>`;
     const onRight = px > W - 190;
     const labelX = px + (onRight ? -12 : 12);
-    const anchor = onRight ? "end" : "start";
-    svg += `<text class="mlabel" x="${labelX}" y="${py - 4}" text-anchor="${anchor}" fill="${p.color}">${esc(String(r.model))}</text>`;
-    svg += `<text class="tag" x="${labelX}" y="${py + 8}" text-anchor="${anchor}" fill="var(--muted)">${esc(r.effort || "default").toUpperCase()} / ${COHORT_LABEL[cohortOf(r)].toUpperCase()}</text>`;
+    svg += `<g class="point-label" transform="translate(${labelX},${py - 4})"><text class="mlabel" x="0" y="0" fill="${p.color}">${esc(String(r.model))}</text>`;
+    svg += `<text class="tag" x="0" y="12" fill="var(--muted)">${esc(r.effort || "default").toUpperCase()} / ${COHORT_LABEL[cohortOf(r)].toUpperCase()}</text></g>`;
     svg += `</g>`;
   });
   svg += `</svg>`;
   host.innerHTML = svg;
+  const chart = host.firstElementChild;
+  const bounds = {left: L + 4, right: W - 8, top: 8, bottom: H - B - 6};
+  arrangeFrontierLabels(host, bounds);
+  // Web fonts can change text widths after the first render.
+  if (document.fonts) document.fonts.ready.then(() => {
+    if (host.firstElementChild === chart) arrangeFrontierLabels(host, bounds);
+  });
 }
 
 /* ---- hardest tasks board ---- */

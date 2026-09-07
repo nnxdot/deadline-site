@@ -69,6 +69,18 @@ class Element {
     assert.ok(elements.get('c-frontier').innerHTML.includes('<svg'));
     assert.ok(!/NaN|Infinity/.test(elements.get('c-frontier').innerHTML));
   }
+  context.labelPoints = Array.from({length: 8}, (_, i) => ({x: 850 + i % 2, y: 27 + i / 10, width: 175, height: 22}));
+  const originalPoints = JSON.stringify(context.labelPoints);
+  const placed = JSON.parse(evaluate('JSON.stringify(placeChartLabels(labelPoints, {left:54,right:972,top:8,bottom:386}))'));
+  assert.equal(placed.length, context.labelPoints.length, 'keep every label for coincident and near-coincident results');
+  assert.equal(JSON.stringify(context.labelPoints), originalPoints, 'label placement must not change the plotted values');
+  for (let i = 0; i < placed.length; i++) {
+    const a = placed[i];
+    assert.ok(a.x >= 54 && a.x + a.width <= 972 && a.y >= 8 && a.y + a.height <= 386, 'labels stay inside the chart');
+    for (const b of placed.slice(i + 1)) {
+      assert.ok(a.x + a.width <= b.x || b.x + b.width <= a.x || a.y + a.height <= b.y || b.y + b.height <= a.y, 'near-equal scores must have separate labels');
+    }
+  }
   evaluate('metric = "cost"; renderFrontier()');
   elements.get('task-search').value = '24_js_machine';
   evaluate('renderTasks()');
