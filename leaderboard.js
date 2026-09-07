@@ -123,6 +123,11 @@ function scoreCellHTML(r) {
   return `<span class="score-gauge" style="--score-color:${providerOf(r.model).color}"><span class="score-number"><span class="score-v" title="Unrounded: ${value}">${fmtScore(r.score)}</span>${err}</span><span class="score-track" aria-hidden="true"><span class="score-fill" style="width:${fill}%"></span></span></span>`;
 }
 
+function tokenScoreCellHTML(r) {
+  const estimated = Number.isFinite(r.dscore) && r.dscore_estimated === true;
+  return `<span class="score-v alt"${estimated ? ' title="Estimated Token DL; assumptions in the post-mortem"' : ""}>${estimated ? "≈" : ""}${fmtScore(r.dscore)}</span>`;
+}
+
 function measurementDetailsHTML(r) {
   return `<p class="td-meta">Full-pass points: ${fmtScore(r.strict_score)}/100. Grader: ${esc(r.benchmark_version || "legacy")} / ${esc((r.suite_hash || "unrecorded").slice(0,12))}.
     ${(r.samples || 1) === 1 ? "Single sample; repeat spread unmeasured." : `${r.samples} attempts per task; spread is repeat standard deviation.`}
@@ -178,11 +183,11 @@ function renderLeaderboard() {
         <td class="rank"><button class="detail-toggle" aria-expanded="false" aria-label="Show details for ${esc(r.model)} ${esc(r.effort || "")}"><span class="chev">▸</span></button>${String(1 + members.filter(other => preciseScore(other) > preciseScore(r) + 1e-10).length).padStart(2, "0")}</td>
         <td class="mname">${logoHTML(r.model)}${esc(r.model)}${r.effort ? `<span class="eff">[${esc(r.effort)}]</span>` : ""}</td>
         <td class="num">${scoreCellHTML(r)}</td>
-        <td class="num"><span class="score-v alt">${fmtScore(r.dscore)}</span></td>
+        <td class="num">${tokenScoreCellHTML(r)}</td>
         <td class="num">${Number(r.passed)}/${Number(r.total)}</td>
         <td class="num"><span class="score-v alt">${fmtScore(r.tdl_score)}</span></td>
-        <td class="num">${METRICS.tokens.get(r) != null ? r.tokens_out.toLocaleString("en-US") : "—"}</td>
-        <td class="num">${runCost(r) != null ? "$" + runCost(r).toFixed(4) : "—"}</td>
+        <td class="num">${METRICS.tokens.get(r) != null ? (r.tokens_out_estimated ? '<span title="Estimated output tokens; assumptions in the post-mortem">≈' + r.tokens_out.toLocaleString("en-US") + '</span>' : r.tokens_out.toLocaleString("en-US")) : "—"}</td>
+        <td class="num">${runCost(r) != null ? (r.cost_is_lower_bound ? "≥" : "") + "$" + runCost(r).toFixed(4) : "—"}</td>
         <td class="num">${Number.isFinite(r.seconds) ? Math.round(r.seconds) + "s" : "—"}</td>
         <td class="date">${esc((r.when || "").replace(/^(\d{4})(\d{2})(\d{2}).*/, "$1-$2-$3"))}</td></tr>` + detailHTML(r, COLS);
     });
@@ -222,7 +227,7 @@ function renderFrontier() {
     const p = providerOf(r.model), v = M.get(r), sc = r.score;
     const px = x(v), py = y(sc);
     const tip = `${esc(r.model)}${r.effort ? " [" + esc(r.effort) + "]" : ""} — ${COHORT_LABEL[cohortOf(r)]}
-Score ${fmtScore(sc)}${Number.isFinite(r.score_err) ? " ±" + r.score_err : ""} · ${M.label} ${M.fmt(v)}`;
+Score ${fmtScore(sc)}${Number.isFinite(r.score_err) ? " ±" + r.score_err : ""} · ${M.label} ${metric === "cost" && r.cost_is_lower_bound ? "≥" : ["tokens", "eff"].includes(metric) && r.tokens_out_estimated ? "≈" : ""}${M.fmt(v)}`;
     svg += `<g class="pt"><title>${tip}</title>`;
     if ((r.samples || 0) >= 3 && Number.isFinite(r.score_err) && r.score_err > 0) {
       const yTop = y(sc + r.score_err), yBot = y(sc - r.score_err);

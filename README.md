@@ -85,8 +85,10 @@ python -m unittest discover -s client -p 'test_*.py' -v
 
 Scores are out of **100**, weighted by task difficulty and depth. The
 **DL Score** additionally applies each task's token budget: points decay by
-budget÷tokens past the deadline. Runs without per-task token data
-(subscriptions, agent mode) get a raw score only.
+budget÷tokens past the deadline. Measured Token DL requires complete per-task
+token data, including for agent runs. Reconstructed estimates are marked ≈,
+with assumptions and sensitivity in the post-mortem. Runs without usable
+token data get a correctness score only.
 
 - **Official**: maintainer-run generations. New certified runs require at least
   three independent attempts per task. Historical entries may have one attempt;

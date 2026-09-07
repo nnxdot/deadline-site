@@ -36,7 +36,7 @@ class Element {
   const sourceResults = ['official', 'community'].flatMap(name =>
     JSON.parse(fs.readFileSync(path.join(root, `data/${name}.json`), 'utf8')));
   assert.equal(evaluate('JSON.stringify(results)'), JSON.stringify(sourceResults), 'load saved results without rewriting or regrading');
-  assert.equal(evaluate('displayed().length'), 10, 'include the eight maintainer results and both community results');
+  assert.equal(evaluate('displayed().length'), 11, 'include the nine maintainer results and both community results');
   assert.equal(evaluate('manifest.tasks.length'), 27);
   assert.equal(evaluate('manifest.tasks.filter(t => t.scored !== false).length'), 26);
   assert.equal(evaluate('manifest.tasks.reduce((sum, t) => sum + t.points, 0)'), 1205);
@@ -130,7 +130,7 @@ class Element {
   assert.ok(elements.get('leaderboard').innerHTML.includes('class="td-analysis"'));
   assert.ok(!elements.get('leaderboard').innerHTML.includes('<th>Source</th>'));
   assert.ok(!elements.get('leaderboard').innerHTML.includes('class="stamp'));
-  assert.equal((elements.get('leaderboard').innerHTML.match(/class="score-track"/g) || []).length, 10);
+  assert.equal((elements.get('leaderboard').innerHTML.match(/class="score-track"/g) || []).length, 11);
   assert.ok(elements.get('leaderboard').innerHTML.includes('colspan="10"'));
   assert.ok(!elements.get('leaderboard').innerHTML.includes('colspan="11"'));
   assert.ok(evaluate('scoreCellHTML({model:"test", score:125})').includes('width:100%'));
@@ -173,7 +173,28 @@ class Element {
   assert.equal(astra.cost_estimate.flex_applied, false);
   assert.equal(astra.cost_estimate.alternative_flex_cost_usd, astra.cost_usd / 2);
   assert.equal(evaluate('cohortOf(results.find(r => r.model === "gpt-6-astra"))'), 'official/agent');
-  assert.equal(evaluate('grouped(displayed()).find(([key]) => key === "official/agent")[1][0].model'), 'gpt-6-astra');
+  assert.equal(evaluate('grouped(displayed()).find(([key]) => key === "official/agent")[1][0].model'), 'claude-fable-5');
+  assert.equal(evaluate('grouped(displayed()).find(([key]) => key === "official/agent")[1][1].model'), 'gpt-6-astra');
+  const fable = evaluate('results.find(r => r.model === "claude-fable-5")');
+  assert.equal(fable.score, 97.32);
+  assert.equal(fable.dscore, 54.77);
+  assert.equal(fable.dscore_estimated, true);
+  assert.equal(fable.metering_complete, false);
+  assert.equal(fable.tokens_out, 443229);
+  assert.equal(fable.recorded_usage.output_tokens, 433769);
+  assert.equal(fable.cost_is_lower_bound, true);
+  assert.equal(fable.certified, false);
+  assert.equal(fable.task_detail['24_js_machine_traces'].scored, false);
+  assert.equal(fable.task_detail['23_js_cipher_traces'].credit, 1);
+  assert.equal(fable.passed, 24);
+  assert.equal(fable.total, 26);
+  assert.equal(evaluate('SORTS.dscore.get(results.find(r => r.model === "claude-fable-5"))'), 54.77, 'estimated token scores remain numerically sortable');
+  assert.ok(evaluate('tokenScoreCellHTML(results.find(r => r.model === "claude-fable-5"))').includes('≈54.77'));
+  assert.ok(!evaluate('tokenScoreCellHTML(results.find(r => r.model === "gpt-6-astra"))').includes('≈'));
+  assert.ok(!evaluate('tokenScoreCellHTML({dscore:null,dscore_estimated:true})').includes('≈'));
+  assert.ok(elements.get('leaderboard').innerHTML.includes('≈443,229'));
+  assert.ok(elements.get('leaderboard').innerHTML.includes('≥$41.6780'));
+  assert.ok(elements.get('leaderboard').innerHTML.includes('54.72–54.78'));
   assert.ok(elements.get('leaderboard').innerHTML.includes('$12.9753'));
   assert.ok(elements.get('leaderboard').innerHTML.includes('110,960'));
   const rendered = elements.get('leaderboard').innerHTML;

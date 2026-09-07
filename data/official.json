@@ -3148,5 +3148,442 @@
       "generation_settings_basis": "Local CLI session turn_context; not independent provider attestation"
     },
     "analysis": "A fresh Codex agent run fully passed 24/26 scored tasks. It skipped eval_traces and earned 43.76% credit on sql_traces_xl. Task 24 remains unscored under the unchanged 3.4 rules. Token counts include all model calls, reasoning and self-checks. The Time column sums 4,097.8 seconds across tasks; elapsed generation time was 2,091.9 seconds with up to two tasks running concurrently. Model and effort were checked against local session receipts, not independently attested by the provider. One sample per task; repeat variation is unmeasured."
+  },
+  {
+    "task_detail": {
+      "01_cipher_d2": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "medium",
+        "family": "cipher",
+        "points": 10,
+        "contribution": 0.8298755186721992,
+        "seconds": 46.3203
+      },
+      "02_cipher_d4": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "hard",
+        "family": "cipher",
+        "points": 20,
+        "contribution": 1.6597510373443984,
+        "seconds": 149.3581
+      },
+      "03_cipher_d6": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "brutal",
+        "family": "cipher",
+        "points": 35,
+        "contribution": 2.904564315352697,
+        "seconds": 272.0494
+      },
+      "04_cipher_d8": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "nightmare",
+        "family": "cipher",
+        "points": 70,
+        "contribution": 5.809128630705394,
+        "seconds": 230.9846
+      },
+      "05_cipher_d10": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "nightmare",
+        "family": "cipher",
+        "points": 120,
+        "contribution": 9.95850622406639,
+        "seconds": 783.5248
+      },
+      "06_machine_a": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "medium",
+        "family": "state machine",
+        "points": 15,
+        "contribution": 1.2448132780082988,
+        "seconds": 29.7991
+      },
+      "07_machine_traces": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "hard",
+        "family": "state machine",
+        "points": 30,
+        "contribution": 2.4896265560165975,
+        "seconds": 121.7239
+      },
+      "08_codec_a": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "medium",
+        "family": "codec",
+        "points": 15,
+        "contribution": 1.2448132780082988,
+        "seconds": 52.1889
+      },
+      "09_codec_traces": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "brutal",
+        "family": "codec",
+        "points": 40,
+        "contribution": 3.319502074688797,
+        "seconds": 47.5752
+      },
+      "10_strange_calendar": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "hard",
+        "family": "calendar",
+        "points": 20,
+        "contribution": 1.6597510373443984,
+        "seconds": 45.1822
+      },
+      "11_eval_a": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "hard",
+        "family": "expression",
+        "points": 20,
+        "contribution": 1.6597510373443984,
+        "seconds": 49.1149
+      },
+      "12_eval_traces": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "brutal",
+        "family": "expression",
+        "points": 40,
+        "contribution": 3.319502074688797,
+        "seconds": 243.7855
+      },
+      "13_pairs_a": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "brutal",
+        "family": "pair counting",
+        "points": 25,
+        "contribution": 2.074688796680498,
+        "seconds": 19.6764
+      },
+      "14_pairs_traces": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "brutal",
+        "family": "pair counting",
+        "points": 40,
+        "contribution": 3.319502074688797,
+        "seconds": 27.167
+      },
+      "15_midnight_machine": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "nightmare",
+        "family": "interpreter",
+        "points": 100,
+        "contribution": 8.298755186721992,
+        "seconds": 540.9135
+      },
+      "16_calendar_traces": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "brutal",
+        "family": "calendar",
+        "points": 45,
+        "contribution": 3.7344398340248963,
+        "seconds": 71.4687
+      },
+      "17_machine_traces_xl": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "nightmare",
+        "family": "state machine",
+        "points": 70,
+        "contribution": 5.809128630705394,
+        "seconds": 121.9379
+      },
+      "18_codec_traces_xl": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "nightmare",
+        "family": "codec",
+        "points": 70,
+        "contribution": 5.809128630705394,
+        "seconds": 60.7046
+      },
+      "19_redacted_machine": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "nightmare",
+        "family": "interpreter",
+        "points": 90,
+        "contribution": 7.468879668049793,
+        "seconds": 326.0067
+      },
+      "20_sql_report": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "hard",
+        "family": "SQL",
+        "points": 20,
+        "contribution": 1.6597510373443984,
+        "seconds": 30.0465
+      },
+      "21_sql_traces": {
+        "credit": 0.956216232716,
+        "note": "388/404 cases matched; 2/3 groups fully passed",
+        "difficulty": "brutal",
+        "family": "SQL",
+        "points": 45,
+        "contribution": 3.5709319893958504,
+        "seconds": 146.249
+      },
+      "22_sql_traces_xl": {
+        "credit": 0.532597473117,
+        "note": "309/404 cases matched; 1/3 groups fully passed",
+        "difficulty": "nightmare",
+        "family": "SQL",
+        "points": 65,
+        "contribution": 2.8729324276020747,
+        "seconds": 134.2302
+      },
+      "23_js_cipher_traces": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "hard",
+        "family": "cipher",
+        "points": 35,
+        "contribution": 2.904564315352697,
+        "seconds": 1386.4923
+      },
+      "24_js_machine_traces": {
+        "credit": 0.0,
+        "note": "Required final-state labels are absent from the unchanged public prompt.",
+        "difficulty": "brutal",
+        "family": "unscored",
+        "points": 0,
+        "contribution": 0.0,
+        "seconds": 311.4408,
+        "scored": false
+      },
+      "25_js_eval_traces": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "brutal",
+        "family": "expression",
+        "points": 45,
+        "contribution": 3.7344398340248963,
+        "seconds": 224.9545
+      },
+      "26_repo_bughunt": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "brutal",
+        "family": "repository repair",
+        "points": 50,
+        "contribution": 4.149377593360996,
+        "seconds": 44.0619
+      },
+      "27_repo_bughunt_xl": {
+        "credit": 1.0,
+        "note": "",
+        "difficulty": "nightmare",
+        "family": "repository repair",
+        "points": 70,
+        "contribution": 5.809128630705394,
+        "seconds": 49.0715
+      }
+    },
+    "commentary": "Fully passed 24/26 tasks. Partial credit on sql_traces (96%), sql_traces_xl (53%).",
+    "id": "official-claude-fable-5-high-20260906",
+    "model": "claude-fable-5",
+    "effort": "high",
+    "official": true,
+    "verified": true,
+    "benchmark_version": "deadline-3.4",
+    "suite_hash": "eecf5b0a714cbb6e5303c666fe78dd49c404fa140c643fe84cf231316a28a1f5",
+    "measurement_status": "single-sample",
+    "submitted_by": null,
+    "when": "20260906",
+    "score": 97.32,
+    "score_err": null,
+    "strict_score": 90.87,
+    "score_analysis": {
+      "score_unrounded": 97.31523371160374,
+      "weighting_scores": {
+        "points": 97.31523371160374,
+        "equal_task": 98.03389886858847,
+        "equal_family": 98.1067174290111
+      },
+      "leave_one_family_out": {
+        "SQL": 100.0,
+        "calendar": 97.16215493200218,
+        "cipher": 96.4643241775765,
+        "codec": 97.00449687266898,
+        "expression": 97.05896056589319,
+        "interpreter": 96.81266662313547,
+        "pair counting": 97.16215493200218,
+        "repository repair": 97.01830103454608,
+        "state machine": 97.03197855273625
+      },
+      "family_scores": {
+        "SQL": 75.11428171140383,
+        "calendar": 100.0,
+        "cipher": 100.0,
+        "codec": 100.0,
+        "expression": 100.0,
+        "interpreter": 100.0,
+        "pair counting": 100.0,
+        "repository repair": 100.0,
+        "state machine": 100.0
+      },
+      "family_point_share": {
+        "SQL": 0.1078838174273859,
+        "calendar": 0.05394190871369295,
+        "cipher": 0.24066390041493776,
+        "codec": 0.1037344398340249,
+        "expression": 0.08713692946058091,
+        "interpreter": 0.15767634854771784,
+        "pair counting": 0.05394190871369295,
+        "repository repair": 0.0995850622406639,
+        "state machine": 0.0954356846473029
+      },
+      "interpretation": "Alternative weightings and family omissions describe sensitivity, not confidence intervals or new attempts."
+    },
+    "dscore": 54.77,
+    "samples": 1,
+    "passed": 24,
+    "total": 26,
+    "tokens_in": 6870262,
+    "tokens_out": 443229,
+    "cost_usd": 41.677986000000004,
+    "seconds": 5566.0284,
+    "mode": "sub",
+    "tdl_score": null,
+    "metering_source": "Claude Code finalized usage plus explicitly estimated interrupted output",
+    "settings_verified": true,
+    "flags": [],
+    "tasks": {
+      "01_cipher_d2": 1.0,
+      "02_cipher_d4": 1.0,
+      "03_cipher_d6": 1.0,
+      "04_cipher_d8": 1.0,
+      "05_cipher_d10": 1.0,
+      "06_machine_a": 1.0,
+      "07_machine_traces": 1.0,
+      "08_codec_a": 1.0,
+      "09_codec_traces": 1.0,
+      "10_strange_calendar": 1.0,
+      "11_eval_a": 1.0,
+      "12_eval_traces": 1.0,
+      "13_pairs_a": 1.0,
+      "14_pairs_traces": 1.0,
+      "15_midnight_machine": 1.0,
+      "16_calendar_traces": 1.0,
+      "17_machine_traces_xl": 1.0,
+      "18_codec_traces_xl": 1.0,
+      "19_redacted_machine": 1.0,
+      "20_sql_report": 1.0,
+      "21_sql_traces": 0.956216232716,
+      "22_sql_traces_xl": 0.532597473117,
+      "23_js_cipher_traces": 1.0,
+      "24_js_machine_traces": 0.0,
+      "25_js_eval_traces": 1.0,
+      "26_repo_bughunt": 1.0,
+      "27_repo_bughunt_xl": 1.0
+    },
+    "dscore_estimated": true,
+    "dscore_estimate": {
+      "created_at": "2026-09-06T23:58:16.484396+00:00",
+      "dscore": 54.77,
+      "dscore_estimated": true,
+      "estimated_output_tokens": 443229,
+      "recorded_output_tokens_lower_bound": 433769,
+      "method": "Keep finalized recorded output. Reconstruct unfinished thinking from Claude live estimated_tokens_delta, scaled by actual/live totals in 16 completed thinking-heavy invocation receipts. Add the observed median 17 auxiliary title output tokens to each interrupted invocation.",
+      "thinking_calibration_factor": 0.9800784470937675,
+      "calibration_minimum_live_thinking": 1000,
+      "per_task": {
+        "15_midnight_machine": {
+          "recorded_output_tokens": 44809,
+          "unfinished_live_thinking_tokens": 250,
+          "event_stream_sha256": "fcd83c77f2edd10d2cc11ab9e8af4d0f74a1094467028040d76f7996fd29c0c4",
+          "estimated_missing_thinking_tokens": 245,
+          "estimated_missing_auxiliary_output_tokens": 17,
+          "estimated_output_tokens": 45071
+        },
+        "23_js_cipher_traces": {
+          "recorded_output_tokens": 93227,
+          "unfinished_live_thinking_tokens": 9350,
+          "event_stream_sha256": "35d4e0ba66e3a6d0b3e8d6d070eaca37ccd8738ca675e0c67be858ed55113707",
+          "estimated_missing_thinking_tokens": 9164,
+          "estimated_missing_auxiliary_output_tokens": 17,
+          "estimated_output_tokens": 102408
+        },
+        "25_js_eval_traces": {
+          "recorded_output_tokens": 18621,
+          "unfinished_live_thinking_tokens": 0,
+          "event_stream_sha256": "49e6c2b949ee0fd9d886be368ce90ce6f7edbc412229d6ce6a41607d40d0ec10",
+          "estimated_missing_thinking_tokens": 0,
+          "estimated_missing_auxiliary_output_tokens": 17,
+          "estimated_output_tokens": 18638
+        }
+      },
+      "sensitivity": {
+        "low": 54.72,
+        "high": 54.78,
+        "basis": "Scale missing thinking 25% below/above the point estimate; high-output scenario additionally allows 500 uncaptured output tokens per interrupted invocation.",
+        "kind": "assumption sensitivity, not a statistical confidence interval"
+      },
+      "recorded_only_dscore_upper_bound": 54.79,
+      "new_model_calls": 0,
+      "new_grader_runs": 0,
+      "correctness_unchanged": true,
+      "raw_result_sha256": "e75144766139a655fc7b1e6f49574116cc6b45cccb03da37212c588248eadcd2"
+    },
+    "tokens_out_estimated": true,
+    "tokens_in_is_lower_bound": true,
+    "recorded_usage": {
+      "input_tokens": 6870262,
+      "uncached_input_tokens": 22776,
+      "cached_input_tokens": 6156186,
+      "cache_write_input_tokens": 691300,
+      "output_tokens": 433769,
+      "total_tokens": 7304031,
+      "reasoning_output_tokens": 276667
+    },
+    "metering_complete": false,
+    "cost_estimated": true,
+    "cost_is_lower_bound": true,
+    "cost_estimate": {
+      "estimate_type": "client_reported_api_equivalent_with_recovered_lower_bound",
+      "pricing_source": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "pricing_checked_on": "2026-09-06",
+      "input_usd_per_million": 10,
+      "output_usd_per_million": 50,
+      "cache_read_usd_per_million": 1,
+      "cache_write_5m_usd_per_million": 12.5,
+      "cache_write_1h_usd_per_million": 20,
+      "basis": "Claude Code API-equivalent list prices, including cache pricing. Subscription run, not an invoice."
+    },
+    "timing_source": "Sum of active Claude invocation intervals; quota pause excluded; maximum two concurrent tasks",
+    "maximum_concurrent_attempts": 2,
+    "settings_verification_basis": "Exact Fable 5 in all solver messages; explicit high CLI effort, not independent provider attestation",
+    "certified": false,
+    "publication_basis": "Maintainer requested publication with an explicitly estimated Token DL. Correctness is graded in Docker; one sample, not a three-sample certified result.",
+    "published_source": {
+      "generation_run_id": "fable-high-34-20260906T191325Z",
+      "graded_run_id": "5b98da4ff2d44edfab3bc9effee50ed7",
+      "graded_result_sha256": "e75144766139a655fc7b1e6f49574116cc6b45cccb03da37212c588248eadcd2",
+      "submission_sha256": "86202d38cd2c77a1499bb28f3fa7a5eaf2944f6e166e2458e3bcda76ff62162c",
+      "verification_sha256": "f63c6b423cd1106bb5581c90a6ff0ba3345ed5ede10935057b6732dc7aef1adf",
+      "estimate_sha256": "2fcab9080c7858039d361faeaa073ee64eb6b362a912a7875d7a3596883b82e8",
+      "client": "Claude Code CLI 2.1.260",
+      "requested_model": "claude-fable-5",
+      "effort": "high",
+      "sample_unit": "one agent session per task; interrupted sessions continued without private grading feedback"
+    },
+    "analysis": "Claude Code agent run; 24/26 scored tasks fully passed. Partial credit: sql_traces 95.62%, sql_traces_xl 53.26%. Task 24 remains unscored under the unchanged 3.4 rules. Token DL is estimated at 54.77 using recorded tokens plus reconstructed output from interrupted invocations on tasks 15, 23 and 25. Claude live thinking counters were calibrated against 16 completed receipts; estimated total output is 443,229 tokens. Varying missing-token assumptions gives 54.72\u201354.78, an assumption sensitivity range, not a confidence interval. Cost is a recorded API-equivalent lower bound, not a subscription charge. Time sums active task intervals and excludes pauses. Original sessions continued without grading feedback. One sample; repeat variation is unmeasured."
   }
 ]
