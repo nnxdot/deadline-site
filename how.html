@@ -10,16 +10,16 @@
 <meta property="og:title" content="How DEADLINE works">
 <meta property="og:description" content="How Deadline scores 26 of its 27 public coding tasks with private machine grading and continuous partial credit. Correctness and token efficiency reported separately.">
 <meta property="og:url" content="https://deadline.nnx.fyi/how.html">
-<meta property="og:image" content="https://deadline.nnx.fyi/og.png?v=20260906">
+<meta property="og:image" content="https://deadline.nnx.fyi/og.png?v=20260907-35">
 <meta property="og:image:type" content="image/png">
-<meta property="og:image:alt" content="Deadline. Every model meets its deadline. 27 public coding tasks, 26 scored, 100 points. Private tests, partial credit, no judge model.">
+<meta property="og:image:alt" content="Deadline. Every model meets its deadline. Deadline 3.5: 27 public coding tasks, 24 scored, scores out of 100. Private tests, partial credit, no judge model.">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="How DEADLINE works">
 <meta name="twitter:description" content="How Deadline scores 26 of its 27 public coding tasks with private machine grading and continuous partial credit. Correctness and token efficiency reported separately.">
-<meta name="twitter:image" content="https://deadline.nnx.fyi/og.png?v=20260906">
-<meta name="twitter:image:alt" content="Deadline. Every model meets its deadline. 27 public coding tasks, 26 scored, 100 points. Private tests, partial credit, no judge model.">
+<meta name="twitter:image" content="https://deadline.nnx.fyi/og.png?v=20260907-35">
+<meta name="twitter:image:alt" content="Deadline. Every model meets its deadline. Deadline 3.5: 27 public coding tasks, 24 scored, scores out of 100. Private tests, partial credit, no judge model.">
 <meta name="theme-color" content="#e5484d">
 <script src="theme.js"></script>
 <link rel="stylesheet" href="style.css?v=8">
@@ -65,7 +65,7 @@
       but the <b>test suites and reference solutions are private</b>. Public
       benchmark answers leak into training data and inflate scores; Deadline's
       graders never leave the maintainer's machine.</p>
-      <p>The 27 public prompts and submission format remain unchanged. In <b>Deadline 3.4, 26 tasks are scored</b>: <code>24_js_machine_traces</code> is unscored because required state labels were absent from its observations. Its answer has no effect on the score.</p>
+      <p>The 27 public prompts and submission format remain unchanged. In <b>Deadline 3.5, 24 tasks are scored</b>; tasks 19, 22 and 24 are unscored. The version selector retains the historical 3.4 results with 26 scored tasks and only task 24 excluded.</p>
       <p>A canary GUID helps investigate contamination; it does not prove that training-data leakage is absent.</p>
     </div>
   </div>
@@ -74,7 +74,7 @@
     <div class="step-no">&#8594;</div>
     <div>
       <h3>One blind attempt, graded by fuzz-tested oracles</h3>
-      <p>The model gets one blind attempt at each public prompt. For Deadline 3.4,
+      <p>The model gets one blind attempt at each public prompt. For both scoring versions,
       a private controller keeps the tests and expected answers outside the candidate environment.
       Python and JavaScript run in isolated containers that receive submitted code, public files,
       and invocation inputs. The controller compares returned values and exceptions; printing a
@@ -86,26 +86,32 @@
   <div class="step">
     <div class="step-no">100</div>
     <div>
-      <h3>Scored out of 100, weighted by difficulty</h3>
-      <p>The 26 scored tasks total <b>1,205 points</b>, normalized to 100. The headline
-      measures <b>correctness</b>. For valid completed answers, task credit is
-      <b>q<sup>2</sup> &minus; 0.15 &times; (1&minus;q)<sup>2</sup></b>, where q is the matched fraction balanced equally
-      across reviewed semantic areas within each function, then equally across
-      functions. SQL balances empty and nonempty result classes. Duplicate inputs
-      count once across groups. Every case must pass for full task credit.</p>
-      <p>This continuous rule replaces the old requirement to fully pass a group
-      before receiving positive partial credit. Negative penalties remain: q=0
-      earns &minus;15% task credit; q=0.5 earns 21.25%; q=1 earns 100% if every case passes.
-      Invalid or incomplete execution receives &minus;15%, explicit skips earn zero,
-      and unresolved blank replies suppress the headline score.</p>
-      <p>The headline keeps the published task point values and displays two
+      <h3>Versioned scores out of 100</h3>
+      <p><b>Deadline 3.5</b> scores 24 tasks totaling <b>1,050 points</b>. Its headline
+      discounts correctness by output tokens: positive task credit is multiplied by
+      min(1, task budget / output tokens). Negative penalties are never discounted.
+      Undiscounted Correctness stays visible. Missing per-task usage means no headline;
+      the run still has a correctness result. Existing reconstructed estimates are marked &asymp;.</p>
+      <p>For valid completed answers, 3.5 task credit is
+      <b>q<sup>4</sup> &minus; 0.15 &times; (1&minus;q)<sup>2</sup></b>, where q is the matched fraction balanced equally
+      across semantic areas within each function, then across functions. SQL balances empty and nonempty
+      result classes. Duplicate inputs count once. Every case must pass for full credit.
+      At q=0.5, task credit is 2.5%; at q=0.9, it is 65.46%.</p>
+      <p>Tasks <b>19, 22 and 24</b> are unscored in 3.5. The first two have hidden rules
+      that their public observations do not determine; task 24 omits required final-state labels.
+      Invalid execution receives &minus;15%, skips earn zero and unresolved replies remain incomplete.</p>
+      <p><b>Deadline 3.4</b> remains available through the version selector with all original results:
+      26 scored tasks, 1,205 points, q<sup>2</sup> &minus; 0.15(1&minus;q)<sup>2</sup> credit,
+      correctness as the headline, and Token DL alongside it. Only task 24 is unscored in 3.4.
+      These versions are not directly comparable. Regrading uses the same saved answers, not new model attempts.</p>
+      <p>Correctness keeps the published point values for scored tasks and displays two
       decimals. The downloadable result data includes equal-task and equal-family
       scores, plus ranks with each family omitted, to expose sensitivity to weighting.
       The nine families are cipher,
       state machine, codec, calendar, expression, pair counting, interpreter,
       SQL and repository repair; equal-family scoring weights tasks equally within
       each family. These comparisons are <b>not confidence intervals</b>.</p>
-      <p><b>DL Score</b> additionally discounts positive credit by budget divided by output tokens
+      <p><b>Token DL</b> (the 3.5 headline; a separate metric in 3.4) discounts positive credit by budget divided by output tokens
       when over budget. Measured values require complete per-task token measurements. Reconstructed estimates are marked ≈, with their assumptions and sensitivity in the result's post-mortem.
       Client-reported measurements and effort labels are not independently authenticated.</p>
       <p>New certified official runs require at least <b>three independent attempts per task</b>.
@@ -136,11 +142,11 @@
   <div class="callout">
     <div class="ch">What Deadline measures — and what it does not</div>
     <p>Deadline measures <b>exact Python 3, JavaScript (Node), and
-    SQLite SQL, standard libraries only</b>, across 27 public tasks (26 scored in version 3.4). Most tasks show only the
+    SQLite SQL, standard libraries only</b>, across 27 public tasks (24 scored in 3.5; 26 in 3.4). Most tasks show only the
     observed behavior of a hidden system — the model must reverse-engineer
     its rules — in one blind attempt, against token deadlines. Reproducing
     the given examples earns nothing, a half-cracked theory earns little
-    (continuous credit is q² − 0.15(1 − q)², using balanced semantic matches). Invalid execution receives −15%; explicit skips earn zero. Two of the tasks are whole-project bug hunts across dozens of
+    (continuous credit uses balanced semantic matches and the selected version's partial-credit curve). Invalid execution receives −15%; explicit skips earn zero. Two of the tasks are whole-project bug hunts across dozens of
     generated files. It does NOT measure dependency wrangling or long
     agentic sessions. A high Deadline score
     means correct inference under pressure; it is not a claim about all of
@@ -152,8 +158,9 @@
     <p>Private expected answers, a separate comparison controller, typed results, bounded
     execution, immutable per-attempt records and content hashes support grading integrity.
     Duplicate and style checks are review signals, not proof of cheating or model identity.
-    The calibration audit runs all 26 scored reference solutions, 44 deliberately
-    broken implementations and 3 independent correct alternatives in Docker.
+    The 3.5 calibration audit executes all 24 scored reference solutions, deliberately
+    broken controls and independent correct alternatives in Docker. A separate mutation screen was reviewed
+    against the complete public prose and examples; it does not prove general uniqueness.
     Focused contract checks cover signed division, codec validation, scope and call
     depth; separate independent calculations check the private expected results.
     Generated tasks remain finite tests, not proof of correctness for every possible input.
@@ -165,7 +172,7 @@
     time discount, following the original convention; this can overestimate TIME-DL.
     Negative credit is never discounted. Expanded model rows show the timing coverage.
     File intervals do not establish inference latency; TIME-DL is a descriptive estimate.
-    Correctness determines the agent leaderboard order. API generation time is recorded
+    Version 3.5 ranks by the token-discounted headline; unmetered entries keep correctness without a headline rank. Version 3.4 ranks by correctness. API generation time is recorded
     separately from grading time.</p>
   </div>
 

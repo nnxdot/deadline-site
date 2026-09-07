@@ -7,9 +7,16 @@ hidden cipher pipelines, randomized state machines and formats, scrambled
 precedence tables, performance gates, and a generated-semantics interpreter —
 graded by hidden, fuzz-tested oracles with semantic-balanced partial credit.
 No judge model, no self-reported scores. Every task carries a TOKEN BUDGET
-(its deadline). Correctness is the headline; Token Deadline Score separately
-measures correctness discounted by token usage. Official runs also report a
-strict all-attempts-must-pass score.
+(its deadline). Version **3.5** makes token-discounted correctness the headline,
+with undiscounted correctness alongside it. It scores 24 tasks (1,050 points),
+using q^4 - 0.15*(1-q)^2 credit; tasks 19, 22 and 24 are unscored.
+Missing token measurements remain unmetered, and reconstructed estimates are marked approximately.
+
+The **v3.5 / v3.4 selector** preserves the full historical 3.4 board, its 26 scored
+tasks (1,205 points), q^2 partial-credit rule and correctness headline. The raw
+3.4 data is preserved unchanged in [`data/v3.4/`](data/v3.4/). Different versions
+never rank together. The 3.5 results regrade existing answers; they are not new
+model attempts or evidence that correctness saturation has been resolved.
 
 **Scope, honestly:** Deadline measures exact Python 3, JavaScript (Node), and SQLite SQL with
 standard libraries only, across 27 machine-generated tasks — most reverse-engineered

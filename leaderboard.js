@@ -53,6 +53,14 @@ const COHORT_LABEL = {
 const cohortOf = r => (r.official ? "official" : "community") + "/" + (["agent", "sub"].includes(modeOf(r)) ? "agent" : "api");
 
 const preciseScore = r => r.score_analysis?.score_unrounded ?? r.score;
+/* Version-aware fields: from deadline-3.5 the entry's `score` is the
+   token-discounted headline (absent without complete token measurements) and
+   `correctness` is the undiscounted score. Earlier versions used correctness
+   as the headline. */
+const isV35 = r => r.benchmark_version === "deadline-3.5";
+const headlineOf = r => isV35(r) ? (Number.isFinite(r.score) ? r.score : null) : preciseScore(r);
+const correctnessOf = r => isV35(r) ? (r.score_analysis?.score_unrounded ?? r.correctness) : preciseScore(r);
+const rankKey = r => headlineOf(r);
 const fmtCount = n => new Intl.NumberFormat("en", {notation:"compact", maximumFractionDigits:1}).format(n);
 function modeOf(r) { return r.mode || (r.tokens_out || r.cost_usd != null ? "api" : "sub"); }
 function runCost(r) {
@@ -64,7 +72,8 @@ function runCost(r) {
 }
 /* ---- sortable score columns ---- */
 const SORTS = {
-  score: {label: "Correctness", get: preciseScore},
+  score: {label: "Score", get: headlineOf},
+  correctness: {label: "Correctness", get: correctnessOf},
   dscore: {label: "Token DL", get: r => Number.isFinite(r.dscore) ? r.dscore : null},
   tdl: {label: "TIME-DL", get: r => Number.isFinite(r.tdl_score) ? (r.tdl_score_unrounded ?? r.tdl_score) : null},
 };
@@ -77,13 +86,14 @@ const METRICS = {
            fmt: v => v >= 1000 ? (v / 1000).toFixed(0) + "k" : String(Math.round(v)), invert: true},
   seconds: {label: "run time", get: r => Number.isFinite(r.seconds) ? r.seconds : null,
             fmt: v => Math.round(v) + "s", invert: true},
-  eff: {label: "output tokens per point", get: r => r.tokens_out && r.score > 0 ? r.tokens_out / r.score : null,
+  eff: {label: "output tokens per correctness point", get: r => r.tokens_out && correctnessOf(r) > 0 ? r.tokens_out / correctnessOf(r) : null,
         fmt: v => v >= 1000 ? (v / 1000).toFixed(1) + "k" : v.toFixed(0), invert: true},
   tdl: {label: "TIME-DL", get: r => Number.isFinite(r.tdl_score) ? r.tdl_score : null,
         fmt: v => v.toFixed(0), invert: false},
 };
 
 let manifest = null, results = [], PRICES = {}, cohort = "all", metric = "cost", sortKey = "score", sortAsc = false;
+let versions = {}, datasets = {}, selectedVersion = "3.5";
 
 /* suite guard: entries graded against a different version or suite hash never mix in */
 function displayed() {
@@ -92,14 +102,14 @@ function displayed() {
   return results.filter(r => r && r.benchmark_version === manifest.benchmark_version &&
     r.suite_hash === manifest.suite_hash && r.measurement_status !== "incomplete" &&
     r.complete !== false && r.pilot !== true && r.leaderboard_eligible !== false &&
-    Number.isFinite(r.score) &&
+    (Number.isFinite(r.score) || Number.isFinite(r.correctness)) &&
     (cohort === "all" || cohortOf(r) === cohort || cohortOf(r).startsWith(cohort + "/")) &&
     (effort === "all" || r.effort === effort));
 }
 
 function compareEntries(a, b) {
   const get = SORTS[sortKey].get, va = get(a), vb = get(b);
-  if (va == null && vb == null) return 0;
+  if (va == null && vb == null) return (correctnessOf(b) ?? -1) - (correctnessOf(a) ?? -1);
   if (va == null) return 1;   /* nulls last regardless of direction */
   if (vb == null) return -1;
   return sortAsc ? va - vb : vb - va;
@@ -115,12 +125,15 @@ function grouped(rows) {
 
 function scoreCellHTML(r) {
   if (!Number.isFinite(r.score)) {
-    return '<span class="score-v null">—</span>';
+    return isV35(r)
+      ? '<span class="score-v null" title="Headline is token-discounted; this run lacks complete token measurements">unmetered</span>'
+      : '<span class="score-v null">—</span>';
   }
   const err = Number.isFinite(r.score_err) ? `<span class="err">±${r.score_err}</span>` : "";
-  const value = Number.isFinite(preciseScore(r)) ? preciseScore(r) : r.score;
+  const value = isV35(r) ? r.score : (Number.isFinite(preciseScore(r)) ? preciseScore(r) : r.score);
   const fill = Math.max(0, Math.min(100, value));
-  return `<span class="score-gauge" style="--score-color:${providerOf(r.model).color}"><span class="score-number"><span class="score-v" title="Unrounded: ${value}">${fmtScore(r.score)}</span>${err}</span><span class="score-track" aria-hidden="true"><span class="score-fill" style="width:${fill}%"></span></span></span>`;
+  const estimated = isV35(r) && r.score_estimated;
+  return `<span class="score-gauge" style="--score-color:${providerOf(r.model).color}"><span class="score-number"><span class="score-v" title="${estimated ? 'Estimated from recorded usage and reconstructed interrupted output; details in the post-mortem' : 'Unrounded: ' + value}">${estimated ? '≈' : ''}${fmtScore(r.score)}</span>${err}</span><span class="score-track" aria-hidden="true"><span class="score-fill" style="width:${fill}%"></span></span></span>`;
 }
 
 function tokenScoreCellHTML(r) {
@@ -171,8 +184,8 @@ function renderLeaderboard() {
   const arrow = k => sortKey === k ? (sortAsc ? " ▴" : " ▾") : "";
   const th = (k, tip) => `<th scope="col" class="num sortable${sortKey === k ? " on" : ""}" data-sort="${k}" aria-sort="${sortKey === k ? (sortAsc ? "ascending" : "descending") : "none"}"><button type="button" class="sort-button" title="${tip} — click to sort">${SORTS[k].label}${arrow(k)}</button></th>`;
   const head = `<thead><tr><th></th><th>Model</th>
-    ${th("score", "Correctness using published task points")}
-    ${th("dscore", "Separate token-efficiency metric; community usage is client reported")}
+    ${th("score", "Headline: token-discounted correctness from 3.5; earlier versions list correctness here")}
+    ${isV35(manifest) ? th("correctness", "Undiscounted correctness using published task points") : th("dscore", "Correctness discounted by output-token usage")}
     <th class="num">Tasks</th>
     ${th("tdl", "Descriptive time-discounted estimate; timing assumptions in each post-mortem")}<th class="num">Out tok</th><th class="num">Cost</th><th class="num">Time</th><th>Date</th></tr></thead>`;
   let body = "";
@@ -180,10 +193,10 @@ function renderLeaderboard() {
     if (grouped(rows).length > 1) body += `<tr class="cohort-tr"><td colspan="${COLS}">${COHORT_LABEL[key]} — ranked within this cohort only</td></tr>`;
     members.forEach((r, i) => {
       body += `<tr class="click-row" title="click for the breakdown">
-        <td class="rank"><button class="detail-toggle" aria-expanded="false" aria-label="Show details for ${esc(r.model)} ${esc(r.effort || "")}"><span class="chev">▸</span></button>${String(1 + members.filter(other => preciseScore(other) > preciseScore(r) + 1e-10).length).padStart(2, "0")}</td>
+        <td class="rank"><button class="detail-toggle" aria-expanded="false" aria-label="Show details for ${esc(r.model)} ${esc(r.effort || "")}"><span class="chev">▸</span></button>${rankKey(r) == null ? '—' : String(1 + members.filter(other => rankKey(other) != null && rankKey(other) > rankKey(r) + 1e-10).length).padStart(2, "0")}</td>
         <td class="mname">${logoHTML(r.model)}${esc(r.model)}${r.effort ? `<span class="eff">[${esc(r.effort)}]</span>` : ""}</td>
         <td class="num">${scoreCellHTML(r)}</td>
-        <td class="num">${tokenScoreCellHTML(r)}</td>
+        <td class="num">${isV35(r) ? (headlineOf(r) == null ? scoreCellHTML({model:r.model,score:r.correctness}) : '<span class="score-v alt">' + fmtScore(r.correctness) + '</span>') : tokenScoreCellHTML(r)}</td>
         <td class="num">${Number(r.passed)}/${Number(r.total)}</td>
         <td class="num"><span class="score-v alt">${fmtScore(r.tdl_score)}</span></td>
         <td class="num">${METRICS.tokens.get(r) != null ? (r.tokens_out_estimated ? '<span title="Estimated output tokens; assumptions in the post-mortem">≈' + r.tokens_out.toLocaleString("en-US") + '</span>' : r.tokens_out.toLocaleString("en-US")) : "—"}</td>
@@ -284,7 +297,7 @@ function renderFrontier() {
   const host = document.getElementById("c-frontier");
   const M = METRICS[metric];
   document.getElementById("metric-name").textContent = M.label;
-  const rows = displayed().filter(r => Number.isFinite(r.score) && M.get(r) != null);
+  const rows = displayed().filter(r => Number.isFinite(correctnessOf(r)) && M.get(r) != null);
   if (!rows.length) {
     host.innerHTML = displayed().length
       ? `<div class="empty">No ${M.label} measurements for the displayed entries.</div>`
@@ -295,7 +308,7 @@ function renderFrontier() {
   const maxV = Math.max(...rows.map(M.get)) * 1.12 || 1;
   const x = v => L + (W - L - R) * (M.invert ? 1 - v / maxV : v / maxV);
   const y = s => T + (H - T - B) * (1 - Math.max(0, Math.min(100, s)) / 100);
-  let svg = `<svg class="chart" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Score versus ${M.label}">`;
+  let svg = `<svg class="chart" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Correctness versus ${M.label}">`;
   for (let s = 0; s <= 100; s += 20) {
     svg += `<line x1="${L}" y1="${y(s)}" x2="${W - R}" y2="${y(s)}" stroke="var(--axis)" stroke-width="1" stroke-dasharray="1 6"/>`;
     svg += `<text class="axis-doto" x="${L - 9}" y="${y(s) + 5}" text-anchor="end" fill="var(--muted)">${s}</text>`;
@@ -308,10 +321,10 @@ function renderFrontier() {
   svg += `<text class="tag" x="${(L + W - R) / 2}" y="${H - 5}" text-anchor="middle" fill="var(--muted)">${M.label.toUpperCase()}${M.invert ? " — RIGHT = LESS" : " — RIGHT = MORE"}</text>`;
   svg += `<line x1="${L}" y1="${y(0)}" x2="${W - R}" y2="${y(0)}" stroke="var(--red)" stroke-width="2"/>`;
   rows.forEach(r => {
-    const p = providerOf(r.model), v = M.get(r), sc = r.score;
+    const p = providerOf(r.model), v = M.get(r), sc = correctnessOf(r);
     const px = x(v), py = y(sc);
     const tip = `${esc(r.model)}${r.effort ? " [" + esc(r.effort) + "]" : ""} — ${COHORT_LABEL[cohortOf(r)]}
-Score ${fmtScore(sc)}${Number.isFinite(r.score_err) ? " ±" + r.score_err : ""} · ${M.label} ${metric === "cost" && r.cost_is_lower_bound ? "≥" : ["tokens", "eff"].includes(metric) && r.tokens_out_estimated ? "≈" : ""}${M.fmt(v)}`;
+Correctness ${fmtScore(sc)} · ${M.label} ${metric === "cost" && r.cost_is_lower_bound ? "≥" : ["tokens", "eff"].includes(metric) && r.tokens_out_estimated ? "≈" : ""}${M.fmt(v)}`;
     svg += `<g class="pt" data-x="${px}" data-y="${py}"><title>${tip}</title><path class="label-leader" fill="none" stroke="${p.color}" stroke-width="1" opacity=".45" pointer-events="none"/>`;
     if ((r.samples || 0) >= 3 && Number.isFinite(r.score_err) && r.score_err > 0) {
       const yTop = y(sc + r.score_err), yBot = y(sc - r.score_err);
@@ -400,13 +413,15 @@ function renderStats() {
   }
   document.querySelectorAll(".ticker-task-count").forEach(el => { el.textContent = tasks.length; });
   const line = document.getElementById("suite-line");
-  if (line) line.textContent = `${families} families. ${tasks.filter(t => t.scored !== false).length} scored tasks, totaling ${tasks.reduce((sum, t) => sum + t.points, 0).toLocaleString("en-US")} points. Task 24 remains unscored.`;
+  const unscored = tasks.filter(t => t.scored === false).map(t => Number(t.id.slice(0, 2)));
+  if (line) line.textContent = `${families} families. ${tasks.filter(t => t.scored !== false).length} scored tasks, totaling ${tasks.reduce((sum, t) => sum + t.points, 0).toLocaleString("en-US")} points. ${unscored.length === 1 ? 'Task' : 'Tasks'} ${unscored.join(', ')} unscored.`;
 }
 
 function renderBoards() { renderLeaderboard(); renderFrontier(); renderHardest(); }
 function renderAll() { renderStats(); renderTasks(); renderBoards(); }
 
 function wire() {
+  document.getElementById("benchmark-version").addEventListener("change", e => selectVersion(e.target.value, true));
   document.getElementById("f-effort").addEventListener("change", renderBoards);
   for (const id of ["task-family", "task-level"]) document.getElementById(id).addEventListener("change", renderTasks);
   document.getElementById("task-search")?.addEventListener("input", renderTasks);
@@ -446,33 +461,72 @@ function wire() {
   });
 }
 
-async function init() {
-  const [tasks, official, community, prices] = await Promise.all(
-    ["data/tasks.json", "data/official.json", "data/community.json", "prices.json"].map(async path => {
-      const response = await fetch(path, {cache: "no-store"});
-      if (!response.ok) throw new Error("Unavailable data");
-      return response.json();
-    }));
-  if (!tasks || Array.isArray(tasks) || !Object.keys(tasks).length ||
-      !Array.isArray(official) || !Array.isArray(community)) throw new Error("Invalid result data");
+const SCORING_COPY = {
+  "3.5": `<p>The headline <b>Score</b> is correctness discounted by output-token usage. Undiscounted Correctness stays visible. Runs without complete usage show “unmetered”; reconstructed estimates are marked ≈.</p><p>The 24 scored tasks total <b>1,050 points</b>. Completed answers earn q⁴ − 0.15(1 − q)² credit, with q balanced across semantic areas and functions. A 90% matched fraction earns 65.46% task credit. Every case must pass for full credit. Invalid execution receives −15%; skips earn zero; unresolved answers remain incomplete.</p><p>Tasks 19, 22 and 24 remain available but unscored. Token discounts affect positive credit only. TIME-DL stays a separate descriptive estimate from archived intervals.</p>`,
+  "3.4": `<p>The headline <b>Correctness</b> uses 26 scored tasks totaling <b>1,205 points</b>. Completed answers earn q² − 0.15(1 − q)² credit, with q balanced across semantic areas and functions. Every case must pass for full credit. Invalid execution receives −15%; skips earn zero; unresolved answers remain incomplete.</p><p>Task 24 is unscored. Token DL separately discounts positive credit by output-token usage; TIME-DL uses archived intervals. The historical results and original 3.4 scoring are preserved.</p>`,
+};
+
+function selectVersion(version, updateURL = false) {
+  if (!datasets[version]) return;
+  selectedVersion = version;
+  const data = datasets[version], config = versions[version];
   const timeBudgets = {medium:60, hard:120, brutal:240, nightmare:450};
-  manifest = {
-    benchmark_version: "deadline-3.4",
-    suite_hash: "eecf5b0a714cbb6e5303c666fe78dd49c404fa140c643fe84cf231316a28a1f5",
-    tasks: Object.entries(tasks).map(([id, task]) => ({...task, id, title:id,
-      language: id.includes("_js_") ? "JavaScript" : id.includes("_sql_") ? "SQL" : "Python",
-      time_budget: timeBudgets[task.difficulty]})),
-  };
-  results = [...official, ...community]; PRICES = prices;
-  const families = [...new Set(manifest.tasks.map(t => t.family))].sort();
+  manifest = {...config, tasks: Object.entries(data.tasks).map(([id, task]) => ({...task, id, title:id,
+    language: id.includes("_js_") ? "JavaScript" : id.includes("_sql_") ? "SQL" : "Python",
+    time_budget: timeBudgets[task.difficulty]}))};
+  results = [...data.official, ...data.community];
+  sortKey = "score"; sortAsc = false;
+  SORTS.score.label = isV35(manifest) ? "Score" : "Correctness";
+  document.getElementById("benchmark-version").value = version;
   document.getElementById("task-family").innerHTML = '<option value="">All families</option>' +
-    families.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join("");
+    [...new Set(manifest.tasks.map(t => t.family))].sort().map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join("");
+  document.getElementById("task-family").value = "";
+  const effort = document.getElementById("f-effort").value;
+  const efforts = [...new Set(results.map(r => r.effort).filter(Boolean))].sort();
   document.getElementById("f-effort").innerHTML = '<option value="all">All efforts</option>' +
-    [...new Set(results.map(r => r.effort).filter(Boolean))].sort().map(e => `<option value="${esc(e)}">${esc(e)}</option>`).join("");
-  const latest = results.map(r => r.when || "").sort().at(-1);
-  document.getElementById("release-status").textContent = "27 public tasks · 26 scored · Saved answers regraded in Docker." +
-    (latest ? " Updated " + latest.replace(/^(\d{4})(\d{2})(\d{2}).*/, "$1-$2-$3") + "." : "");
-  wire(); renderAll();
+    efforts.map(e => `<option value="${esc(e)}">${esc(e)}</option>`).join("");
+  document.getElementById("f-effort").value = efforts.includes(effort) ? effort : "all";
+  const count = manifest.tasks.filter(t => t.scored !== false).length;
+  document.getElementById("release-status").textContent = `${config.label} · ${manifest.tasks.length} public tasks · ${count} scored · ${isV35(manifest) ? 'Saved answers regraded in Docker.' : 'Historical results and scoring preserved.'}`;
+  document.getElementById("hero-score-note").textContent = isV35(manifest)
+    ? "Token-discounted score. Correctness alongside it. Continuous partial credit. No judge model."
+    : "Correctness out of 100. Continuous partial credit. Token efficiency measured separately. No judge model.";
+  document.getElementById("scoring-method").innerHTML = SCORING_COPY[version];
+  document.getElementById("method-headline").textContent = isV35(manifest)
+    ? "Public prompts. Private, deterministic grading. Token-discounted correctness is the headline."
+    : "Public prompts. Private, deterministic grading. Correctness is the headline score.";
+  for (const name of ["official", "community"]) {
+    const link = document.getElementById(name + "-download");
+    if (link) link.setAttribute("href", config.base + "/" + name + ".json");
+  }
+  if (updateURL && typeof window !== "undefined") {
+    const url = new URL(window.location.href);
+    url.searchParams.set("version", version);
+    window.history.replaceState(null, "", url);
+  }
+  renderAll();
+}
+
+async function init() {
+  const fetchJSON = async path => {
+    const response = await fetch(path, {cache:"no-store"});
+    if (!response.ok) throw new Error("Unavailable data");
+    return response.json();
+  };
+  const [catalog, prices] = await Promise.all([fetchJSON("data/versions.json"), fetchJSON("prices.json")]);
+  versions = catalog.versions; PRICES = prices;
+  await Promise.all(Object.entries(versions).map(async ([version, config]) => {
+    const [tasks, official, community] = await Promise.all(
+      ["tasks", "official", "community"].map(name => fetchJSON(config.base + "/" + name + ".json")));
+    if (!tasks || Array.isArray(tasks) || !Object.keys(tasks).length ||
+        !Array.isArray(official) || !Array.isArray(community)) throw new Error("Invalid result data");
+    datasets[version] = {tasks, official, community};
+  }));
+  document.getElementById("benchmark-version").innerHTML = Object.entries(versions)
+    .map(([version, config]) => `<option value="${esc(version)}">${esc(config.label)}</option>`).join("");
+  const requested = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("version") : null;
+  wire();
+  selectVersion(datasets[requested] ? requested : catalog.default);
 }
 const ready = init().catch(error => {
   document.getElementById("release-status").textContent = "Results could not be loaded. Please reload to try again.";

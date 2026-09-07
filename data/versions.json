@@ -1,0 +1,17 @@
+{
+  "default": "3.5",
+  "versions": {
+    "3.5": {
+      "label": "v3.5",
+      "benchmark_version": "deadline-3.5",
+      "suite_hash": "3759711867a53184c1bf312db947a0c532a9a526f9df38d69007dedee76df881",
+      "base": "data"
+    },
+    "3.4": {
+      "label": "v3.4",
+      "benchmark_version": "deadline-3.4",
+      "suite_hash": "eecf5b0a714cbb6e5303c666fe78dd49c404fa140c643fe84cf231316a28a1f5",
+      "base": "data/v3.4"
+    }
+  }
+}

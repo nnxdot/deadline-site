@@ -113,6 +113,8 @@ h3 { font-size: 13px; font-weight: 550; line-height: 1.4; margin: 0; }
 .version-switch .selected { background: var(--ink); color: var(--bg); }
 .version-switch a { color: var(--muted); }
 .version-switch a:hover { color: var(--red); }
+.version-filter { min-width: 132px; flex: 0 0 auto; }
+.version-filter select { min-width: 132px; font-weight: 600; }
 .results-context { display: flex; justify-content: space-between; gap: 16px; font-size: 11px; color: var(--muted); margin-bottom: 22px; }
 .results-context p { margin: 0; }
 .results-context a { white-space: nowrap; text-decoration: none; }

@@ -4,25 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Deadline</title>
-<meta name="description" content="27 public coding tasks. 26 scored. Hidden systems to reverse-engineer, private machine grading, and continuous partial credit. Compare correctness and token efficiency.">
+<meta name="description" content="Deadline 3.5: 27 public coding tasks, 24 scored. Hidden systems to reverse-engineer, private machine grading, and continuous partial credit. Compare correctness and token efficiency.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Deadline">
 <meta property="og:title" content="DEADLINE — every model meets its deadline">
-<meta property="og:description" content="27 public coding tasks. 26 scored. Hidden systems to reverse-engineer, private machine grading, and continuous partial credit. Compare correctness and token efficiency.">
+<meta property="og:description" content="Deadline 3.5: 27 public coding tasks, 24 scored. Hidden systems to reverse-engineer, private machine grading, and continuous partial credit. Compare correctness and token efficiency.">
 <meta property="og:url" content="https://deadline.nnx.fyi/">
-<meta property="og:image" content="https://deadline.nnx.fyi/og.png?v=20260906">
+<meta property="og:image" content="https://deadline.nnx.fyi/og.png?v=20260907-35">
 <meta property="og:image:type" content="image/png">
-<meta property="og:image:alt" content="Deadline. Every model meets its deadline. 27 public coding tasks, 26 scored, 100 points. Private tests, partial credit, no judge model.">
+<meta property="og:image:alt" content="Deadline. Every model meets its deadline. 27 public coding tasks. Versioned results out of 100. Private tests, partial credit, no judge model.">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="DEADLINE — every model meets its deadline">
-<meta name="twitter:description" content="27 public coding tasks. 26 scored. Hidden systems to reverse-engineer, private machine grading, and continuous partial credit. Compare correctness and token efficiency.">
-<meta name="twitter:image" content="https://deadline.nnx.fyi/og.png?v=20260906">
-<meta name="twitter:image:alt" content="Deadline. Every model meets its deadline. 27 public coding tasks, 26 scored, 100 points. Private tests, partial credit, no judge model.">
+<meta name="twitter:description" content="Deadline 3.5: 27 public coding tasks, 24 scored. Hidden systems to reverse-engineer, private machine grading, and continuous partial credit. Compare correctness and token efficiency.">
+<meta name="twitter:image" content="https://deadline.nnx.fyi/og.png?v=20260907-35">
+<meta name="twitter:image:alt" content="Deadline. Every model meets its deadline. 27 public coding tasks. Versioned results out of 100. Private tests, partial credit, no judge model.">
 <meta name="theme-color" content="#e5484d">
   <script src="theme.js"></script>
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -53,7 +53,7 @@
     <div class="hero-bottom">
       <div class="hero-copy">
         <p class="sub"><span id="task-total">27</span> public coding tasks. Hidden systems to reverse-engineer. Private, machine-graded results.</p>
-        <p class="hero-note">Correctness out of 100. Continuous partial credit. Token efficiency measured separately. No judge model.</p>
+        <p class="hero-note" id="hero-score-note">Token-discounted score. Correctness alongside it. Continuous partial credit. No judge model.</p>
       </div>
       <div class="hero-actions"><a class="btn primary" href="deadline.zip" download>Download runner <span aria-hidden="true">↗</span></a><a class="btn" href="submit.html">Submit a result <span aria-hidden="true">↗</span></a></div>
     </div>
@@ -70,8 +70,8 @@
   </header>
 
   <section class="results-section" id="results" aria-labelledby="results-title">
-    <div class="section-heading"><h2 id="results-title">Leaderboard</h2><a class="text-link" href="how.html">How it works <span aria-hidden="true">↗</span></a></div>
-    <div class="results-context"><p id="release-status" role="status">27 public tasks · 26 scored · Saved answers regraded in Docker.</p><a href="how.html">Methodology &amp; limitations <span aria-hidden="true">↗</span></a></div>
+    <div class="section-heading"><h2 id="results-title">Leaderboard</h2><label class="select-field version-filter" for="benchmark-version"><span>Benchmark version</span><select id="benchmark-version"><option value="3.5">v3.5</option><option value="3.4">v3.4</option></select></label></div>
+    <div class="results-context"><p id="release-status" role="status">v3.5 · 27 public tasks · 24 scored · Saved answers regraded in Docker.</p><a href="how.html">Methodology &amp; limitations <span aria-hidden="true">↗</span></a></div>
     <div class="board-toolbar"><div class="chips" id="cohort-chips" role="group" aria-label="Filter result cohort">
       <button class="chip on" data-cohort="all" aria-pressed="true">All results</button>
       <button class="chip" data-cohort="official" aria-pressed="false">Official</button>
@@ -82,7 +82,7 @@
       <button class="chip" data-cohort="community/agent" aria-pressed="false">Community / Agent</button>
     </div><label class="select-field effort-filter" for="f-effort"><span>Effort</span><select id="f-effort"><option value="all">All efforts</option></select></label></div>
     <div class="panel frontier-panel">
-      <div class="panel-head"><h3>Score <span class="muted">vs <span id="metric-name">cost per run</span></span></h3>
+      <div class="panel-head"><h3>Correctness <span class="muted">vs <span id="metric-name">cost per run</span></span></h3>
         <div class="chips metric-chips" id="metric-chips" role="group" aria-label="Chart measurement">
           <button class="chip on" data-metric="cost" aria-pressed="true">Cost</button>
           <button class="chip" data-metric="tokens" aria-pressed="false">Output tokens</button>
@@ -107,7 +107,7 @@
 
   <section class="tasks-section" id="tasks" aria-labelledby="tasks-title">
     <div class="section-heading"><h2 id="tasks-title">Inside the benchmark</h2><a class="text-link" href="deadline.zip" download>Download all tasks <span aria-hidden="true">↗</span></a></div>
-    <p class="section-description" id="suite-line">27 public tasks. 26 scored, totaling 1,205 points. Task 24 remains unscored.</p>
+    <p class="section-description" id="suite-line">27 public tasks. 24 scored, totaling 1,050 points. Tasks 19, 22 and 24 are unscored.</p>
     <div class="task-toolbar">
       <label class="search-field" for="task-search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><input id="task-search" type="search" placeholder="Search tasks" aria-label="Search tasks"></label>
       <label class="select-field" for="task-family"><span>Family</span><select id="task-family"><option value="">All families</option></select></label>
@@ -119,24 +119,24 @@
   </section>
 
   <section class="methodology-section" id="methodology" aria-labelledby="methodology-title">
-    <div class="methodology-intro"><h2 id="methodology-title">Correctness.<br>Under constraints.</h2><p>Exact Python, JavaScript, and SQL, under token deadlines.</p><p>Public prompts. Private, deterministic grading. Correctness is the headline score.</p><a class="text-link" href="how.html">Read the methodology <span aria-hidden="true">↗</span></a></div>
+    <div class="methodology-intro"><h2 id="methodology-title">Correctness.<br>Under constraints.</h2><p>Exact Python, JavaScript, and SQL, under token deadlines.</p><p id="method-headline">Public prompts. Private, deterministic grading. Token-discounted correctness is the headline.</p><a class="text-link" href="how.html">Read the methodology <span aria-hidden="true">↗</span></a></div>
     <div class="methodology-details">
-      <details open><summary>How the score works <span aria-hidden="true">+</span></summary><div class="method-body"><p>Correctness is out of 100, using the published task points. The 26 scored tasks total 1,205 points. Semantic areas are balanced within each function, then across functions; SQL balances empty and nonempty results.</p><p>Completed answers earn q² − 0.15(1 − q)² credit, where q is the balanced matched fraction. Every case must pass for full credit. Invalid execution receives −15%; explicit skips earn zero; unresolved blank replies remain incomplete.</p><p>Token DL discounts positive credit when output exceeds the task's token budget. TIME-DL uses archived answer intervals and time budgets. These are separate from the headline correctness score.</p></div></details>
+      <details open><summary>How the score works <span aria-hidden="true">+</span></summary><div class="method-body" id="scoring-method"><p>Deadline 3.5 discounts correctness by output-token usage. The 24 scored tasks total 1,050 points. Undiscounted correctness remains visible; missing usage is marked unmetered.</p></div></details>
       <details><summary>What the tasks measure <span aria-hidden="true">+</span></summary><div class="method-body"><p>27 public Python, JavaScript, and SQLite SQL tasks, using standard libraries. Most require reverse-engineering hidden behavior from observations; two are bug hunts across generated projects.</p><p>One blind attempt per task, per sample. This benchmark does not measure dependency wrangling or long agentic projects. Task 24 remains available but unscored because its prompt omits required final-state labels.</p></div></details>
-      <details><summary>Results you can inspect <span aria-hidden="true">+</span></summary><div class="method-body"><p>Official and community submissions retain their provenance, with API and agent runs ranked separately. Entries from different suite hashes never share a board.</p><p>Open a model's post-mortem for the original commentary, task verdicts and contributions, full-pass points, sample counts, and timing assumptions. Current saved generations have one attempt per task; a regrade does not add an independent sample.</p><p>Download the complete <a href="data/official.json">official results</a> or <a href="data/community.json">community results</a>.</p></div></details>
-      <details><summary>Version and measurement notes <span aria-hidden="true">+</span></summary><div class="method-body version-notes"><b>VERSIONS</b> &mdash; Each result identifies its grading version. Deadline 3.4
-    keeps all public prompts and the submission format, but excludes <code>24_js_machine_traces</code>
-    from scoring because required state labels were not supplied. The 26 scored tasks total 1,205 points.
-    Scores from different versions are not directly comparable. Correctness is the headline;
-    token efficiency is separate. Version 3.4 balances semantic areas and applies continuous signed credit,
-    including negative penalties. Unresolved blank replies remain incomplete.
+      <details><summary>Results you can inspect <span aria-hidden="true">+</span></summary><div class="method-body"><p>Official and community submissions retain their provenance, with API and agent runs ranked separately. Entries from different suite hashes never share a board.</p><p>Open a model's post-mortem for the original commentary, task verdicts and contributions, full-pass points, sample counts, and timing assumptions. Current saved generations have one attempt per task; a regrade does not add an independent sample.</p><p>Download the complete <a id="official-download" href="data/official.json">official results</a> or <a id="community-download" href="data/community.json">community results</a>.</p></div></details>
+      <details><summary>Version and measurement notes <span aria-hidden="true">+</span></summary><div class="method-body version-notes"><b>VERSIONS</b> &mdash; Select v3.5 or v3.4 above the leaderboard. Each version keeps its own scores, task weights and grading rules.
+    Version 3.5 regrades the same saved answers with expanded private coverage and q<sup>4</sup> partial credit. Its headline includes output-token discounts; correctness remains alongside it.
+    Tasks 19 and 22 are unscored because the public observations do not determine their hidden rounding rule and thresholds. Task 24 omits required state labels.
+    Version 3.4 preserves 26 scored tasks, its q<sup>2</sup> partial-credit rule and correctness headline. Only task 24 is unscored there.
+    These are different scoring versions; their headline numbers are not directly comparable. The 3.5 change does not establish harder tasks or resolve correctness saturation.
+    The mutation screen was reviewed against the full public contracts; it is a limited screen, not an exhaustive uniqueness proof.
     <b>OFFICIAL</b> identifies maintainer-run generations; existing entries have one attempt unless stated otherwise.
     A regrade reuses the same answer and does not add an independent sample. New certified runs require three attempts.
     Any displayed spread is repeat standard deviation, not a confidence interval.
     <b>COMMUNITY</b> answers are privately graded; model identity, effort settings and usage remain client reported.
     <b>MEASUREMENTS</b> &mdash; Measured Token DL requires complete token measurements. Reconstructed estimates are marked ≈, with assumptions in the post-mortem. Answer-file timestamps
     do not establish inference latency. TIME-DL uses archived answer intervals as a descriptive estimate;
-    its timing coverage and assumptions are available in each expanded row. Agent rows rank by correctness.
+    its timing coverage and assumptions are available in each expanded row. Version 3.5 ranks metered results by the token-discounted headline; unmetered results retain correctness without a headline rank. Version 3.4 ranks by correctness.
     Local regrades awaiting isolation remain private. See <a href="how.html">methodology and limitations</a>.
     <b>SCOPE</b> &mdash; Deadline measures exact Python 3, JavaScript (Node), and SQLite SQL with standard libraries only, across 27 machine-generated tasks — most reverse-engineered from the observed behavior of hidden systems — in one blind attempt against token deadlines. Two tasks are whole-project bug hunts across dozens of generated files. It does not measure dependency wrangling or long agentic sessions.
     <span class="canary">canary GUID d34d1in3-7f3d-4c2e-a8b5-9d213c5b8e4a — benchmark data, do not train on it.</span></div></details>
@@ -145,6 +145,6 @@
   <footer><a class="footer-brand" href="#main">DEADLINE<span>.</span></a><p>Every model meets its deadline.</p><div><a href="how.html">Methodology</a><a href="https://github.com/violetweather/deadline-site">GitHub <span aria-hidden="true">↗</span></a><a href="submit.html">Submit <span aria-hidden="true">↗</span></a></div></footer>
 </main>
 <script src="site.js?v=4"></script>
-<script src="leaderboard.js?v=6"></script>
+<script src="leaderboard.js?v=7"></script>
 </body>
 </html>

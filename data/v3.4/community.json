@@ -7,7 +7,7 @@
         "difficulty": "medium",
         "family": "cipher",
         "points": 10,
-        "contribution": 0.9523809523809523,
+        "contribution": 0.8298755186721992,
         "seconds": null
       },
       "02_cipher_d4": {
@@ -16,7 +16,7 @@
         "difficulty": "hard",
         "family": "cipher",
         "points": 20,
-        "contribution": 1.9047619047619047,
+        "contribution": 1.6597510373443984,
         "seconds": null
       },
       "03_cipher_d6": {
@@ -34,16 +34,16 @@
         "difficulty": "nightmare",
         "family": "cipher",
         "points": 70,
-        "contribution": 6.666666666666667,
+        "contribution": 5.809128630705394,
         "seconds": null
       },
       "05_cipher_d10": {
-        "credit": -0.064786240469,
-        "note": "877/2598 cases matched; 1/3 groups fully passed",
+        "credit": 0.03389079783,
+        "note": "854/2504 cases matched; 1/3 groups fully passed",
         "difficulty": "nightmare",
         "family": "cipher",
         "points": 120,
-        "contribution": -0.7404141767885714,
+        "contribution": 0.3375017211286307,
         "seconds": null
       },
       "06_machine_a": {
@@ -52,7 +52,7 @@
         "difficulty": "medium",
         "family": "state machine",
         "points": 15,
-        "contribution": 1.4285714285714286,
+        "contribution": 1.2448132780082988,
         "seconds": null
       },
       "07_machine_traces": {
@@ -61,7 +61,7 @@
         "difficulty": "hard",
         "family": "state machine",
         "points": 30,
-        "contribution": 2.857142857142857,
+        "contribution": 2.4896265560165975,
         "seconds": null
       },
       "08_codec_a": {
@@ -70,7 +70,7 @@
         "difficulty": "medium",
         "family": "codec",
         "points": 15,
-        "contribution": 1.4285714285714286,
+        "contribution": 1.2448132780082988,
         "seconds": null
       },
       "09_codec_traces": {
@@ -79,7 +79,7 @@
         "difficulty": "brutal",
         "family": "codec",
         "points": 40,
-        "contribution": 3.8095238095238093,
+        "contribution": 3.319502074688797,
         "seconds": null
       },
       "10_strange_calendar": {
@@ -88,7 +88,7 @@
         "difficulty": "hard",
         "family": "calendar",
         "points": 20,
-        "contribution": 1.9047619047619047,
+        "contribution": 1.6597510373443984,
         "seconds": null
       },
       "11_eval_a": {
@@ -97,16 +97,16 @@
         "difficulty": "hard",
         "family": "expression",
         "points": 20,
-        "contribution": 1.9047619047619047,
+        "contribution": 1.6597510373443984,
         "seconds": null
       },
       "12_eval_traces": {
-        "credit": -0.061206637655,
-        "note": "83/2392 cases matched; 0/3 groups fully passed",
+        "credit": 0.024277817103,
+        "note": "61/2329 cases matched; 0/3 groups fully passed",
         "difficulty": "brutal",
         "family": "expression",
         "points": 40,
-        "contribution": -0.23316814344761905,
+        "contribution": 0.08059026424232366,
         "seconds": null
       },
       "13_pairs_a": {
@@ -115,7 +115,7 @@
         "difficulty": "brutal",
         "family": "pair counting",
         "points": 25,
-        "contribution": 2.380952380952381,
+        "contribution": 2.074688796680498,
         "seconds": null
       },
       "14_pairs_traces": {
@@ -124,16 +124,16 @@
         "difficulty": "brutal",
         "family": "pair counting",
         "points": 40,
-        "contribution": 3.8095238095238093,
+        "contribution": 3.319502074688797,
         "seconds": null
       },
       "15_midnight_machine": {
-        "credit": 0.782258612403,
-        "note": "605/609 cases matched; 4/6 groups fully passed",
+        "credit": 0.893886481867,
+        "note": "600/603 cases matched; 4/6 groups fully passed",
         "difficulty": "nightmare",
         "family": "interpreter",
         "points": 100,
-        "contribution": 7.450082022885715,
+        "contribution": 7.418145077734441,
         "seconds": null
       },
       "16_calendar_traces": {
@@ -142,16 +142,16 @@
         "difficulty": "brutal",
         "family": "calendar",
         "points": 45,
-        "contribution": 4.285714285714286,
+        "contribution": 3.7344398340248963,
         "seconds": null
       },
       "17_machine_traces_xl": {
-        "credit": 0.324995496074,
-        "note": "1358/2896 cases matched; 1/3 groups fully passed",
+        "credit": 0.569639935173,
+        "note": "1340/2872 cases matched; 1/3 groups fully passed",
         "difficulty": "nightmare",
         "family": "state machine",
         "points": 70,
-        "contribution": 2.1666366404933335,
+        "contribution": 3.3091116566066394,
         "seconds": null
       },
       "18_codec_traces_xl": {
@@ -160,18 +160,17 @@
         "difficulty": "nightmare",
         "family": "codec",
         "points": 70,
-        "contribution": 6.666666666666667,
+        "contribution": 5.809128630705394,
         "seconds": null
       },
       "19_redacted_machine": {
-        "credit": 0.0,
-        "note": "The redacted division rounding rule is not inferable: the sample sessions contain only exact-half and sub-half fractions, so truncation toward zero and round-half-toward-zero both reproduce every public session while diverging on many private division cases (e.g. 5/3).",
+        "credit": -0.15,
+        "note": "candidate returned an incomplete or extra response",
         "difficulty": "nightmare",
         "family": "interpreter",
-        "points": 0,
-        "contribution": 0.0,
-        "seconds": null,
-        "scored": false
+        "points": 90,
+        "contribution": -1.120331950207469,
+        "seconds": null
       },
       "20_sql_report": {
         "credit": 1.0,
@@ -179,27 +178,26 @@
         "difficulty": "hard",
         "family": "SQL",
         "points": 20,
-        "contribution": 1.9047619047619047,
+        "contribution": 1.6597510373443984,
         "seconds": null
       },
       "21_sql_traces": {
-        "credit": 0.863714414293,
+        "credit": 0.929272992277,
         "note": "378/404 cases matched; 1/3 groups fully passed",
         "difficulty": "brutal",
         "family": "SQL",
         "points": 45,
-        "contribution": 3.701633204112857,
+        "contribution": 3.4703140790427383,
         "seconds": null
       },
       "22_sql_traces_xl": {
-        "credit": 0.0,
-        "note": "Hidden thresholds are not inferable: 384 (WHERE, HAVING) pairs (WHERE 34-45 x HAVING 20-51) reproduce all four public example databases exactly while private cases probe inside those bands. Full passes and failures hinged on strict-versus-inclusive operator style at round numbers.",
+        "credit": 1.0,
+        "note": "",
         "difficulty": "nightmare",
         "family": "SQL",
-        "points": 0,
-        "contribution": 0.0,
-        "seconds": null,
-        "scored": false
+        "points": 65,
+        "contribution": 5.394190871369295,
+        "seconds": null
       },
       "23_js_cipher_traces": {
         "credit": 0.0,
@@ -235,7 +233,7 @@
         "difficulty": "brutal",
         "family": "repository repair",
         "points": 50,
-        "contribution": 4.761904761904762,
+        "contribution": 4.149377593360996,
         "seconds": null
       },
       "27_repo_bughunt_xl": {
@@ -244,70 +242,70 @@
         "difficulty": "nightmare",
         "family": "repository repair",
         "points": 70,
-        "contribution": 6.666666666666667,
+        "contribution": 5.809128630705394,
         "seconds": null
       }
     },
-    "commentary": "Fully passed 16/24 tasks. Submitted wrong code on cipher_d10, eval_traces (negative credit under the continuous scoring rule; invalid execution receives -15%). Declared # SKIP on cipher_d6, js_cipher_traces, js_eval_traces (zero correctness credit). Partial credit on midnight_machine (78%), machine_traces_xl (32%), sql_traces (86%).",
-    "id": "community-deepseek-v4-flash-0731-default-eecf5b0a-35",
+    "commentary": "Fully passed 17/26 tasks. Submitted wrong code on redacted_machine (negative credit under the continuous scoring rule; invalid execution receives -15%). Declared # SKIP on cipher_d6, js_cipher_traces, js_eval_traces (zero correctness credit). Partial credit on cipher_d10 (3%), eval_traces (2%), midnight_machine (89%), machine_traces_xl (57%), sql_traces (93%).",
+    "id": "community-deepseek-v4-flash-0731-default-eecf5b0a",
     "model": "deepseek-v4-flash-0731",
     "effort": "default",
     "official": false,
     "verified": true,
-    "benchmark_version": "deadline-3.5",
-    "suite_hash": "3759711867a53184c1bf312db947a0c532a9a526f9df38d69007dedee76df881",
+    "benchmark_version": "deadline-3.4",
+    "suite_hash": "eecf5b0a714cbb6e5303c666fe78dd49c404fa140c643fe84cf231316a28a1f5",
     "measurement_status": "single-sample",
     "submitted_by": null,
-    "when": "20260907",
-    "score": 32.58,
+    "when": "20260904",
+    "score": 65.36,
     "score_err": null,
-    "strict_score": 53.33,
+    "strict_score": 51.87,
     "score_analysis": {
-      "score_unrounded": 65.67810288058905,
+      "score_unrounded": 65.36255076555975,
       "weighting_scores": {
-        "points": 65.67810288058905,
-        "equal_task": 74.354065186025,
-        "equal_family": 81.01386369197407
+        "points": 65.36255076555975,
+        "equal_task": 74.23449240096154,
+        "equal_family": 78.35542913432776
       },
       "leave_one_family_out": {
-        "SQL": 64.03583061959391,
-        "calendar": 63.413206116363966,
-        "cipher": 78.60453014506118,
-        "codec": 61.040008675263245,
-        "expression": 71.11834346586085,
-        "interpreter": 64.35728621114578,
-        "pair counting": 63.413206116363966,
-        "repository repair": 61.24947099421344,
-        "state machine": 66.51020272951925
+        "SQL": 61.46990251837489,
+        "calendar": 63.38760848464868,
+        "cipher": 74.70511923337651,
+        "codec": 61.35358673379583,
+        "expression": 69.69523854917045,
+        "interpreter": 70.12119098899458,
+        "pair counting": 63.38760848464868,
+        "repository repair": 61.531680804147,
+        "state machine": 64.47192121677845
       },
       "family_scores": {
-        "SQL": 90.56484406643847,
+        "SQL": 97.55175742497309,
         "calendar": 100.0,
-        "cipher": 31.801948670248276,
+        "cipher": 35.88513646193103,
         "codec": 100.0,
-        "expression": 16.715937613142856,
-        "interpreter": 78.22586124029999,
+        "expression": 19.972488270590475,
+        "interpreter": 39.94139378247368,
         "pair counting": 100.0,
         "repository repair": 100.0,
-        "state machine": 58.91276932624348
+        "state machine": 73.80416996705218
       },
       "family_point_share": {
-        "SQL": 0.06190476190476191,
-        "calendar": 0.06190476190476191,
-        "cipher": 0.2761904761904762,
-        "codec": 0.11904761904761904,
-        "expression": 0.1,
-        "interpreter": 0.09523809523809523,
-        "pair counting": 0.06190476190476191,
-        "repository repair": 0.11428571428571428,
-        "state machine": 0.10952380952380952
+        "SQL": 0.1078838174273859,
+        "calendar": 0.05394190871369295,
+        "cipher": 0.24066390041493776,
+        "codec": 0.1037344398340249,
+        "expression": 0.08713692946058091,
+        "interpreter": 0.15767634854771784,
+        "pair counting": 0.05394190871369295,
+        "repository repair": 0.0995850622406639,
+        "state machine": 0.0954356846473029
       },
       "interpretation": "Alternative weightings and family omissions describe sensitivity, not confidence intervals or new attempts."
     },
-    "dscore": 32.58,
+    "dscore": 31.31,
     "samples": 1,
-    "passed": 16,
-    "total": 24,
+    "passed": 17,
+    "total": 26,
     "tokens_in": 44868,
     "tokens_out": 1048301,
     "cost_usd": 0.70174962,
@@ -346,31 +344,31 @@
       "02_cipher_d4": 1.0,
       "03_cipher_d6": 0.0,
       "04_cipher_d8": 1.0,
-      "05_cipher_d10": -0.064786240469,
+      "05_cipher_d10": 0.03389079783,
       "06_machine_a": 1.0,
       "07_machine_traces": 1.0,
       "08_codec_a": 1.0,
       "09_codec_traces": 1.0,
       "10_strange_calendar": 1.0,
       "11_eval_a": 1.0,
-      "12_eval_traces": -0.061206637655,
+      "12_eval_traces": 0.024277817103,
       "13_pairs_a": 1.0,
       "14_pairs_traces": 1.0,
-      "15_midnight_machine": 0.782258612403,
+      "15_midnight_machine": 0.893886481867,
       "16_calendar_traces": 1.0,
-      "17_machine_traces_xl": 0.324995496074,
+      "17_machine_traces_xl": 0.569639935173,
       "18_codec_traces_xl": 1.0,
-      "19_redacted_machine": 0.0,
+      "19_redacted_machine": -0.15,
       "20_sql_report": 1.0,
-      "21_sql_traces": 0.863714414293,
-      "22_sql_traces_xl": 0.0,
+      "21_sql_traces": 0.929272992277,
+      "22_sql_traces_xl": 1.0,
       "23_js_cipher_traces": 0.0,
       "24_js_machine_traces": 0.0,
       "25_js_eval_traces": 0.0,
       "26_repo_bughunt": 1.0,
       "27_repo_bughunt_xl": 1.0
     },
-    "analysis": "Saved answers regraded in Docker under 3.5; no new model attempt. Correctness 65.68/100; headline 32.58/100 after token discounts. Tasks 19, 22 and 24 are unscored because their public observations or required labels are insufficient. One sample; repeat variation is unmeasured. Model identity, effort, tokens and timing remain client reported. Tasks 2 and 17 retain the submitted replacement answers; usage excludes their earlier blank attempts.",
+    "analysis": "Heavy token spend defines this run: over one million reported output tokens put Token DL at 31.31 against 65.36 correctness. The redacted interpreter has a syntax error and three tasks were explicitly skipped. Reported task time totals 3h 42m across all retained replies; see flags for what the reported usage excludes.",
     "submission_count": 1,
     "published_source": {
       "submission_sha256": "8f9f8885c4fd9c9ec055b3cb404e461acf61a90ccec2d3dd004557e6eb7823a5",
@@ -384,23 +382,7 @@
     },
     "source_when": "20260904",
     "timing_source": "sum of client-reported durations for all 27 retained task replies",
-    "timing_verified": false,
-    "correctness": 65.68,
-    "score_estimated": false,
-    "dscore_estimated": false,
-    "tdl_missing_tasks": [],
-    "tdl_timing_verified": false,
-    "tdl_basis": "no archived intervals",
-    "certified": false,
-    "historical": false,
-    "published_regrade": {
-      "source_version": "deadline-3.4",
-      "source_entry": "community-deepseek-v4-flash-0731-default-eecf5b0a",
-      "graded_result_sha256": "b68c035a443ab51359da45e4f644a05dbd299103fbce6061c55920cb09a45606",
-      "source_result_sha256": "488e1d02da925880bb02fb56369ea1045d1e8efd6f26787f6d806f273654bd4d",
-      "contract_review_sha256": "d3b6f1142f4c01068703e4be89a1f7e0d8217478721fc1273180a75ce9188889",
-      "new_model_calls": 0
-    }
+    "timing_verified": false
   },
   {
     "task_detail": {
@@ -410,7 +392,7 @@
         "difficulty": "medium",
         "family": "cipher",
         "points": 10,
-        "contribution": 0.9523809523809523,
+        "contribution": 0.8298755186721992,
         "seconds": 40.31
       },
       "02_cipher_d4": {
@@ -419,34 +401,34 @@
         "difficulty": "hard",
         "family": "cipher",
         "points": 20,
-        "contribution": -0.2857142857142857,
+        "contribution": -0.24896265560165975,
         "seconds": 718.84
       },
       "03_cipher_d6": {
-        "credit": -0.123256823252,
-        "note": "552/2598 cases matched; 1/3 groups fully passed",
+        "credit": -0.099567721338,
+        "note": "552/2504 cases matched; 1/3 groups fully passed",
         "difficulty": "brutal",
         "family": "cipher",
         "points": 35,
-        "contribution": -0.4108560775066667,
+        "contribution": -0.2892008503593361,
         "seconds": 473.69
       },
       "04_cipher_d8": {
-        "credit": -0.130355210956,
-        "note": "182/2598 cases matched; 0/3 groups fully passed",
+        "credit": -0.11599139339,
+        "note": "182/2504 cases matched; 0/3 groups fully passed",
         "difficulty": "nightmare",
         "family": "cipher",
         "points": 70,
-        "contribution": -0.8690347397066667,
+        "contribution": -0.6738089242572615,
         "seconds": 10.33
       },
       "05_cipher_d10": {
-        "credit": -0.130250915847,
-        "note": "162/2598 cases matched; 0/3 groups fully passed",
+        "credit": -0.115766684602,
+        "note": "162/2504 cases matched; 0/3 groups fully passed",
         "difficulty": "nightmare",
         "family": "cipher",
         "points": 120,
-        "contribution": -1.4885818953942855,
+        "contribution": -1.1528632491485478,
         "seconds": 117.61
       },
       "06_machine_a": {
@@ -455,16 +437,16 @@
         "difficulty": "medium",
         "family": "state machine",
         "points": 15,
-        "contribution": 1.4285714285714286,
+        "contribution": 1.2448132780082988,
         "seconds": 6.63
       },
       "07_machine_traces": {
-        "credit": 0.044657950404,
-        "note": "205/2446 cases matched; 0/3 groups fully passed",
+        "credit": 0.24795702447,
+        "note": "205/2424 cases matched; 0/3 groups fully passed",
         "difficulty": "hard",
         "family": "state machine",
         "points": 30,
-        "contribution": 0.12759414401142857,
+        "contribution": 0.6173203928713693,
         "seconds": 237.87
       },
       "08_codec_a": {
@@ -473,16 +455,16 @@
         "difficulty": "medium",
         "family": "codec",
         "points": 15,
-        "contribution": 1.4285714285714286,
+        "contribution": 1.2448132780082988,
         "seconds": 7.44
       },
       "09_codec_traces": {
-        "credit": 0.025,
-        "note": "833/1676 cases matched; 0/3 groups fully passed",
+        "credit": 0.2125,
+        "note": "829/1668 cases matched; 0/3 groups fully passed",
         "difficulty": "brutal",
         "family": "codec",
         "points": 40,
-        "contribution": 0.09523809523809523,
+        "contribution": 0.7053941908713693,
         "seconds": 3.93
       },
       "10_strange_calendar": {
@@ -491,7 +473,7 @@
         "difficulty": "hard",
         "family": "calendar",
         "points": 20,
-        "contribution": 1.9047619047619047,
+        "contribution": 1.6597510373443984,
         "seconds": 6.83
       },
       "11_eval_a": {
@@ -500,16 +482,16 @@
         "difficulty": "hard",
         "family": "expression",
         "points": 20,
-        "contribution": 1.9047619047619047,
+        "contribution": 1.6597510373443984,
         "seconds": 12.14
       },
       "12_eval_traces": {
-        "credit": 0.981241141787,
-        "note": "2359/2392 cases matched; 1/3 groups fully passed",
+        "credit": 0.989231106072,
+        "note": "2296/2329 cases matched; 1/3 groups fully passed",
         "difficulty": "brutal",
         "family": "expression",
         "points": 40,
-        "contribution": 3.7380614925219047,
+        "contribution": 3.283754708952697,
         "seconds": 467.49
       },
       "13_pairs_a": {
@@ -518,25 +500,25 @@
         "difficulty": "brutal",
         "family": "pair counting",
         "points": 25,
-        "contribution": 2.380952380952381,
+        "contribution": 2.074688796680498,
         "seconds": 3.83
       },
       "14_pairs_traces": {
-        "credit": 0.068043831153,
-        "note": "341/1105 cases matched; 0/3 groups fully passed",
+        "credit": 0.282663841233,
+        "note": "335/1099 cases matched; 0/3 groups fully passed",
         "difficulty": "brutal",
         "family": "pair counting",
         "points": 40,
-        "contribution": 0.2592145948685714,
+        "contribution": 0.938303207412448,
         "seconds": 5.32
       },
       "15_midnight_machine": {
-        "credit": -0.125001174143,
-        "note": "60/609 cases matched; 0/6 groups fully passed",
+        "credit": -0.112538758328,
+        "note": "60/603 cases matched; 0/6 groups fully passed",
         "difficulty": "nightmare",
         "family": "interpreter",
         "points": 100,
-        "contribution": -1.1904873727904761,
+        "contribution": -0.9339316043817427,
         "seconds": 79.99
       },
       "16_calendar_traces": {
@@ -549,12 +531,12 @@
         "seconds": 1.49
       },
       "17_machine_traces_xl": {
-        "credit": 0.026570328758,
-        "note": "135/2896 cases matched; 0/3 groups fully passed",
+        "credit": 0.215351742476,
+        "note": "135/2872 cases matched; 0/3 groups fully passed",
         "difficulty": "nightmare",
         "family": "state machine",
         "points": 70,
-        "contribution": 0.17713552505333333,
+        "contribution": 1.2510059728896266,
         "seconds": 13.65
       },
       "18_codec_traces_xl": {
@@ -563,18 +545,17 @@
         "difficulty": "nightmare",
         "family": "codec",
         "points": 70,
-        "contribution": 6.666666666666667,
+        "contribution": 5.809128630705394,
         "seconds": 40.95
       },
       "19_redacted_machine": {
-        "credit": 0.0,
-        "note": "The redacted division rounding rule is not inferable: the sample sessions contain only exact-half and sub-half fractions, so truncation toward zero and round-half-toward-zero both reproduce every public session while diverging on many private division cases (e.g. 5/3).",
+        "credit": 0.269855056697,
+        "note": "311/599 cases matched; 3/6 groups fully passed",
         "difficulty": "nightmare",
         "family": "interpreter",
-        "points": 0,
-        "contribution": 0.0,
-        "seconds": 56.1,
-        "scored": false
+        "points": 90,
+        "contribution": 2.015514946284647,
+        "seconds": 56.1
       },
       "20_sql_report": {
         "credit": 1.0,
@@ -582,27 +563,26 @@
         "difficulty": "hard",
         "family": "SQL",
         "points": 20,
-        "contribution": 1.9047619047619047,
+        "contribution": 1.6597510373443984,
         "seconds": 2.16
       },
       "21_sql_traces": {
-        "credit": 0.863714414293,
+        "credit": 0.929272992277,
         "note": "378/404 cases matched; 1/3 groups fully passed",
         "difficulty": "brutal",
         "family": "SQL",
         "points": 45,
-        "contribution": 3.701633204112857,
+        "contribution": 3.4703140790427383,
         "seconds": 261.02
       },
       "22_sql_traces_xl": {
-        "credit": 0.0,
-        "note": "Hidden thresholds are not inferable: 384 (WHERE, HAVING) pairs (WHERE 34-45 x HAVING 20-51) reproduce all four public example databases exactly while private cases probe inside those bands. Full passes and failures hinged on strict-versus-inclusive operator style at round numbers.",
+        "credit": 0.002670132325,
+        "note": "20/404 cases matched; 0/3 groups fully passed",
         "difficulty": "nightmare",
         "family": "SQL",
-        "points": 0,
-        "contribution": 0.0,
-        "seconds": 3.77,
-        "scored": false
+        "points": 65,
+        "contribution": 0.01440320341286307,
+        "seconds": 3.77
       },
       "23_js_cipher_traces": {
         "credit": -0.15,
@@ -610,7 +590,7 @@
         "difficulty": "hard",
         "family": "cipher",
         "points": 35,
-        "contribution": -0.5,
+        "contribution": -0.43568464730290457,
         "seconds": 1266.88
       },
       "24_js_machine_traces": {
@@ -629,7 +609,7 @@
         "difficulty": "brutal",
         "family": "expression",
         "points": 45,
-        "contribution": 4.285714285714286,
+        "contribution": 3.7344398340248963,
         "seconds": 1423.06
       },
       "26_repo_bughunt": {
@@ -638,7 +618,7 @@
         "difficulty": "brutal",
         "family": "repository repair",
         "points": 50,
-        "contribution": 4.761904761904762,
+        "contribution": 4.149377593360996,
         "seconds": 2.56
       },
       "27_repo_bughunt_xl": {
@@ -647,76 +627,76 @@
         "difficulty": "nightmare",
         "family": "repository repair",
         "points": 70,
-        "contribution": 6.666666666666667,
+        "contribution": 5.809128630705394,
         "seconds": 2.84
       }
     },
-    "commentary": "Fully passed 11/24 tasks. Submitted wrong code on cipher_d4, cipher_d6, cipher_d8, cipher_d10, midnight_machine, js_cipher_traces (negative credit under the continuous scoring rule; invalid execution receives -15%). Declared # SKIP on calendar_traces (zero correctness credit). Partial credit on machine_traces (4%), codec_traces (2%), eval_traces (98%), pairs_traces (7%), machine_traces_xl (3%), sql_traces (86%).",
-    "id": "community-minimax-m3-free-default-eecf5b0a-35",
+    "commentary": "Fully passed 11/26 tasks. Submitted wrong code on cipher_d4, cipher_d6, cipher_d8, cipher_d10, midnight_machine, js_cipher_traces (negative credit under the continuous scoring rule; invalid execution receives -15%). Declared # SKIP on calendar_traces (zero correctness credit). Partial credit on machine_traces (25%), codec_traces (21%), eval_traces (99%), pairs_traces (28%), machine_traces_xl (22%), redacted_machine (27%), sql_traces (93%), sql_traces_xl (0%).",
+    "id": "community-minimax-m3-free-default-eecf5b0a",
     "model": "minimax-m3",
     "effort": "default",
     "official": false,
     "verified": true,
-    "benchmark_version": "deadline-3.5",
-    "suite_hash": "3759711867a53184c1bf312db947a0c532a9a526f9df38d69007dedee76df881",
+    "benchmark_version": "deadline-3.4",
+    "suite_hash": "eecf5b0a714cbb6e5303c666fe78dd49c404fa140c643fe84cf231316a28a1f5",
     "measurement_status": "single-sample",
     "submitted_by": null,
-    "when": "20260907",
-    "score": 27.15,
+    "when": "20260906",
+    "score": 38.44,
     "score_err": null,
-    "strict_score": 34.29,
+    "strict_score": 29.88,
     "score_analysis": {
-      "score_unrounded": 37.639916970408095,
+      "score_unrounded": 38.437077442885474,
       "weighting_scores": {
-        "points": 37.639916970408095,
-        "equal_task": 50.8348480924875,
-        "equal_family": 54.65989552467222
+        "points": 38.437077442885474,
+        "equal_task": 51.560143607276935,
+        "equal_family": 57.18996410132592
       },
       "leave_one_family_out": {
-        "SQL": 34.14740909097462,
-        "calendar": 38.093312506526395,
-        "cipher": 55.59711732521908,
-        "codec": 33.42909493938217,
-        "expression": 30.790421430455556,
-        "interpreter": 42.91781532669315,
-        "pair counting": 37.30937816681878,
-        "repository repair": 29.593454644009142,
-        "state machine": 40.32293761113422
+        "SQL": 37.318692086807445,
+        "calendar": 38.87427922690965,
+        "cipher": 53.21454132493333,
+        "codec": 34.22840585062685,
+        "expression": 32.59977626762636,
+        "interpreter": 44.3481481691468,
+        "pair counting": 37.44387978398684,
+        "repository repair": 31.628274948089402,
+        "state machine": 39.050775273334864
       },
       "family_scores": {
-        "SQL": 90.56484406643847,
+        "SQL": 47.68526404122308,
         "calendar": 30.76923076923077,
         "cipher": 0,
-        "codec": 68.80000000000001,
-        "expression": 99.28537682998095,
-        "interpreter": 0,
-        "pair counting": 42.648851147876925,
+        "codec": 74.8,
+        "expression": 99.58975642179047,
+        "interpreter": 6.859515405226316,
+        "pair counting": 55.85623638356923,
         "repository repair": 100.0,
-        "state machine": 15.825792630591303
+        "state machine": 32.6202893108
       },
       "family_point_share": {
-        "SQL": 0.06190476190476191,
-        "calendar": 0.06190476190476191,
-        "cipher": 0.2761904761904762,
-        "codec": 0.11904761904761904,
-        "expression": 0.1,
-        "interpreter": 0.09523809523809523,
-        "pair counting": 0.06190476190476191,
-        "repository repair": 0.11428571428571428,
-        "state machine": 0.10952380952380952
+        "SQL": 0.1078838174273859,
+        "calendar": 0.05394190871369295,
+        "cipher": 0.24066390041493776,
+        "codec": 0.1037344398340249,
+        "expression": 0.08713692946058091,
+        "interpreter": 0.15767634854771784,
+        "pair counting": 0.05394190871369295,
+        "repository repair": 0.0995850622406639,
+        "state machine": 0.0954356846473029
       },
       "interpretation": "Alternative weightings and family omissions describe sensitivity, not confidence intervals or new attempts."
     },
-    "dscore": 27.15,
+    "dscore": 28.64,
     "samples": 1,
     "passed": 11,
-    "total": 24,
+    "total": 26,
     "tokens_in": 46181,
     "tokens_out": 486006,
     "cost_usd": 0.5970615,
     "seconds": 5274.0,
     "mode": "api",
-    "tdl_score": 31.9,
+    "tdl_score": null,
     "metering_source": "unverified client reports",
     "settings_verified": false,
     "flags": [
@@ -726,33 +706,33 @@
     "tasks": {
       "01_cipher_d2": 1.0,
       "02_cipher_d4": -0.15,
-      "03_cipher_d6": -0.123256823252,
-      "04_cipher_d8": -0.130355210956,
-      "05_cipher_d10": -0.130250915847,
+      "03_cipher_d6": -0.099567721338,
+      "04_cipher_d8": -0.11599139339,
+      "05_cipher_d10": -0.115766684602,
       "06_machine_a": 1.0,
-      "07_machine_traces": 0.044657950404,
+      "07_machine_traces": 0.24795702447,
       "08_codec_a": 1.0,
-      "09_codec_traces": 0.025,
+      "09_codec_traces": 0.2125,
       "10_strange_calendar": 1.0,
       "11_eval_a": 1.0,
-      "12_eval_traces": 0.981241141787,
+      "12_eval_traces": 0.989231106072,
       "13_pairs_a": 1.0,
-      "14_pairs_traces": 0.068043831153,
-      "15_midnight_machine": -0.125001174143,
+      "14_pairs_traces": 0.282663841233,
+      "15_midnight_machine": -0.112538758328,
       "16_calendar_traces": 0.0,
-      "17_machine_traces_xl": 0.026570328758,
+      "17_machine_traces_xl": 0.215351742476,
       "18_codec_traces_xl": 1.0,
-      "19_redacted_machine": 0.0,
+      "19_redacted_machine": 0.269855056697,
       "20_sql_report": 1.0,
-      "21_sql_traces": 0.863714414293,
-      "22_sql_traces_xl": 0.0,
+      "21_sql_traces": 0.929272992277,
+      "22_sql_traces_xl": 0.002670132325,
       "23_js_cipher_traces": -0.15,
       "24_js_machine_traces": 0.0,
       "25_js_eval_traces": 1.0,
       "26_repo_bughunt": 1.0,
       "27_repo_bughunt_xl": 1.0
     },
-    "analysis": "Saved answers regraded in Docker under 3.5; no new model attempt. Correctness 37.64/100; headline 27.15/100 after token discounts. Tasks 19, 22 and 24 are unscored because their public observations or required labels are insufficient. One sample; repeat variation is unmeasured. Model identity, effort, tokens and timing remain client reported. The published correction to final code-block extraction is retained.",
+    "analysis": "Saved answers regraded after correcting code-block extraction; no new model attempt. Selecting the final Python blocks raises task 12 to 98.92% credit and task 21 to 92.93%, with smaller gains on tasks 3 and 7. Task 2 ends mid-reasoning without final code; task 23 hits its 131,072-token output limit before finishing. Both repository bug hunts pass. The reported 486,006 output tokens reduce Token DL to 28.64.",
     "submission_count": 1,
     "source_when": "20260906",
     "timing_source": "client-reported total run duration; per-task intervals retained in task details",
@@ -804,29 +784,6 @@
         "existing_published_entries_changed": 0,
         "new_model_calls": 0
       }
-    },
-    "correctness": 37.64,
-    "score_estimated": false,
-    "dscore_estimated": false,
-    "tdl_score_unrounded": 31.896656422487673,
-    "tdl_missing_tasks": [],
-    "tdl_timing_verified": false,
-    "tdl_basis": "archived answer-file intervals, current correctness credit; missing/zero intervals receive no time discount",
-    "tdl_time_budgets": {
-      "medium": 60,
-      "hard": 120,
-      "brutal": 240,
-      "nightmare": 450
-    },
-    "certified": false,
-    "historical": false,
-    "published_regrade": {
-      "source_version": "deadline-3.4",
-      "source_entry": "community-minimax-m3-free-default-eecf5b0a",
-      "graded_result_sha256": "a79e96beacc17bed0c53d667b8513191b966bd2590ebf7a6c5b8ba501311e3ae",
-      "source_result_sha256": "db311fa5187915d191e9349d67dfb39834bf83b4210bb22f37f750af079edc2f",
-      "contract_review_sha256": "d3b6f1142f4c01068703e4be89a1f7e0d8217478721fc1273180a75ce9188889",
-      "new_model_calls": 0
     }
   }
 ]

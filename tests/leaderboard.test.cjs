@@ -15,6 +15,7 @@ class Element {
   }
   get innerHTML() { return this.html || ''; }
   addEventListener(event, callback) { this.listeners[event] = callback; }
+  setAttribute(name, value) { (this.attributes ||= {})[name] = value; }
   appendChild() {}
   querySelectorAll() { return []; }
 }
@@ -33,8 +34,32 @@ class Element {
   vm.runInContext(script, context);
   await vm.runInContext("ready", context);
   const evaluate = code => vm.runInContext(code, context);
-  const sourceResults = ['official', 'community'].flatMap(name =>
+  const currentResults = ['official', 'community'].flatMap(name =>
     JSON.parse(fs.readFileSync(path.join(root, `data/${name}.json`), 'utf8')));
+  assert.equal(evaluate('selectedVersion'), '3.5', 'new version is the default');
+  assert.equal(evaluate('JSON.stringify(results)'), JSON.stringify(currentResults));
+  assert.equal(evaluate('displayed().length'), 11);
+  assert.equal(evaluate('manifest.tasks.filter(t => t.scored !== false).length'), 24);
+  assert.equal(evaluate('manifest.tasks.reduce((sum, t) => sum + t.points, 0)'), 1050);
+  assert.equal(evaluate('grouped(displayed()).find(([key]) => key === "official/agent")[1][0].model'), 'gpt-6-astra');
+  assert.ok(elements.get('leaderboard').innerHTML.includes('≈56.68'));
+  assert.ok(elements.get('leaderboard').innerHTML.includes('87.21'));
+  assert.ok(elements.get('leaderboard').innerHTML.includes('unmetered'));
+  assert.ok(elements.get('leaderboard').innerHTML.includes('99.63'));
+  assert.equal((elements.get('leaderboard').innerHTML.match(/class="score-track"/g) || []).length, 11, 'unmetered results keep a correctness bar');
+  for (const task of ['19_redacted_machine', '22_sql_traces_xl', '24_js_machine_traces']) {
+    assert.ok(!elements.get('hardest').innerHTML.includes(task));
+  }
+  evaluate('metric="seconds"; renderFrontier()');
+  assert.equal((elements.get('c-frontier').innerHTML.match(/class="pt"/g) || []).length, 11, 'correctness chart retains unmetered results');
+  assert.ok(elements.get('scoring-method').innerHTML.includes('q⁴'));
+  assert.ok(elements.get('benchmark-version').innerHTML.includes('v3.4'));
+  evaluate('selectVersion("3.4")');
+  const sourceResults = ['official', 'community'].flatMap(name =>
+    JSON.parse(fs.readFileSync(path.join(root, `data/v3.4/${name}.json`), 'utf8')));
+  assert.equal(evaluate('selectedVersion'), '3.4');
+  assert.ok(elements.get('scoring-method').innerHTML.includes('q²'));
+  assert.equal(elements.get('official-download').attributes.href, 'data/v3.4/official.json');
   assert.equal(evaluate('JSON.stringify(results)'), JSON.stringify(sourceResults), 'load saved results without rewriting or regrading');
   assert.equal(evaluate('displayed().length'), 11, 'include the nine maintainer results and both community results');
   assert.equal(evaluate('manifest.tasks.length'), 27);
@@ -200,9 +225,12 @@ class Element {
   assert.equal(fable.task_detail['23_js_cipher_traces'].credit, 1);
   assert.equal(fable.passed, 24);
   assert.equal(fable.total, 26);
-  assert.equal(evaluate('SORTS.dscore.get(results.find(r => r.model === "claude-fable-5"))'), 54.77, 'estimated token scores remain numerically sortable');
+  assert.ok(evaluate('SORTS.correctness.get(results.find(r => r.model === "claude-fable-5"))') > 97, 'pre-3.5 rows expose their published score as correctness');
+  assert.equal(evaluate('headlineOf(results.find(r => r.model === "claude-fable-5"))'), evaluate('preciseScore(results.find(r => r.model === "claude-fable-5"))'), 'pre-3.5 headline stays the published correctness');
+  assert.equal(evaluate('headlineOf({benchmark_version:"deadline-3.5", score: null, correctness: 80})'), null, '3.5 headline absent without token measurements');
+  assert.ok(evaluate('scoreCellHTML({benchmark_version:"deadline-3.5", score: null, correctness: 80})').includes('unmetered'));
+  assert.equal(evaluate('correctnessOf({benchmark_version:"deadline-3.5", score: 61.2, correctness: 88.4})'), 88.4);
   assert.ok(evaluate('tokenScoreCellHTML(results.find(r => r.model === "claude-fable-5"))').includes('≈54.77'));
-  assert.ok(!evaluate('tokenScoreCellHTML(results.find(r => r.model === "gpt-6-astra"))').includes('≈'));
   assert.ok(!evaluate('tokenScoreCellHTML({dscore:null,dscore_estimated:true})').includes('≈'));
   assert.ok(elements.get('leaderboard').innerHTML.includes('≈443,229'));
   assert.ok(elements.get('leaderboard').innerHTML.includes('≥$41.6780'));
@@ -233,5 +261,13 @@ class Element {
   assert.equal(evaluate('fmtScore(86.2)'), '86.20');
   context.escapeProbe = '<script>"&';
   assert.equal(evaluate('esc(escapeProbe)'), '&lt;script&gt;&quot;&amp;');
+  evaluate('selectVersion("3.5")');
+  assert.equal(evaluate('JSON.stringify(results)'), JSON.stringify(currentResults), 'switching versions never mutates either dataset');
+  assert.equal(evaluate('displayed().length'), 11);
+  assert.equal(elements.get('official-download').attributes.href, 'data/official.json');
+  assert.equal(evaluate('headlineOf(results.find(r => r.model === "claude-opus-5"))'), null);
+  assert.equal(evaluate('correctnessOf(results.find(r => r.model === "claude-fable-5"))'), evaluate('results.find(r => r.model === "claude-fable-5").score_analysis.score_unrounded'));
+  evaluate('selectVersion("unknown")');
+  assert.equal(evaluate('selectedVersion'), '3.5');
   console.log('Leaderboard rendering, precision, cohort isolation, effort filters, score bars and escaping: PASS');
 })().catch(error => { console.error(error); process.exitCode = 1; });
