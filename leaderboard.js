@@ -57,7 +57,7 @@ const preciseScore = r => r.score_analysis?.score_unrounded ?? r.score;
    token-discounted headline (absent without complete token measurements) and
    `correctness` is the undiscounted score. Earlier versions used correctness
    as the headline. */
-const isV35 = r => r.benchmark_version === "deadline-3.5";
+const isV35 = r => ["deadline-3.5", "deadline-3.6"].includes(r.benchmark_version);
 const isV4 = r => r?.benchmark_version === "deadline-4.0";
 const tokenScored = r => isV35(r) || isV4(r);
 const headlineOf = r => isV4(r) ? (r.score_unrounded ?? r.score) : isV35(r) ? (Number.isFinite(r.score) ? r.score : null) : preciseScore(r);
@@ -65,12 +65,48 @@ const correctnessOf = r => isV4(r) ? (r.correctness_unrounded ?? r.correctness) 
 const rankKey = r => headlineOf(r);
 const fmtCount = n => new Intl.NumberFormat("en", {notation:"compact", maximumFractionDigits:1}).format(n);
 function modeOf(r) { return r.mode || (r.tokens_out || r.cost_usd != null ? "api" : "sub"); }
+/* Four rates per model; absent cache rates fall back to in x 0.1 / in x 1.25. */
+function priceOf(model) {
+  const p = PRICES[model];
+  if (!p || !Number.isFinite(p.in) || !Number.isFinite(p.out)) return null;
+  return {in: p.in, out: p.out,
+    cached_in: Number.isFinite(p.cached_in) ? p.cached_in : p.in * 0.1,
+    cache_write: Number.isFinite(p.cache_write) ? p.cache_write : p.in * 1.25};
+}
+/* Provider receipt first, then the harness/stamped figure, then list pricing. */
 function runCost(r) {
+  if (r.cost_basis === "billed" && Number.isFinite(r.billed_cost_usd)) return r.billed_cost_usd;
   if (Number.isFinite(r.cost_usd)) return r.cost_usd;
-  const p = PRICES[r.model];
+  if (Number.isFinite(r.cost_lower_bound_usd)) return r.cost_lower_bound_usd;
+  const p = r.pricing_snapshot?.prices?.[r.model] || r.pricing_snapshot?.rates || priceOf(r.model);
   if (!p || (!r.tokens_in && !r.tokens_out)) return null;
-  const cost = (r.tokens_in || 0) / 1e6 * p.in + (r.tokens_out || 0) / 1e6 * p.out;
+  const u = r.usage || {};
+  const cached = Number(u.cached_input_tokens ?? u.cached_in ?? 0) || 0;
+  const written = Number(u.cache_write_input_tokens ?? u.cache_write_in ?? 0) || 0;
+  const fresh = Math.max(0, (r.tokens_in || 0) - cached - written);
+  const cost = (fresh * p.in + cached * (p.cached_in ?? p.in) + written * (p.cache_write ?? p.in) +
+                (r.tokens_out || 0) * p.out) / 1e6;
   return Number.isFinite(cost) ? cost : null;
+}
+/* ---- cost provenance ladder, worst to best ---- */
+const COST_BASES = {
+  "lower-bound": {label: "≥ LOWER BOUND", tip: "Token classes are missing, so the amount is a floor, not the cost."},
+  estimated: {label: "ESTIMATED", tip: "Estimated API cost; source and assumptions are in the post-mortem."},
+  computed: {label: "COMPUTED", tip: "Harness-recorded tokens priced with the run's stamped price table."},
+  billed: {label: "BILLED", tip: "Provider receipt: the amount actually billed for the run."},
+};
+function costBasisOf(r) {
+  const declared = String(r.cost_basis || "").toLowerCase();
+  if (COST_BASES[declared]) return declared;
+  if (r.cost_is_lower_bound) return "lower-bound";
+  if (Number.isFinite(r.cost_lower_bound_usd) && !Number.isFinite(r.cost_usd)) return "lower-bound";
+  if (runCost(r) == null) return null;
+  return "estimated";
+}
+function costChipHTML(r) {
+  const key = costBasisOf(r);
+  if (!key) return "";
+  return `<span class="mchip costchip cb-${key}" title="${COST_BASES[key].tip}">${COST_BASES[key].label}</span>`;
 }
 /* ---- sortable score columns ---- */
 const SORTS = {
@@ -90,12 +126,25 @@ const METRICS = {
             fmt: v => Math.round(v) + "s", invert: true},
   eff: {label: "output tokens per correctness point", get: r => r.tokens_out && correctnessOf(r) > 0 ? r.tokens_out / correctnessOf(r) : null,
         fmt: v => v >= 1000 ? (v / 1000).toFixed(1) + "k" : v.toFixed(0), invert: true},
+  ppp: {label: "dollars per correctness point", get: r => {
+          const cost = runCost(r), score = correctnessOf(r);
+          return cost != null && Number.isFinite(score) && score > 0 ? cost / score : null;
+        },
+        fmt: v => "$" + v.toFixed(v < 0.1 ? 3 : 2) + "/pt", invert: true},
   tdl: {label: "TIME-DL", get: r => Number.isFinite(r.tdl_score) ? r.tdl_score : null,
         fmt: v => v.toFixed(0), invert: false},
 };
 
 let manifest = null, results = [], PRICES = {}, cohort = "all", metric = "cost", sortKey = "score", sortAsc = false;
-let versions = {}, datasets = {}, selectedVersion = "3.5";
+/* Chart Y-axis measure. Score (discounted headline) is primary; Correctness
+   stays selectable — on saturated cohorts correctness is flat at 100 while
+   the score still separates entries. */
+const MEASURES = {
+  score: {label: "Score", get: headlineOf},
+  correctness: {label: "Correctness", get: correctnessOf},
+};
+let chartMeasure = "score";
+let versions = {}, datasets = {}, selectedVersion = "4.0";
 
 /* suite guard: entries graded against a different version or suite hash never mix in */
 function displayed() {
@@ -150,10 +199,13 @@ function tokenScoreCellHTML(r) {
 }
 
 function measurementDetailsHTML(r) {
+  const measured = r.measurement || {}, spread = measured.correctness, calibration = measured.calibration;
+  const evidence = (spread?.samples > 1 ? `<p class="td-meta">Observed correctness range: ${fmtScore(spread.minimum)}–${fmtScore(spread.maximum)} across ${spread.samples} independent samples. This is sample spread, not a confidence interval.</p>` : "") +
+    (calibration ? `<p class="td-meta">${calibration.skips} declared skips; ${calibration.incorrect_submissions} incorrect submissions (partial answers included), across ${calibration.resolved} resolved task attempts. These are observed choices, not confidence estimates.</p>` : "");
   return `<p class="td-meta">Full-pass points: ${fmtScore(r.strict_score)}/100. Grader: ${esc(r.benchmark_version || "legacy")} / ${esc((r.suite_hash || "unrecorded").slice(0,12))}.
     ${(r.samples || 1) === 1 ? "Single sample; repeat spread unmeasured." : `${r.samples} attempts per task; spread is repeat standard deviation.`}
     ${r.settings_verified ? (r.settings_verification_basis ? `Generation settings checked: ${esc(r.settings_verification_basis)}.` : "Generation settings verified.") : "Generation settings not independently verified."}</p>` +
-    (r.tdl_score != null ? `<p class="td-meta">TIME-DL is a descriptive estimate from saved answer timestamps, not measured latency.${(r.tdl_missing_tasks || []).length ? ` ${(r.tdl_missing_tasks || []).length} task(s) have no usable interval and get no time discount, which can overstate it.` : ""}</p>` : "");
+    evidence + (r.tdl_score != null ? `<p class="td-meta">${r.timing_source === "harness_wall_clock" && r.timing_verified ? "TIME-DL uses harness-measured task wall time, including the agent's tool calls." : "TIME-DL is a descriptive estimate from saved answer timestamps, not measured latency."}${(r.tdl_missing_tasks || []).length ? ` ${(r.tdl_missing_tasks || []).length} task(s) have no usable interval and get no time discount, which can overstate it.` : ""}</p>` : "");
 }
 
 function detailHTML(r, cols) {
@@ -188,13 +240,15 @@ function renderLeaderboard() {
   const host = document.getElementById("leaderboard");
   const rows = displayed();
   if (!rows.length) { host.innerHTML = EMPTY_BOARD; return; }
-  const COLS = 10;
+  const calibrationColumn = manifest.benchmark_version === 'deadline-3.6';
+  const COLS = calibrationColumn ? 11 : 10;
   const arrow = k => sortKey === k ? (sortAsc ? " ▴" : " ▾") : "";
   const th = (k, tip) => `<th scope="col" class="num sortable${sortKey === k ? " on" : ""}" data-sort="${k}" aria-sort="${sortKey === k ? (sortAsc ? "ascending" : "descending") : "none"}"><button type="button" class="sort-button" title="${tip} — click to sort">${SORTS[k].label}${arrow(k)}</button></th>`;
   const head = `<thead><tr><th></th><th>Model</th>
     ${th("score", "Headline: token-discounted correctness from 3.5; earlier versions list correctness here")}
     ${tokenScored(manifest) ? th("correctness", "Undiscounted correctness using published task points") : th("dscore", "Correctness discounted by output-token usage")}
     <th class="num">Tasks</th>
+    ${calibrationColumn ? '<th class="num" title="Declared skips / incorrect submissions, including partial answers. Counts cover all samples.">Skip / wrong</th>' : ''}
     ${th("tdl", "Descriptive time-discounted estimate; timing assumptions in each post-mortem")}<th class="num">Out tok</th><th class="num">Cost</th><th class="num">Time</th><th>Date</th></tr></thead>`;
   let body = "";
   for (const [key, members] of grouped(rows)) {
@@ -206,9 +260,10 @@ function renderLeaderboard() {
         <td class="num">${scoreCellHTML(r)}</td>
         <td class="num">${tokenScored(r) ? (headlineOf(r) == null ? scoreCellHTML({model:r.model,score:r.correctness}) : '<span class="score-v alt">' + fmtScore(r.correctness) + '</span>') : tokenScoreCellHTML(r)}</td>
         <td class="num">${Number(r.passed)}/${Number(r.total)}</td>
+        ${calibrationColumn ? `<td class="num">${r.measurement?.calibration ? r.measurement.calibration.skips + ' / ' + r.measurement.calibration.incorrect_submissions : '—'}</td>` : ''}
         <td class="num"><span class="score-v alt">${fmtScore(r.tdl_score)}</span></td>
         <td class="num">${METRICS.tokens.get(r) != null ? (r.tokens_out_estimated ? '<span title="Estimated output tokens; assumptions in the post-mortem">≈' + r.tokens_out.toLocaleString("en-US") + '</span>' : r.tokens_out.toLocaleString("en-US")) : "—"}</td>
-        <td class="num">${runCost(r) != null ? (r.cost_is_lower_bound ? "≥" : "") + "$" + runCost(r).toFixed(4) : "—"}</td>
+        <td class="num">${runCost(r) != null ? (costBasisOf(r) === "lower-bound" ? "≥" : "") + "$" + runCost(r).toFixed(4) : "—"}${costChipHTML(r)}</td>
         <td class="num">${Number.isFinite(r.seconds) ? Math.round(r.seconds) + "s" : "—"}</td>
         <td class="date">${esc((r.when || "").replace(/^(\d{4})(\d{2})(\d{2}).*/, "$1-$2-$3"))}</td></tr>` + detailHTML(r, COLS);
     });
@@ -304,8 +359,11 @@ function arrangeFrontierLabels(host, bounds) {
 function renderFrontier() {
   const host = document.getElementById("c-frontier");
   const M = METRICS[metric];
+  const Y = MEASURES[chartMeasure];
   document.getElementById("metric-name").textContent = M.label;
-  const rows = displayed().filter(r => Number.isFinite(correctnessOf(r)) && M.get(r) != null);
+  const measureName = document.getElementById("measure-name");
+  if (measureName) measureName.textContent = Y.label;
+  const rows = displayed().filter(r => Number.isFinite(Y.get(r)) && M.get(r) != null);
   if (!rows.length) {
     host.innerHTML = displayed().length
       ? `<div class="empty">No ${M.label} measurements for the displayed entries.</div>`
@@ -316,7 +374,7 @@ function renderFrontier() {
   const maxV = Math.max(...rows.map(M.get)) * 1.12 || 1;
   const x = v => L + (W - L - R) * (M.invert ? 1 - v / maxV : v / maxV);
   const y = s => T + (H - T - B) * (1 - Math.max(0, Math.min(100, s)) / 100);
-  let svg = `<svg class="chart" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Correctness versus ${M.label}">`;
+  let svg = `<svg class="chart" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${Y.label} versus ${M.label}">`;
   for (let s = 0; s <= 100; s += 20) {
     svg += `<line x1="${L}" y1="${y(s)}" x2="${W - R}" y2="${y(s)}" stroke="var(--axis)" stroke-width="1" stroke-dasharray="1 6"/>`;
     svg += `<text class="axis-doto" x="${L - 9}" y="${y(s) + 5}" text-anchor="end" fill="var(--muted)">${s}</text>`;
@@ -329,13 +387,14 @@ function renderFrontier() {
   svg += `<text class="tag" x="${(L + W - R) / 2}" y="${H - 5}" text-anchor="middle" fill="var(--muted)">${M.label.toUpperCase()}${M.invert ? " — RIGHT = LESS" : " — RIGHT = MORE"}</text>`;
   svg += `<line x1="${L}" y1="${y(0)}" x2="${W - R}" y2="${y(0)}" stroke="var(--red)" stroke-width="2"/>`;
   rows.forEach(r => {
-    const p = providerOf(r.model), v = M.get(r), sc = correctnessOf(r);
+    const p = providerOf(r.model), v = M.get(r), sc = Y.get(r);
     const px = x(v), py = y(sc);
     const tip = `${esc(r.model)}${r.effort ? " [" + esc(r.effort) + "]" : ""} — ${COHORT_LABEL[cohortOf(r)]}
-Correctness ${fmtScore(sc)} · ${M.label} ${metric === "cost" && r.cost_is_lower_bound ? "≥" : ["tokens", "eff"].includes(metric) && r.tokens_out_estimated ? "≈" : ""}${M.fmt(v)}`;
+${Y.label} ${fmtScore(sc)} · ${M.label} ${["cost", "ppp"].includes(metric) && costBasisOf(r) === "lower-bound" ? "≥" : ["tokens", "eff"].includes(metric) && r.tokens_out_estimated ? "≈" : ""}${M.fmt(v)}`;
     svg += `<g class="pt" data-x="${px}" data-y="${py}"><title>${tip}</title><path class="label-leader" fill="none" stroke="${p.color}" stroke-width="1" opacity=".45" pointer-events="none"/>`;
-    if ((r.samples || 0) >= 3 && Number.isFinite(r.score_err) && r.score_err > 0) {
-      const yTop = y(sc + r.score_err), yBot = y(sc - r.score_err);
+    const correctSpread = isV35(r) ? r.correctness_err : r.score_err;
+    if ((r.samples || 0) >= 3 && Number.isFinite(correctSpread) && correctSpread > 0) {
+      const yTop = y(sc + correctSpread), yBot = y(sc - correctSpread);
       svg += `<g class="whisker" stroke="${p.color}" stroke-width="1.5" opacity="0.7">
         <line x1="${px}" y1="${yTop}" x2="${px}" y2="${yBot}"/>
         <line x1="${px - 4}" y1="${yTop}" x2="${px + 4}" y2="${yTop}"/>
@@ -426,7 +485,25 @@ function renderStats() {
   if (line) line.textContent = `${families} families. ${tasks.filter(t => t.scored !== false).length} scored tasks, totaling ${tasks.reduce((sum, t) => sum + t.points, 0).toLocaleString("en-US")} points. ${unscored.length ? `${unscored.length === 1 ? 'Task' : 'Tasks'} ${unscored.join(', ')} unscored.` : 'All tasks scored. Difficulty labels are design targets.'}`;
 }
 
-function renderBoards() { renderLeaderboard(); renderFrontier(); renderHardest(); }
+function renderStudies() {
+  const host=document.getElementById('measurement-studies');
+  const data=datasets[selectedVersion]?.studies || {};
+  const curves=(data.effort_curves || []).filter(r => r.suite_hash===manifest.suite_hash);
+  const deltas=(data.cohort_deltas || []).filter(r => r.suite_hash===manifest.suite_hash);
+  host.hidden=!curves.length && !deltas.length;
+  if (host.hidden) { host.innerHTML=''; return; }
+  let body='<div class="section-heading"><h3>Controlled measurements</h3></div><p class="meta-line">Observed runs on matching task and settings configurations. Single samples do not establish superiority.</p>';
+  for (const c of curves) {
+    const points=c.points.filter(p=>Number.isFinite(p.tokens_out)&&Number.isFinite(p.score));
+    if (!points.length) continue;
+    const max=Math.max(1,...points.map(p=>p.tokens_out));
+    const coords=points.map(p=>`${40+420*p.tokens_out/max},${135-1.1*p.score}`).join(' ');
+    body+=`<div class="study-card"><h4>${esc(c.model)} · ${esc(c.mode)} · effort</h4><svg viewBox="0 0 500 170" role="img" aria-label="Headline score versus output tokens"><path d="M40 20V135H470" fill="none" stroke="var(--border)"/><polyline points="${coords}" fill="none" stroke="var(--red)" stroke-width="2"/>${points.map(p=>`<circle cx="${40+420*p.tokens_out/max}" cy="${135-1.1*p.score}" r="4" fill="var(--red)"><title>${esc(p.effort)}: ${fmtScore(p.score)} score; ${p.tokens_out} output tokens</title></circle>`).join('')}<text x="40" y="160" fill="var(--muted)">0</text><text x="460" y="160" text-anchor="end" fill="var(--muted)">${fmtCount(max)} output tokens</text><text x="10" y="28" fill="var(--muted)">100</text><text x="20" y="138" fill="var(--muted)">0</text></svg><table><thead><tr><th>Effort</th><th>Score</th><th>Output tokens</th><th>$ / correctness point</th><th>Samples</th></tr></thead><tbody>${points.map(p=>`<tr><td>${esc(p.effort)}</td><td>${fmtScore(p.score)}</td><td>${p.tokens_out.toLocaleString('en-US')}</td><td>${Number.isFinite(p.cost_per_point)?'$'+p.cost_per_point.toFixed(4):'—'}</td><td>${Number(p.samples)}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  if (deltas.length) body+=`<div class="study-card"><h4>Agent minus API</h4><table><thead><tr><th>Model</th><th>Effort</th><th>Correctness difference</th><th>Headline difference</th><th>Samples per condition</th></tr></thead><tbody>${deltas.map(r=>`<tr><td>${esc(r.model)}</td><td>${esc(r.effort)}</td><td>${fmtScore(r.correctness_delta)}</td><td>${fmtScore(r.headline_delta)}</td><td>${Number(r.samples)}</td></tr>`).join('')}</tbody></table></div>`;
+  host.innerHTML=body;
+}
+function renderBoards() { renderLeaderboard(); renderFrontier(); renderHardest(); renderStudies(); }
 function renderAll() { renderStats(); renderTasks(); renderBoards(); }
 
 function wire() {
@@ -440,6 +517,14 @@ function wire() {
     cohort = chip.dataset.cohort;
     document.querySelectorAll("#cohort-chips .chip").forEach(c => { c.classList.toggle("on", c === chip); c.setAttribute("aria-pressed", String(c === chip)); });
     renderBoards();
+  });
+  const measureChips = document.getElementById("measure-chips");
+  if (measureChips) measureChips.addEventListener("click", e => {
+    const chip = e.target.closest && e.target.closest(".chip");
+    if (!chip || !chip.dataset.measure) return;
+    chartMeasure = chip.dataset.measure;
+    document.querySelectorAll("#measure-chips .chip").forEach(c => { c.classList.toggle("on", c === chip); c.setAttribute("aria-pressed", String(c === chip)); });
+    renderFrontier();
   });
   document.getElementById("metric-chips").addEventListener("click", e => {
     const chip = e.target.closest && e.target.closest(".chip");
@@ -472,6 +557,7 @@ function wire() {
 
 const SCORING_COPY = {
   "4.0": `<p>Deadline 4.0 is a separate 72-task suite across nine families and five languages. The 800 task points weight debugging and maintenance at 60%, and inference, exactness, specification compliance and SQL at 40%. API and agent runs are separate lanes.</p><p>Partial credit is q⁴ − 0.15(1 − q)², with q balanced across semantic areas. Every case must pass for full credit. Invalid execution receives −15%; skips earn zero; missing or truncated answers remain incomplete.</p><p>For agents, positive credit is multiplied by min(1, output-token budget / output tokens). Exceeding a task's total-token ceiling forfeits positive credit; negative penalties stay unchanged. Input includes cached reads counted once at face value. Wall time is reported, never scored.</p><p>Output deadlines derive from two thirds of the cheapest observed fully correct solve, rounded up to 250 tokens with a 1,000-token floor. Total ceilings derive from ten times that solve's total tokens, rounded up to 25,000 with a 100,000 floor. Existing limits can only tighten for unchanged tasks. A task without a correct solve starts with no output discount and a payload-based total ceiling; that ceiling also persists under the ratchet.</p><p>Official agent rankings put complete sweeps without ceiling forfeitures first, then deadline score, then correctness. Raw API runs keep a separate output-token scoring regime. Release requires completed calibration, followed by fresh attempts with limits printed beforehand: one full agent sample or three independent API samples. The published Astra entry uses saved calibration answers; its generation and certification details are in the post-mortem.</p>`,
+  "3.6": `<p>The headline <b>Score</b> keeps the 3.5 token-discounted scoring rule. Correctness remains visible alongside it. The draft has 45 public tasks, 42 scored, with 18 new tasks requiring fresh answers.</p><p>Credit remains q⁴ − 0.15(1 − q)², balanced across semantic areas and functions. Every private case must pass for full credit. Invalid execution receives −15%; declared skips earn zero; missing and truncated attempts remain incomplete. Token discounts affect positive credit only.</p><p>Tasks 19, 22 and 24 stay unscored. Their successors are new tasks with complete or provably identifiable contracts. New official entries require three independent samples. Calibration subsets are private development evidence and are not leaderboard results.</p>`,
   "3.5": `<p>The headline <b>Score</b> is correctness discounted by output-token usage. Undiscounted Correctness stays visible. Runs without complete usage show “unmetered”; reconstructed estimates are marked ≈.</p><p>The 24 scored tasks total <b>1,050 points</b>. Completed answers earn q⁴ − 0.15(1 − q)² credit, with q balanced across semantic areas and functions. A 90% matched fraction earns 65.46% task credit. Every case must pass for full credit. Invalid execution receives −15%; skips earn zero; unresolved answers remain incomplete.</p><p>Tasks 19, 22 and 24 remain available but unscored. Token discounts affect positive credit only. TIME-DL stays a separate descriptive estimate from archived intervals.</p>`,
   "3.4": `<p>The headline <b>Correctness</b> uses 26 scored tasks totaling <b>1,205 points</b>. Completed answers earn q² − 0.15(1 − q)² credit, with q balanced across semantic areas and functions. Every case must pass for full credit. Invalid execution receives −15%; skips earn zero; unresolved answers remain incomplete.</p><p>Task 24 is unscored. Token DL separately discounts positive credit by output-token usage; TIME-DL uses archived intervals. The historical results and original 3.4 scoring are preserved.</p>`,
 };
@@ -486,6 +572,14 @@ function selectVersion(version, updateURL = false) {
     language: isV4(config) ? languageNames[task.language] : id.includes("_js_") ? "JavaScript" : id.includes("_sql_") ? "SQL" : "Python",
     time_budget: timeBudgets[task.difficulty]}))};
   const v4 = isV4(manifest);
+  /* Chart default per version: Score on 4.0 (correctness is flat at the top
+     there); Correctness on older boards, where most entries are unmetered
+     and a Score axis would hide them. The chip can always override. */
+  chartMeasure = v4 ? "score" : "correctness";
+  document.querySelectorAll("#measure-chips .chip").forEach(c => {
+    const on = c.dataset && c.dataset.measure === chartMeasure;
+    c.classList.toggle("on", on); c.setAttribute("aria-pressed", String(on));
+  });
   results = [...data.official, ...data.community];
   sortKey = "score"; sortAsc = false;
   SORTS.score.label = isV35(manifest) || v4 ? "Score" : "Correctness";
@@ -520,7 +614,9 @@ function selectVersion(version, updateURL = false) {
   document.getElementById('hero-submit').setAttribute('href', v4 ? 'submit.html#deadline4' : 'submit.html');
   document.getElementById('hero-submit').innerHTML = `${v4 ? '4.0 submissions' : 'Submit a result'} <span aria-hidden="true">↗</span>`;
   document.getElementById('task-scope').textContent = v4
-    ? '72 tasks: eight per family. Python, JavaScript, TypeScript, Go and SQLite SQL. Families cover repository debugging, regression finding, behavior-preserving refactoring, diagnosis, performance, inference, exactness, specification compliance and SQL.' : '27 public Python, JavaScript and SQLite tasks. Most infer hidden behavior from observations; two repair generated projects. Retired tasks and scoring rules follow the selected version.';
+    ? '72 tasks: eight per family. Python, JavaScript, TypeScript, Go and SQLite SQL. Families cover repository debugging, regression finding, behavior-preserving refactoring, diagnosis, performance, inference, exactness, specification compliance and SQL.' : version === '3.6'
+    ? '45 public Python, JavaScript and SQLite tasks. New tasks combine explicit rule exceptions, interacting clauses, exact optimization, error recovery and inference with finite uniqueness proofs. Three retired tasks remain unscored.'
+    : '27 public Python, JavaScript and SQLite tasks. Most infer hidden behavior from observations; two repair generated projects. Retired tasks and scoring rules follow the selected version.';
   document.getElementById('scope-limitations').textContent = v4
     ? 'One attempt per task, per sample. Agents may use local tools and self-tests in a public task room; private graders remain outside it. Raw API attempts use no tools. Design difficulty labels are not empirical difficulty claims. The 4.0 tasks are new and cannot reuse 3.x answers.'
     : 'One blind attempt per task, per sample. This benchmark does not measure dependency wrangling or long agentic projects. Task 24 remains available but unscored because its prompt omits required final-state labels.';
@@ -558,8 +654,9 @@ async function init() {
       ["tasks", "official", "community"].map(name => fetchJSON(config.base + "/" + name + ".json")));
     if (!tasks || Array.isArray(tasks) || !Object.keys(tasks).length ||
         !Array.isArray(official) || !Array.isArray(community)) throw new Error("Invalid result data");
+    const studies=config.studies ? await fetchJSON(config.studies) : null;
     const overview=config.overview ? await fetchJSON(config.overview) : null;
-    datasets[version] = {tasks, official, community, overview};
+    datasets[version] = {tasks, official, community, studies, overview};
   }));
   document.getElementById("benchmark-version").innerHTML = Object.entries(versions)
     .map(([version, config]) => `<option value="${esc(version)}">${esc(config.label)}</option>`).join("");

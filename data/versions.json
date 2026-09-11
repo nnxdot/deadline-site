@@ -1,35 +1,47 @@
 {
-  "default": "3.5",
-  "versions": {
-    "3.5": {
-      "label": "v3.5",
-      "benchmark_version": "deadline-3.5",
-      "suite_hash": "3759711867a53184c1bf312db947a0c532a9a526f9df38d69007dedee76df881",
-      "base": "data"
-    },
-    "3.4": {
-      "label": "v3.4",
-      "benchmark_version": "deadline-3.4",
-      "suite_hash": "eecf5b0a714cbb6e5303c666fe78dd49c404fa140c643fe84cf231316a28a1f5",
-      "base": "data/v3.4"
-    },
-    "4.0": {
-      "label": "v4.0",
-      "benchmark_version": "deadline-4.0",
-      "suite_hash": "2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958",
-      "base": "data/v4",
-      "status": "calibration",
-      "certified_results": false,
-      "overview": "data/v4/overview.json",
-      "task_info_only": false,
-      "published_run_ids": [
-        "astra-full72-final10-20260910-v2-calibration"
-      ],
-      "prompts": "releases/v4/2026Q4/2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958/prompts/api",
-      "archive": "deadline-v4.zip",
-      "public_manifest": "releases/v4/2026Q4/2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958/manifest.json",
-      "runner_readme": "releases/v4/2026Q4/2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958/README.md",
-      "submission_open": true
-    }
+ "default": "4.0",
+ "versions": {
+  "3.5": {
+   "label": "v3.5",
+   "benchmark_version": "deadline-3.5",
+   "suite_hash": "3759711867a53184c1bf312db947a0c532a9a526f9df38d69007dedee76df881",
+   "base": "data"
+  },
+  "3.4": {
+   "label": "v3.4",
+   "benchmark_version": "deadline-3.4",
+   "suite_hash": "eecf5b0a714cbb6e5303c666fe78dd49c404fa140c643fe84cf231316a28a1f5",
+   "base": "data/v3.4"
+  },
+  "3.6": {
+   "label": "v3.6 draft",
+   "benchmark_version": "deadline-3.6",
+   "suite_hash": "0b26d3542d1b8e0a451f12f733ddcc6e5299f92f485fb7facfa5855289740734",
+   "base": "data/v3.6",
+   "prompts": "prompts/v3.6",
+   "archive": "deadline-v3.6.zip",
+   "status": "draft",
+   "certified_results": false,
+   "studies": "data/v3.6/studies.json",
+   "calibration_suite_hash": "40e8cc4fb87fd58df4fdc9a8a809fbc96cd44ce58685ca94313f4c5b5ef02c7c"
+  },
+  "4.0": {
+   "label": "v4.0",
+   "benchmark_version": "deadline-4.0",
+   "suite_hash": "2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958",
+   "base": "data/v4",
+   "status": "calibration",
+   "certified_results": false,
+   "overview": "data/v4/overview.json",
+   "task_info_only": false,
+   "published_run_ids": [
+    "astra-full72-final10-20260910-v2-calibration"
+   ],
+   "prompts": "releases/v4/2026Q4/2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958/prompts/api",
+   "archive": "deadline-v4.zip",
+   "public_manifest": "releases/v4/2026Q4/2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958/manifest.json",
+   "runner_readme": "releases/v4/2026Q4/2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958/README.md",
+   "submission_open": true
   }
+ }
 }

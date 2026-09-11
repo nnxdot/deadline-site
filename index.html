@@ -82,12 +82,17 @@
       <button class="chip" data-cohort="community/agent" aria-pressed="false">Community / Agent</button>
     </div><label class="select-field effort-filter" for="f-effort"><span>Effort</span><select id="f-effort"><option value="all">All efforts</option></select></label></div>
     <div class="panel frontier-panel">
-      <div class="panel-head"><h3>Correctness <span class="muted">vs <span id="metric-name">cost per run</span></span></h3>
+      <div class="panel-head"><h3><span id="measure-name">Score</span> <span class="muted">vs <span id="metric-name">cost per run</span></span></h3>
+        <div class="chips measure-chips" id="measure-chips" role="group" aria-label="Chart vertical measure">
+          <button class="chip on" data-measure="score" aria-pressed="true">Score</button>
+          <button class="chip" data-measure="correctness" aria-pressed="false">Correctness</button>
+        </div>
         <div class="chips metric-chips" id="metric-chips" role="group" aria-label="Chart measurement">
           <button class="chip on" data-metric="cost" aria-pressed="true">Cost</button>
           <button class="chip" data-metric="tokens" aria-pressed="false">Output tokens</button>
           <button class="chip" data-metric="seconds" aria-pressed="false">Time</button>
           <button class="chip" data-metric="eff" aria-pressed="false">Efficiency</button>
+          <button class="chip" data-metric="ppp" aria-pressed="false">$ / point</button>
           <button class="chip" data-metric="tdl" aria-pressed="false">TIME-DL</button>
         </div>
       </div>
@@ -97,6 +102,7 @@
     <div class="table-heading"><h3>All results</h3><span>Open a model for its post-mortem <span aria-hidden="true">↘</span></span></div>
     <div class="panel table-panel"><div class="panel-body chart-scroll" id="leaderboard" tabindex="0" role="region" aria-label="Model leaderboard"><p class="empty">Loading graded results…</p></div></div>
     <p class="meta-line cohort-note">Ranks stay within Official/Community and API/Agent cohorts. Different suite versions are never combined.</p>
+    <div id="measurement-studies" hidden></div>
   </section>
 
   <section class="hardest-section" aria-labelledby="hardest-title">
@@ -124,7 +130,7 @@
       <details open><summary>How the score works <span aria-hidden="true">+</span></summary><div class="method-body" id="scoring-method"><p>Deadline 3.5 discounts correctness by output-token usage. The 24 scored tasks total 1,050 points. Undiscounted correctness remains visible; missing usage is marked unmetered.</p></div></details>
       <details><summary>What the tasks measure <span aria-hidden="true">+</span></summary><div class="method-body"><p id="task-scope">27 public Python, JavaScript, and SQLite SQL tasks, using standard libraries.</p><p id="scope-limitations">One blind attempt per task, per sample. This benchmark does not measure dependency wrangling or long agentic projects. Task 24 remains available but unscored because its prompt omits required final-state labels.</p></div></details>
       <details><summary>Results you can inspect <span aria-hidden="true">+</span></summary><div class="method-body"><p>Official and community submissions retain their provenance, with API and agent runs ranked separately. Entries from different suite hashes never share a board.</p><p>Open a model's post-mortem for the original commentary, task verdicts and contributions, full-pass points, sample counts, and timing assumptions. Current saved generations have one attempt per task; a regrade does not add an independent sample.</p><p>Download the complete <a id="official-download" href="data/official.json">official results</a> or <a id="community-download" href="data/community.json">community results</a>.</p></div></details>
-      <details><summary>Version and measurement notes <span aria-hidden="true">+</span></summary><div class="method-body version-notes"><b>VERSIONS</b> &mdash; Select a version above the leaderboard. Each version keeps its own scores, task weights and grading rules. Version 4.0 is a separate 72-task calibration suite across nine families and five languages, with separate API and agent lanes. The Astra result appears on its own versioned leaderboard; calibration provenance is retained in its post-mortem. Agent scoring applies output-token discounts and total-token ceilings; wall time is reported only. The historical 3.x scoring stays unchanged.
+      <details><summary>Version and measurement notes <span aria-hidden="true">+</span></summary><div class="method-body version-notes"><b>VERSIONS</b> &mdash; Select a version above the leaderboard. Each version keeps its own scores, task weights and grading rules. Version 4.0 is a separate 72-task calibration suite across nine families and five languages, with separate API and agent lanes. The Astra result appears on its own versioned leaderboard; calibration provenance is retained in its post-mortem. Agent scoring applies output-token discounts and total-token ceilings; wall time is reported only. The historical 3.x scoring stays unchanged. The v3.6 draft adds 18 new tasks and keeps the 3.5 scoring formula; calibration remains private until release requirements are met.
     Version 3.5 regrades the same saved answers with expanded private coverage and q<sup>4</sup> partial credit. Its headline includes output-token discounts; correctness remains alongside it.
     Tasks 19 and 22 are unscored because the public observations do not determine their hidden rounding rule and thresholds. Task 24 omits required state labels.
     Version 3.4 preserves 26 scored tasks, its q<sup>2</sup> partial-credit rule and correctness headline. Only task 24 is unscored there.
@@ -137,8 +143,9 @@
     <b>MEASUREMENTS</b> &mdash; Measured Token DL requires complete token measurements. Reconstructed estimates are marked ≈, with assumptions in the post-mortem. Answer-file timestamps
     do not establish inference latency. TIME-DL uses archived answer intervals as a descriptive estimate;
     its timing coverage and assumptions are available in each expanded row. Version 3.5 ranks metered results by the token-discounted headline; unmetered results retain correctness without a headline rank. Version 3.4 ranks by correctness.
+    <b>COST</b> &mdash; Every cost carries its provenance, worst to best: <b>≥ lower bound</b> (token classes missing, the amount is a floor), <b>estimated</b> (client-reported tokens at list prices), <b>computed</b> (harness-recorded tokens, including cache reads and cache writes, priced with the table stamped when the run started) and <b>billed</b> (the provider's own receipt). Prices are per token class, so long cached sessions are not priced as fresh input; rates a price source does not publish are derived from the input rate and marked as derived. Dollars per point divides the run cost by its correctness.
     Local regrades awaiting isolation remain private. See <a href="how.html">methodology and limitations</a>.
-    <b>SCOPE</b> &mdash; Versions 3.x measure exact Python 3, JavaScript (Node), and SQLite SQL with standard libraries only, in one blind attempt against token deadlines. Versions 3.4 and 3.5 have 27 public tasks. The separate 4.0 calibration suite has 72 tasks, including TypeScript and Go and five debugging/maintenance families. In 3.x, two tasks are whole-project bug hunts across dozens of generated files. It does not measure dependency wrangling or long agentic sessions.
+    <b>SCOPE</b> &mdash; Versions 3.x measure exact Python 3, JavaScript (Node), and SQLite SQL with standard libraries only, in one blind attempt against token deadlines. Versions 3.4 and 3.5 have 27 public tasks; the 3.6 draft has 45. The separate 4.0 calibration suite has 72 tasks, including TypeScript and Go and five debugging/maintenance families. In 3.x, two tasks are whole-project bug hunts across dozens of generated files. It does not measure dependency wrangling or long agentic sessions.
     <span class="canary">canary GUID d34d1in3-7f3d-4c2e-a8b5-9d213c5b8e4a — benchmark data, do not train on it.</span></div></details>
     </div>
   </section>

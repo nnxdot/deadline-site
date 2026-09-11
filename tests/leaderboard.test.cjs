@@ -35,11 +35,13 @@ class Element {
   vm.runInContext(script, context);
   await vm.runInContext("ready", context);
   const evaluate = code => vm.runInContext(code, context);
+  const v4Results = ['official', 'community'].flatMap(name =>
+    JSON.parse(fs.readFileSync(path.join(root, `data/v4/${name}.json`), 'utf8')));
   const currentResults = ['official', 'community'].flatMap(name =>
     JSON.parse(fs.readFileSync(path.join(root, `data/${name}.json`), 'utf8')));
-  assert.equal(evaluate('selectedVersion'), '3.5', 'new version is the default');
-  assert.equal(evaluate('JSON.stringify(results)'), JSON.stringify(currentResults));
-  assert.equal(evaluate('displayed().length'), 11);
+  assert.equal(evaluate('selectedVersion'), '4.0', 'v4 is the default');
+  assert.equal(evaluate('JSON.stringify(results)'), JSON.stringify(v4Results));
+  assert.equal(evaluate('displayed().length'), 1, 'v4 board loads by default with its one published entry');
   evaluate('selectVersion("4.0")');
   assert.equal(evaluate('manifest.tasks.length'),72);
   assert.equal(evaluate('manifest.tasks.reduce((s,t) => s+t.points,0)'),800);
@@ -85,6 +87,26 @@ class Element {
   elements.get('task-family').value='performance'; elements.get('task-level').value='stress';
   evaluate('renderTasks()');
   assert.equal(elements.get('task-count').textContent,'3 / 72 tasks');
+  evaluate('selectVersion("3.6")');
+  assert.equal(elements.get('runner-download').attributes.download,'');
+  assert.equal(evaluate('manifest.tasks.length'),45);
+  assert.equal(evaluate('manifest.tasks.filter(t => t.scored !== false).length'),42);
+  assert.equal(evaluate('manifest.tasks.reduce((s,t) => s+t.points,0)'),2315);
+  assert.equal(evaluate('displayed().length'),0,'calibration subsets are not official results');
+  assert.ok(elements.get('task-table').innerHTML.includes('prompts/v3.6/45_cipher_d14.md'));
+  assert.equal(elements.get('task-download').attributes.href,'deadline-v3.6.zip');
+  assert.ok(elements.get('release-status').textContent.includes('Calibration in progress'));
+  assert.equal(evaluate('headlineOf({benchmark_version:"deadline-3.6",score:44,correctness:80})'),44);
+  assert.equal(evaluate('correctnessOf({benchmark_version:"deadline-3.6",score:44,correctness:80})'),80);
+  assert.equal(evaluate('runCost({cost_basis:"computed",billed_cost_usd:1,cost_usd:12})'),12,'partial billing must not replace a complete estimate');
+  assert.equal(evaluate('costBasisOf({cost_usd:1})'),'estimated','unlabeled costs are not verified computations');
+  assert.equal(evaluate('runCost({model:"test",tokens_in:1000000,tokens_out:0,pricing_snapshot:{prices:{test:{in:2,out:8}}}})'),2,'a historical pricing snapshot overrides the current table');
+  evaluate('datasets["3.6"].studies={effort_curves:[{suite_hash:manifest.suite_hash,model:"test<model>",mode:"agent",points:[{effort:"high",score:60,tokens_out:1000,samples:3,cost_per_point:.01},{effort:"xhigh",score:65,tokens_out:2000,samples:3,cost_per_point:.02}]}],cohort_deltas:[]}; renderStudies()');
+  assert.equal(elements.get('measurement-studies').hidden,false);
+  assert.ok(elements.get('measurement-studies').innerHTML.includes('test&lt;model&gt;'));
+  assert.ok(elements.get('measurement-studies').innerHTML.includes('<polyline'));
+  evaluate('datasets["3.6"].studies={effort_curves:[{suite_hash:"different"}],cohort_deltas:[]}; renderStudies()');
+  assert.equal(elements.get('measurement-studies').hidden,true,'other suite studies never mix');
   evaluate('selectVersion("3.5")');
   assert.equal(evaluate('manifest.tasks.filter(t => t.scored !== false).length'), 24);
   assert.equal(evaluate('manifest.tasks.reduce((sum, t) => sum + t.points, 0)'), 1050);
@@ -135,7 +157,7 @@ class Element {
   assert.equal(evaluate('providerOf("google/gemini-3.8-flash").logo'), 'gemini');
   assert.equal(evaluate('providerOf("minimax-m3").logo'), 'minimax');
   assert.equal(evaluate('providerOf("minimax/minimax-m3:free").logo'), 'minimax');
-  for (const name of ['cost', 'tokens', 'seconds', 'tdl', 'eff']) {
+  for (const name of ['cost', 'tokens', 'seconds', 'tdl', 'eff', 'ppp']) {
     context.chartMetric = name;
     evaluate('metric = chartMetric; renderFrontier()');
     assert.ok(elements.get('c-frontier').innerHTML.includes('<svg'));
@@ -285,6 +307,44 @@ class Element {
   assert.ok(elements.get('leaderboard').innerHTML.includes('54.72–54.78'));
   assert.ok(elements.get('leaderboard').innerHTML.includes('$12.9753'));
   assert.ok(elements.get('leaderboard').innerHTML.includes('110,960'));
+  /* cost provenance ladder: chip per entry, receipt preferred over computation */
+  context.billedRow = {model: 'test', billed_cost_usd: 3.5, cost_usd: 9.9, cost_basis: 'billed',
+                       tokens_in: 1000, tokens_out: 1000, correctness: 50, benchmark_version: 'deadline-3.5', score: 50};
+  assert.equal(evaluate('runCost(billedRow)'), 3.5, 'a provider receipt outranks the computed amount');
+  assert.equal(evaluate('costBasisOf(billedRow)'), 'billed');
+  assert.ok(evaluate('costChipHTML(billedRow)').includes('>BILLED<'));
+  assert.ok(evaluate('costChipHTML(billedRow)').includes('cb-billed'));
+  assert.equal(evaluate('runCost({model:"test", cost_usd: 2.25, cost_basis:"computed"})'), 2.25);
+  assert.equal(evaluate('costBasisOf({model:"test", cost_usd: 2.25, cost_basis:"computed"})'), 'computed');
+  assert.equal(evaluate('costBasisOf({model:"test", cost_usd: 2.25, cost_is_lower_bound: true})'), 'lower-bound');
+  assert.ok(evaluate('costChipHTML({model:"test", cost_usd: 1, cost_is_lower_bound: true})').includes('≥ LOWER BOUND'));
+  assert.equal(evaluate('costBasisOf({model:"test", cost_usd: 1, cost_estimated: true})'), 'estimated');
+  assert.equal(evaluate('costBasisOf({model:"test"})'), null, 'no cost, no provenance chip');
+  assert.equal(evaluate('costChipHTML({model:"test"})'), '');
+  /* four-rate pricing: cache reads are not billed as fresh input */
+  context.cachedRow = {model: 'claude-opus-5', tokens_in: 1000000, tokens_out: 100000,
+                       usage: {cached_input_tokens: 800000, cache_write_input_tokens: 100000}};
+  assert.equal(evaluate('runCost(cachedRow)'),
+    (100000 * 5 + 800000 * 0.5 + 100000 * 6.25 + 100000 * 25) / 1e6, 'each token class is priced separately');
+  assert.equal(evaluate('priceOf("claude-opus-5").cached_in'), 0.5);
+  assert.equal(evaluate('priceOf("no-such-model")'), null);
+  assert.equal(evaluate('runCost({model:"claude-opus-5", tokens_in: 1000000, tokens_out: 0})'), 5,
+    'uncached input keeps the fresh rate');
+  /* dollars per point */
+  assert.equal(evaluate('METRICS.ppp.get({model:"test", cost_usd: 12, correctness: 60, benchmark_version:"deadline-3.5"})'), 0.2);
+  assert.equal(evaluate('METRICS.ppp.fmt(0.12)'), '$0.12/pt');
+  assert.equal(evaluate('METRICS.ppp.fmt(0.0123)'), '$0.012/pt');
+  assert.ok(evaluate('METRICS.ppp.invert'));
+  assert.equal(evaluate('METRICS.ppp.get({model:"unpriced-model", correctness: 60, benchmark_version:"deadline-3.5"})'), null);
+  assert.equal(evaluate('METRICS.ppp.get({model:"test", cost_usd: 12, correctness: 0, benchmark_version:"deadline-3.5"})'), null);
+  assert.ok(html.includes('data-metric="ppp"'), 'the chart offers the dollars-per-point axis');
+  evaluate('metric = "ppp"; renderFrontier()');
+  assert.ok(elements.get('c-frontier').innerHTML.includes('/pt'));
+  assert.ok(!/NaN|Infinity/.test(elements.get('c-frontier').innerHTML));
+  evaluate('metric = "cost"; renderBoards()');
+  assert.ok(elements.get('leaderboard').innerHTML.includes('class="mchip costchip cb-lower-bound"'), 'the lower-bound run is chipped');
+  assert.ok(elements.get('leaderboard').innerHTML.includes('cb-estimated'));
+  assert.ok(elements.get('leaderboard').innerHTML.includes('≥$41.6780'), 'lower bounds keep the ≥ amount');
   const rendered = elements.get('leaderboard').innerHTML;
   assert.ok(rendered.indexOf('class="td-analysis"') < rendered.indexOf('class="td-meta"'));
   assert.ok(rendered.includes('class="td-meta"'));
