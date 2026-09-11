@@ -79,6 +79,10 @@ class Element {
   assert.equal(evaluate('headlineOf(displayed()[0])'),v4row.score_unrounded);
   assert.ok(Math.abs(Object.values(v4row.task_detail).reduce((s,t)=>s+t.contribution,0)-v4row.score_unrounded)<1e-10);
   assert.ok(evaluate('compareV4Rank({swept:true,score:50,correctness:100},{swept:false,score:80,correctness:100})')<0);
+  assert.equal(evaluate('tdlOf(displayed()[0])'), 100, 'frontier entry rides its own 3x time net');
+  assert.ok(elements.get('leaderboard').innerHTML.includes('never ranks'), 'descriptive TIME-DL is labeled non-ranking');
+  const slow = evaluate('(() => { const s = JSON.parse(JSON.stringify(displayed()[0])); for (const d of Object.values(s.task_detail)) d.seconds = d.seconds * 10; results.push(s); const v = tdlOf(s); results.pop(); return v; })()');
+  assert.ok(slow < 40, 'a 10x-slower clone bleeds descriptive TIME-DL: ' + slow);
   evaluate('results.push({...results[0], id:"unapproved"})');
   assert.equal(evaluate('displayed().length'),1,'unapproved pilots stay excluded');
   evaluate('results.pop(); results[0].suite_hash="wrong-suite"');

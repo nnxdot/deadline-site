@@ -109,11 +109,34 @@ function costChipHTML(r) {
   return `<span class="mchip costchip cb-${key}" title="${COST_BASES[key].tip}">${COST_BASES[key].label}</span>`;
 }
 /* ---- sortable score columns ---- */
+/* Descriptive TIME-DL for 4.0 agent entries: verified harness wall-clock per
+   task against a generous net of 3x the fastest fully-correct solve of that
+   task among displayed entries. Discounts positive credit only. Purely
+   descriptive: provider serving speed affects it and it NEVER ranks — the
+   scored deadline is tokens (see the 4.0 scoring notes). */
+function descriptiveTdl(row, rows) {
+  if (!isV4(row) || !row.task_detail) return Number.isFinite(row.tdl_score) ? row.tdl_score : null;
+  const tasks = Object.entries(row.task_detail).filter(([, d]) => d.scored !== false);
+  if (!tasks.length || tasks.some(([, d]) => !Number.isFinite(d.seconds))) return null;
+  let earned = 0, total = 0;
+  for (const [id, d] of tasks) {
+    const frontier = Math.min(...rows.filter(o => isV4(o) && o.task_detail &&
+      o.task_detail[id] && o.task_detail[id].credit === 1 && Number.isFinite(o.task_detail[id].seconds))
+      .map(o => o.task_detail[id].seconds));
+    const net = Number.isFinite(frontier) ? 3 * frontier : Infinity;
+    const discount = d.credit > 0 ? Math.min(1, net / d.seconds) : 1;
+    earned += d.points * (d.credit > 0 ? d.credit * discount : d.credit);
+    total += d.points;
+  }
+  return total ? Math.max(0, 100 * earned / total) : null;
+}
+const tdlOf = r => descriptiveTdl(r, results || []);
+
 const SORTS = {
   score: {label: "Score", get: headlineOf},
   correctness: {label: "Correctness", get: correctnessOf},
   dscore: {label: "Token DL", get: r => Number.isFinite(r.dscore) ? r.dscore : null},
-  tdl: {label: "TIME-DL", get: r => Number.isFinite(r.tdl_score) ? (r.tdl_score_unrounded ?? r.tdl_score) : null},
+  tdl: {label: "TIME-DL", get: r => isV4(r) ? tdlOf(r) : Number.isFinite(r.tdl_score) ? (r.tdl_score_unrounded ?? r.tdl_score) : null},
 };
 
 /* ---- frontier chart axes ---- */
@@ -131,7 +154,7 @@ const METRICS = {
           return cost != null && Number.isFinite(score) && score > 0 ? cost / score : null;
         },
         fmt: v => "$" + v.toFixed(v < 0.1 ? 3 : 2) + "/pt", invert: true},
-  tdl: {label: "TIME-DL", get: r => Number.isFinite(r.tdl_score) ? r.tdl_score : null,
+  tdl: {label: "TIME-DL", get: r => isV4(r) ? tdlOf(r) : Number.isFinite(r.tdl_score) ? r.tdl_score : null,
         fmt: v => v.toFixed(0), invert: false},
 };
 
@@ -205,7 +228,7 @@ function measurementDetailsHTML(r) {
   return `<p class="td-meta">Full-pass points: ${fmtScore(r.strict_score)}/100. Grader: ${esc(r.benchmark_version || "legacy")} / ${esc((r.suite_hash || "unrecorded").slice(0,12))}.
     ${(r.samples || 1) === 1 ? "Single sample; repeat spread unmeasured." : `${r.samples} attempts per task; spread is repeat standard deviation.`}
     ${r.settings_verified ? (r.settings_verification_basis ? `Generation settings checked: ${esc(r.settings_verification_basis)}.` : "Generation settings verified.") : "Generation settings not independently verified."}</p>` +
-    evidence + (r.tdl_score != null ? `<p class="td-meta">${r.timing_source === "harness_wall_clock" && r.timing_verified ? "TIME-DL uses harness-measured task wall time, including the agent's tool calls." : "TIME-DL is a descriptive estimate from saved answer timestamps, not measured latency."}${(r.tdl_missing_tasks || []).length ? ` ${(r.tdl_missing_tasks || []).length} task(s) have no usable interval and get no time discount, which can overstate it.` : ""}</p>` : "");
+    evidence + ((isV4(r) ? tdlOf(r) : r.tdl_score) != null ? `<p class="td-meta">${r.timing_source === "harness_wall_clock" && r.timing_verified ? "TIME-DL uses harness-measured task wall time, including the agent's tool calls, against a net of 3× the fastest correct solve per task. It is descriptive only and never affects rank; the scored deadline is output tokens." : "TIME-DL is a descriptive estimate from saved answer timestamps, not measured latency."}${(r.tdl_missing_tasks || []).length ? ` ${(r.tdl_missing_tasks || []).length} task(s) have no usable interval and get no time discount, which can overstate it.` : ""}</p>` : "");
 }
 
 function detailHTML(r, cols) {
@@ -261,7 +284,7 @@ function renderLeaderboard() {
         <td class="num">${tokenScored(r) ? (headlineOf(r) == null ? scoreCellHTML({model:r.model,score:r.correctness}) : '<span class="score-v alt">' + fmtScore(r.correctness) + '</span>') : tokenScoreCellHTML(r)}</td>
         <td class="num">${Number(r.passed)}/${Number(r.total)}</td>
         ${calibrationColumn ? `<td class="num">${r.measurement?.calibration ? r.measurement.calibration.skips + ' / ' + r.measurement.calibration.incorrect_submissions : '—'}</td>` : ''}
-        <td class="num"><span class="score-v alt">${fmtScore(r.tdl_score)}</span></td>
+        <td class="num"><span class="score-v alt"${isV4(r) && Number.isFinite(tdlOf(r)) ? ' title="Descriptive: verified wall-clock vs 3× the fastest correct solve per task. Serving speed affects this; it never ranks."' : ""}>${fmtScore(isV4(r) ? tdlOf(r) : r.tdl_score)}</span></td>
         <td class="num">${METRICS.tokens.get(r) != null ? (r.tokens_out_estimated ? '<span title="Estimated output tokens; assumptions in the post-mortem">≈' + r.tokens_out.toLocaleString("en-US") + '</span>' : r.tokens_out.toLocaleString("en-US")) : "—"}</td>
         <td class="num">${runCost(r) != null ? (costBasisOf(r) === "lower-bound" ? "≥" : "") + "$" + runCost(r).toFixed(4) : "—"}${costChipHTML(r)}</td>
         <td class="num">${Number.isFinite(r.seconds) ? Math.round(r.seconds) + "s" : "—"}</td>
