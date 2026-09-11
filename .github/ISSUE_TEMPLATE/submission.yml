@@ -9,8 +9,10 @@ body:
         Thanks for submitting to **Deadline**! How this works:
         1. Run `python client/deadline_client.py ...` from a checkout of this repo (see the README).
         2. It writes a `submission.json` with your model's raw replies and token counts.
-        3. Paste the FULL contents of that file below.
-        4. The maintainer re-grades your replies against the private test suite.
+        3. Validate it with `python client/deadline_client.py --validate submission.json`.
+        4. Package it with `python client/deadline_client.py --package submission.json`.
+        5. Attach `submission.json.zip` below and paste the printed metadata, including its SHA-256.
+        6. The maintainer re-grades your replies against the private test suite.
            Your verified score then appears on the site. Scores cannot be self-reported.
   - type: input
     id: model
@@ -23,8 +25,7 @@ body:
   - type: textarea
     id: submission
     attributes:
-      label: Submission JSON
-      description: Paste the full contents of submission.json here. Do not edit it.
-      render: json
+      label: Attachment and metadata
+      description: Drag the ZIP here and paste the metadata printed by --package. Do not paste the raw answers or edit the generated file. A PR containing the original JSON is also accepted.
     validations:
       required: true

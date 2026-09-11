@@ -15,6 +15,21 @@ package does not imply certification. The default stays v3.5 and the existing
 v4 Astra result and historical scores are unchanged. Archive SHA-256:
 `07310a6d7c0d044f27273a7d9560b7252a1c5d3d7752ae8caf2f8a1f13135388`.
 
+**Local 3.6 development preview:** 45 public tasks, 42 scored, 2,315 points.
+The default board and client remain v3.5. The version selector's v3.6 draft uses
+separate data in `data/v3.6/` and prompts in `prompts/v3.6/`; its official and
+community datasets are empty until calibrated results meet release requirements.
+Select it with `--benchmark-version 3.6`. No historical prompts or results are
+rewritten. The 18 new tasks keep 3.5's scoring formula and require fresh answers.
+
+Client workflow: `--dry-run` estimates without model calls; `--max-spend USD`
+reserves an estimated budget; `--params` changes provider settings while
+`--effort` labels them. `--validate FILE` checks completion and metering, and
+`--package FILE` produces a ZIP plus a metadata-only issue body with a SHA-256.
+For a top-up use `--extend OLD.json --out NEW.json`; only identical full prompts
+and settings can carry, without creating extra independent samples. Truncated
+replies stay incomplete and require a separate run for another attempt.
+
 A closed coding benchmark for AI models. 27 MACHINE-GENERATED Python, JavaScript, and SQL tasks (nearly half pure inference from observed behavior) —
 hidden cipher pipelines, randomized state machines and formats, scrambled
 precedence tables, performance gates, and a generated-semantics interpreter —

@@ -80,26 +80,58 @@
       <code class="k">--type anthropic</code>, or <code class="k">--type openai</code>
       for any OpenAI-compatible endpoint (OpenAI, Groq, and local servers like
       Ollama with <code class="k">--base-url http://localhost:11434/v1</code> and
-      no key). Label a thinking setting with <code class="k">--effort</code>.</p>
+      no key). Set actual provider options with <code class="k">--params</code>;
+      <code class="k">--effort</code> only labels the setting and does not change the request.</p>
       <p>The script asks your model every task once — <b>one blind attempt</b> —
       and writes <code class="k">submission.json</code>: the raw replies plus token counts.</p>
+      <p>Check the estimated cost before spending with <code class="k">--dry-run</code>.
+      Add <code class="k">--max-spend 10</code> to reserve against a $10 estimated budget and checkpoint before the next request would exceed it. This is a client estimate, not a provider billing limit.</p>
+      <p>The default remains v3.5. The local v3.6 preview uses
+      <code class="k">--benchmark-version 3.6</code>. Existing v3.5 answers can be carried with
+      <code class="k">--extend old.json --out topup.json</code> only when the full request prompt and provider settings match. A top-up extends one sample.</p>
     </div>
   </div>
 
   <div class="step">
     <div class="step-no">03</div>
     <div>
-      <h3>Open a submission issue</h3>
-      <p>Paste the <b>full contents</b> of <code class="k">submission.json</code> into the
-      form. Don't edit it — the graders notice.</p>
-      <div class="btns" style="margin-top:14px">
-        <a class="btn primary" href="https://github.com/violetweather/deadline-site/issues/new?template=submission.yml">Open the submission form</a>
-      </div>
+      <h3>Package it</h3>
+      <pre class="cmd"><i>$ </i>python client/deadline_client.py --validate submission.json</pre>
+      <p>Validation checks completeness and metering without testing your answers or calling a model. Truncated replies stay incomplete; a fresh attempt belongs in a separate run.</p>
+      <pre class="cmd"><i>$ </i>python client/deadline_client.py --package submission.json</pre>
+      <p>This writes <code class="k">submission.json.zip</code> — real submissions run
+      well past the ~65,000-character limit on issue bodies, and zipping code-heavy
+      JSON shrinks it several times over — and prints a short issue body holding
+      <b>only metadata</b>: model, effort, client version, task and token counts, and
+      the <b>sha256 of the JSON file inside the zip</b>. No answers, ever.</p>
     </div>
   </div>
 
   <div class="step">
     <div class="step-no">04</div>
+    <div>
+      <h3>Send it — attach, or open a PR</h3>
+      <p><b>Attach the zip.</b> Open the submission issue, drag
+      <code class="k">submission.json.zip</code> into it, and paste the printed body
+      above the attachment. The hash in the body pins the file, so a swapped or
+      edited attachment is detectable — and gets rejected.</p>
+      <div class="btns" style="margin-top:14px">
+        <a class="btn primary" href="https://github.com/violetweather/deadline-site/issues/new?template=submission.yml">Open the submission form</a>
+      </div>
+      <p style="margin-top:16px"><b>Or open a pull request.</b> Add the file as
+      <code class="k">submissions/&lt;model&gt;-&lt;date&gt;.json</code> on a branch of your fork
+      and open a PR, subject to GitHub's file-size limits. The commit
+      is the receipt.</p>
+      <pre class="cmd"><i>$ </i>cp submission.json submissions/qwen3-coder-2026-09-08.json
+<i>$ </i>git checkout -b submission/qwen3-coder
+<i>$ </i>git add submissions/ &amp;&amp; git commit -m "submission: qwen3-coder" &amp;&amp; git push</pre>
+      <p>Either lane is graded identically. Don't edit the file after generating it —
+      the grader compares hashes, reply style and per-task receipts.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-no">05</div>
     <div>
       <h3>Get graded</h3>
       <p>The maintainer re-runs your replies against the private test suite in a

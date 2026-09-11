@@ -1,0 +1,731 @@
+{
+  "01_cipher_d2": {
+    "difficulty": "medium",
+    "points": 10,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 1250,
+    "category": "write",
+    "family": "cipher",
+    "tags": [
+      "inference"
+    ],
+    "language": "py",
+    "prompt_sha256": "c36fd49b1fb2a50f67b9e1a1d95447602ef2e19091892a4f69106cf4315b67c4",
+    "request_prompt_sha256": "eed869e040327037bd80035b1e9aaa475f6fbc1c91e0d1c96819d7c23bbd306e"
+  },
+  "02_cipher_d4": {
+    "difficulty": "hard",
+    "points": 20,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 2500,
+    "category": "write",
+    "family": "cipher",
+    "tags": [
+      "inference"
+    ],
+    "language": "py",
+    "prompt_sha256": "19f010e5df643e7c65d21b7891060e3b097c1eaca932a19b6429c4d7f1a4a43f",
+    "request_prompt_sha256": "e1a9da92663a5b8c6f036ffa7607e8bcc96f50b51a2c3f09221bf04661f01abc"
+  },
+  "03_cipher_d6": {
+    "difficulty": "brutal",
+    "points": 35,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 5000,
+    "category": "write",
+    "family": "cipher",
+    "tags": [
+      "inference"
+    ],
+    "language": "py",
+    "prompt_sha256": "267f970db1ceb0636e91c011bb1bcea3d06b0edf5139fc7cc30d8b70cae31a7e",
+    "request_prompt_sha256": "2700cd93541b706d6c5bf35b07e43b885b9c02b6dfd0834db104a0269ac1b737"
+  },
+  "04_cipher_d8": {
+    "difficulty": "nightmare",
+    "points": 70,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 10000,
+    "category": "write",
+    "family": "cipher",
+    "tags": [
+      "inference"
+    ],
+    "language": "py",
+    "prompt_sha256": "d15148f7361aab99c3c27064dead989831a128a6437bcd10a711566d803f0489",
+    "request_prompt_sha256": "b54fc8cb191d58441a390898a67f0af1b5de9ae4fc6cf9c8ace85c426f353ac8"
+  },
+  "05_cipher_d10": {
+    "difficulty": "nightmare",
+    "points": 120,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 10000,
+    "category": "write",
+    "family": "cipher",
+    "tags": [
+      "inference"
+    ],
+    "language": "py",
+    "prompt_sha256": "f72db3d56efc9bf2b0817785f0340821141567484073db8c8a957fcb463c6d12",
+    "request_prompt_sha256": "62ea1ba107108eacdbee101eb88435d54258cae47550b541e58e0c8a5fea57ee"
+  },
+  "06_machine_a": {
+    "difficulty": "medium",
+    "points": 15,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 1250,
+    "category": "write",
+    "family": "state machine",
+    "tags": [
+      "state",
+      "spec"
+    ],
+    "language": "py",
+    "prompt_sha256": "2ceb35a10dcdaa9e9973b882fb06d143e0b7ffacfcd67ba045c1800b5d7229a9",
+    "request_prompt_sha256": "e4a8e710808f27609e16c1c3450a4e191c775106748a8460ed857e72a4eb8fab"
+  },
+  "07_machine_traces": {
+    "difficulty": "hard",
+    "points": 30,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 2500,
+    "category": "write",
+    "family": "state machine",
+    "tags": [
+      "inference",
+      "state"
+    ],
+    "language": "py",
+    "prompt_sha256": "8af4ac30999134d2fafc5b5aebf86bb84d2da7ec54f27a560a820ebe7b742ad4",
+    "request_prompt_sha256": "119d7c732c3c04cf63e060bedf1cf240c800d80c8b611287c10a241a562da658"
+  },
+  "08_codec_a": {
+    "difficulty": "medium",
+    "points": 15,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 1250,
+    "category": "write",
+    "family": "codec",
+    "tags": [
+      "parsing",
+      "numerics"
+    ],
+    "language": "py",
+    "prompt_sha256": "dddf317379be4337cb1fff14cef23292d5222ae57411e970c14f5d2f862b0c74",
+    "request_prompt_sha256": "dc397b4d87a0ce95fa1146f9400ea1143625af379bb47d4f36ad16bf866967b5"
+  },
+  "09_codec_traces": {
+    "difficulty": "brutal",
+    "points": 40,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 5000,
+    "category": "write",
+    "family": "codec",
+    "tags": [
+      "inference",
+      "parsing"
+    ],
+    "language": "py",
+    "prompt_sha256": "2b72b7f0b4f415fe0c9d44b4d3be0cc97eed82e7815ff63fca6f08b2d2190d69",
+    "request_prompt_sha256": "691d9d3f5cd8f6cad01fac130f465d81886a614b455c7afd88bdc06c9321be7f"
+  },
+  "10_strange_calendar": {
+    "difficulty": "hard",
+    "points": 20,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 2500,
+    "category": "write",
+    "family": "calendar",
+    "tags": [
+      "numerics",
+      "algorithms"
+    ],
+    "language": "py",
+    "prompt_sha256": "3cf763876c25d0412af1e1d9c752c7a9d7439a67ed3cf20f5985bff48d8ff595",
+    "request_prompt_sha256": "1f4e7ed8f8b47ddcdfeb954bc9267f30faf9547deb2a908ddb4f2e0143d84f69"
+  },
+  "11_eval_a": {
+    "difficulty": "hard",
+    "points": 20,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 2500,
+    "category": "write",
+    "family": "expression",
+    "tags": [
+      "parsing",
+      "spec"
+    ],
+    "language": "py",
+    "prompt_sha256": "9f6c0cef4f4aac8112060cbb34aa4632f6ed4d1680cee266f973671210f12dd5",
+    "request_prompt_sha256": "2c96860b5f9d683d650118f15c0b858dba1b1a9093a5991074f77d9d1e459338"
+  },
+  "12_eval_traces": {
+    "difficulty": "brutal",
+    "points": 40,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 5000,
+    "category": "write",
+    "family": "expression",
+    "tags": [
+      "inference",
+      "parsing"
+    ],
+    "language": "py",
+    "prompt_sha256": "b09bc843a76db74a132c1aaed4bf40fcf34e96b234b6bb83cbf52299d19f754f",
+    "request_prompt_sha256": "b053c9684ea21dd20e2670210ee74d4718e03e38a8d5d4bfc190f0d76a93c03a"
+  },
+  "13_pairs_a": {
+    "difficulty": "brutal",
+    "points": 25,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 5000,
+    "category": "write",
+    "family": "pair counting",
+    "tags": [
+      "performance",
+      "algorithms"
+    ],
+    "language": "py",
+    "prompt_sha256": "b81777b2c6f4b3184c0525baed6f5db137ab4c6c9aa34ebc744eb97fc0c9411e",
+    "request_prompt_sha256": "d1b32f0805f2aae8518fdbaeaa32f04636e34afafbf64752d110f30e5a9f1549"
+  },
+  "14_pairs_traces": {
+    "difficulty": "brutal",
+    "points": 40,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 5000,
+    "category": "write",
+    "family": "pair counting",
+    "tags": [
+      "inference",
+      "performance"
+    ],
+    "language": "py",
+    "prompt_sha256": "d4c44b706bb684286d2793ec10f028151c17d9cd8198c121d826aa3d6e5cd30c",
+    "request_prompt_sha256": "be42fe6330454f90ce00023ee18b1ef91fda21b27346fa96c932ab381c0fc424"
+  },
+  "15_midnight_machine": {
+    "difficulty": "nightmare",
+    "points": 100,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 10000,
+    "category": "write",
+    "family": "interpreter",
+    "tags": [
+      "parsing",
+      "state"
+    ],
+    "language": "py",
+    "prompt_sha256": "58bddb0360a4f7e4d9c3f683fd651c2f81f94503205b16d0adb19900bda3dfdc",
+    "request_prompt_sha256": "e3817f5a446fc640c7e4f5df0e56fa4343ce7da91f86ba1057aeac5df9efc628"
+  },
+  "16_calendar_traces": {
+    "difficulty": "brutal",
+    "points": 45,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 5000,
+    "category": "write",
+    "family": "calendar",
+    "tags": [
+      "inference",
+      "numerics"
+    ],
+    "language": "py",
+    "prompt_sha256": "a7c736c574a91b3dbc3cb1a310d4714d2fe72f48d7011ea086a602e8be92a8ae",
+    "request_prompt_sha256": "1d8f8e108a2652428aa07ad02b751f7b8959f03456b90fb4c3f1c282d70167a4"
+  },
+  "17_machine_traces_xl": {
+    "difficulty": "nightmare",
+    "points": 70,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 10000,
+    "category": "write",
+    "family": "state machine",
+    "tags": [
+      "inference",
+      "state"
+    ],
+    "language": "py",
+    "prompt_sha256": "9bf7de5fa4b2d0989aa43bd7fe591fc9ac7eb8087f17e34ae6e80684f9f6584b",
+    "request_prompt_sha256": "c6290fd72cd250168014243f0a304139b2febceec04f40057283460738b07621"
+  },
+  "18_codec_traces_xl": {
+    "difficulty": "nightmare",
+    "points": 70,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 10000,
+    "category": "write",
+    "family": "codec",
+    "tags": [
+      "inference",
+      "parsing"
+    ],
+    "language": "py",
+    "prompt_sha256": "17355dedaf95fa8692631f0512b9586d1872595846ad35198ef2bb88d16bddfa",
+    "request_prompt_sha256": "50ab592616b13daec5bf6974523e0751c0e29a2c3256596e987c4df8d3eeb2be"
+  },
+  "19_redacted_machine": {
+    "difficulty": "nightmare",
+    "points": 0,
+    "scored": false,
+    "unscored_reason": "The redacted division rounding rule is not inferable: the sample sessions contain only exact-half and sub-half fractions, so truncation toward zero and round-half-toward-zero both reproduce every public session while diverging on many private division cases (e.g. 5/3).",
+    "budget": 10000,
+    "category": "write",
+    "family": "interpreter",
+    "tags": [
+      "inference",
+      "parsing",
+      "state"
+    ],
+    "language": "py",
+    "prompt_sha256": "c877961be79cc453b79b752c98f8d724af762f305809660324a46289315ffef3",
+    "request_prompt_sha256": "66a2350a5d065034576293c3a045910fd06fe68df92b8ec5feb10151d8c34266"
+  },
+  "20_sql_report": {
+    "difficulty": "hard",
+    "points": 20,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 2500,
+    "category": "write",
+    "family": "SQL",
+    "tags": [
+      "sql",
+      "spec"
+    ],
+    "language": "py",
+    "prompt_sha256": "115582cd91ce2a077da3071635ef5f16f5ef86f542c523ad5c0067be02dcab78",
+    "request_prompt_sha256": "8971d789671bc0607a8fc50cd3824c0112d83187e4068725fad2b9c853901711"
+  },
+  "21_sql_traces": {
+    "difficulty": "brutal",
+    "points": 45,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 5000,
+    "category": "write",
+    "family": "SQL",
+    "tags": [
+      "sql",
+      "inference"
+    ],
+    "language": "py",
+    "prompt_sha256": "d1211ae6d15576020db37a643201469f76e7c62804add3c2d380d6ed135193b5",
+    "request_prompt_sha256": "aaa0b92fc33ea55ee6cf2e4b3236fa4a421d5ee4b8d47259a402717d29981d2a"
+  },
+  "22_sql_traces_xl": {
+    "difficulty": "nightmare",
+    "points": 0,
+    "scored": false,
+    "unscored_reason": "Hidden thresholds are not inferable: 384 (WHERE, HAVING) pairs (WHERE 34-45 x HAVING 20-51) reproduce all four public example databases exactly while private cases probe inside those bands. Full passes and failures hinged on strict-versus-inclusive operator style at round numbers.",
+    "budget": 10000,
+    "category": "write",
+    "family": "SQL",
+    "tags": [
+      "sql",
+      "inference"
+    ],
+    "language": "py",
+    "prompt_sha256": "78d8871962bdc88b91421fd16f9ae29ba44688302bf34f8920e9444d5b97a9a6",
+    "request_prompt_sha256": "06d66bbc89c5f2ea7914bf8ca75805c7d2bf4895b64e0b0d6a1c88386572ec22"
+  },
+  "23_js_cipher_traces": {
+    "difficulty": "hard",
+    "points": 35,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 2500,
+    "category": "js-inference",
+    "family": "cipher",
+    "tags": [
+      "js",
+      "inference"
+    ],
+    "language": "js",
+    "prompt_sha256": "30b2ea64da818f31c44521882328a23ee431715d7c726b6865614c1486970d68",
+    "request_prompt_sha256": "c1e92b404eec4ea75d4675c83d7e7a68b3dafff71c822178a4d3bfa22ce9e006"
+  },
+  "24_js_machine_traces": {
+    "difficulty": "brutal",
+    "points": 0,
+    "scored": false,
+    "unscored_reason": "Required final-state labels are absent from the unchanged public prompt.",
+    "budget": 5000,
+    "category": "js-inference",
+    "family": "unscored",
+    "tags": [
+      "js",
+      "inference",
+      "fsm"
+    ],
+    "language": "js",
+    "prompt_sha256": "aa5f4399201e5ec80dd9e4e0fec1d5eb147fbfbd25551409f1a7c20fb22b0d78",
+    "request_prompt_sha256": "1d730a460307200f7713b6fe2c0f3a08003ee4d8e1042433c1f1e71fa71ca255"
+  },
+  "25_js_eval_traces": {
+    "difficulty": "brutal",
+    "points": 45,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 5000,
+    "category": "js-inference",
+    "family": "expression",
+    "tags": [
+      "js",
+      "inference",
+      "eval"
+    ],
+    "language": "js",
+    "prompt_sha256": "779cff405c55d1f733ee8fddbbf7b3d40326e951b7bbd2a247cfcdb9a3a699a6",
+    "request_prompt_sha256": "8f12d99d7261027344ecfadb89e7d44dca3408e737238111eb3b60a294bf0b3f"
+  },
+  "26_repo_bughunt": {
+    "difficulty": "brutal",
+    "points": 50,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 5000,
+    "category": "repo-bughunt",
+    "family": "repository repair",
+    "tags": [
+      "repo",
+      "navigation",
+      "bugfix"
+    ],
+    "language": "py",
+    "prompt_sha256": "e8d139f3390beba36ea0ba1dd310cdd9e0b3e456ae5c45145864c3964b7da7f3",
+    "request_prompt_sha256": "4eb0e63fe2b37f12ae7a1a2980483c300edc6044fe9c85c35d9fc4ca47cf6860"
+  },
+  "27_repo_bughunt_xl": {
+    "difficulty": "nightmare",
+    "points": 70,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 10000,
+    "category": "repo-bughunt",
+    "family": "repository repair",
+    "tags": [
+      "repo",
+      "navigation",
+      "bugfix"
+    ],
+    "language": "py",
+    "prompt_sha256": "9d52525a889efa66c3d969bb7a73ba5c05eeafcf7c13b349cf463201f7e225d5",
+    "request_prompt_sha256": "e6659d9d667a77a5080907373acb0dcb77f460b88a53041fed5859ca09e3327d"
+  },
+  "28_contrarian_sort": {
+    "difficulty": "medium",
+    "points": 25,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 4000,
+    "category": "write",
+    "family": "prior override",
+    "tags": [
+      "prior-override",
+      "algorithms"
+    ],
+    "language": "py",
+    "prompt_sha256": "5e366ff7839cea6cf3dfba6ff8ec0c5ce5d7cfcf99a998d89c2be8301abb1a89",
+    "request_prompt_sha256": "793d7d05edad77f0854c2d32fb093ef59dc43b3650d7771c02546fcc228b02f7"
+  },
+  "29_familiar_json": {
+    "difficulty": "brutal",
+    "points": 70,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 10000,
+    "category": "write",
+    "family": "prior override",
+    "tags": [
+      "prior-override",
+      "parsing"
+    ],
+    "language": "py",
+    "prompt_sha256": "a81c7765917e2ce99fd9a1d17dbc6d11f66d721dc0c1440b4a4ab96c0a3bebf3",
+    "request_prompt_sha256": "da23e4523323fcd21f7d373b9724ddfa8f4e2637bb78dccd747869ad334ae23b"
+  },
+  "30_familiar_calendar": {
+    "difficulty": "brutal",
+    "points": 45,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 8000,
+    "category": "write",
+    "family": "prior override",
+    "tags": [
+      "prior-override",
+      "calendar"
+    ],
+    "language": "py",
+    "prompt_sha256": "8ddf37b792e0bcc5500152ff80a751adba8e1593a865095d9dfe0b74e42c0df1",
+    "request_prompt_sha256": "39e1a10e4cce5a3386353f4f70b6e1a8e3637d3d6f7dd6a067e0d510310685ab"
+  },
+  "31_grand_machine": {
+    "difficulty": "brutal",
+    "points": 75,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 12000,
+    "category": "write",
+    "family": "rulebook",
+    "tags": [
+      "rulebook",
+      "state-machine",
+      "cross-reference"
+    ],
+    "language": "py",
+    "prompt_sha256": "05ce3585e9a948f003106c5d9c7ffc603ff40e09b398ed186750c19ac0bc6543",
+    "request_prompt_sha256": "102d46177880cc3d97b87e9dbdfa5e096bf5180c968e66c029c119c87d9ea64f"
+  },
+  "32_clause_engine": {
+    "difficulty": "brutal",
+    "points": 75,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 12000,
+    "category": "write",
+    "family": "rulebook",
+    "tags": [
+      "rulebook"
+    ],
+    "language": "py",
+    "prompt_sha256": "a46edc85106aa5363debca48058ae0b17dd6685d9d3b2aeb7de2626378f22eb4",
+    "request_prompt_sha256": "bc997fe883e459c1ac5930a2c30c3a9a73c29bf8ab4f78ca0f41678e92073e31"
+  },
+  "33_exact_tardiness": {
+    "difficulty": "brutal",
+    "points": 70,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 10000,
+    "category": "write",
+    "family": "exact optimization",
+    "tags": [
+      "optimization",
+      "exact"
+    ],
+    "language": "py",
+    "prompt_sha256": "ef0ad5849e863cce4ed315133353f74a158ece98691438127b03c69d7f786714",
+    "request_prompt_sha256": "9ff50445a6a8a372d97b001a15932fe4f7299f3c114ab4ba63d0c49ff6aae383"
+  },
+  "34_exact_shelves": {
+    "difficulty": "brutal",
+    "points": 70,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 10000,
+    "category": "write",
+    "family": "exact optimization",
+    "tags": [
+      "optimization",
+      "exact"
+    ],
+    "language": "py",
+    "prompt_sha256": "41a1a1ae0c04fca05cc6dba5fd49ad97eae42293deb9c66b129c9c5f2bebeaa8",
+    "request_prompt_sha256": "a67927b1190e08399fc1a1cfdfdb24ac9fed1f45bf49c78889dcd9605f32448c"
+  },
+  "35_redacted_machine_b": {
+    "difficulty": "nightmare",
+    "points": 75,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 16000,
+    "category": "write",
+    "family": "inference",
+    "tags": [
+      "inference",
+      "parsing",
+      "state"
+    ],
+    "language": "py",
+    "prompt_sha256": "7ee43ffc8ae27bd65d94aed948c175ad24b5fb77cd852a07d664ff1eea642954",
+    "request_prompt_sha256": "0da60e61310776bd2531980616deb3cc63109527a4c69a4d11f5707640484ace"
+  },
+  "36_sql_report_xl_b": {
+    "difficulty": "brutal",
+    "points": 70,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 12000,
+    "category": "write",
+    "family": "SQL composition",
+    "tags": [
+      "sql",
+      "spec",
+      "aggregation"
+    ],
+    "language": "py",
+    "prompt_sha256": "4e42541e8903c9d51a8101c0897f57567fa9149a0efc1d81cc3e63c3f81402f0",
+    "request_prompt_sha256": "38eb52bfd2831170284a4791bb46b7a03122835f82ae300bd56ceacf8f98cf5a"
+  },
+  "37_js_frame_recovery": {
+    "difficulty": "brutal",
+    "points": 70,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 12000,
+    "category": "write",
+    "family": "recovery",
+    "tags": [
+      "parsing",
+      "recovery"
+    ],
+    "language": "js",
+    "prompt_sha256": "535a8a9fc49ce3bd6da5677ed9169c787c0b6cd08da56dc660c47024bad7f9c4",
+    "request_prompt_sha256": "ea31c05e0c53aee44cb064d92a418c249ff2eda98d24bb7aec9e00241745e53e"
+  },
+  "38_shadow_eval": {
+    "difficulty": "nightmare",
+    "points": 80,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 16000,
+    "category": "write",
+    "family": "inference",
+    "tags": [
+      "inference",
+      "parsing",
+      "hidden-rules"
+    ],
+    "language": "py",
+    "prompt_sha256": "9faf4f98daf6dd19420f3a04ef40a8222a9b57310115798899ffca5cf50c0c8c",
+    "request_prompt_sha256": "b68d3915a6e7cdb7276c026cbdc5549b3878304eb16e2f9a8e248f6f3ee892c0"
+  },
+  "39_shadow_codec": {
+    "difficulty": "nightmare",
+    "points": 80,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 16000,
+    "category": "write",
+    "family": "inference",
+    "tags": [
+      "inference",
+      "codec"
+    ],
+    "language": "py",
+    "prompt_sha256": "d9676961597d065b19119aba5cc9a430c1b767287d09d128c40080e5229fbf93",
+    "request_prompt_sha256": "43e12d573a7e467785814bf098eab69dffbc4d4e0e0ef51eafb82391c6c57aa8"
+  },
+  "40_ciphered_machine": {
+    "difficulty": "brutal",
+    "points": 70,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 12000,
+    "category": "write",
+    "family": "composition",
+    "tags": [
+      "composition",
+      "state-machine",
+      "cipher"
+    ],
+    "language": "py",
+    "prompt_sha256": "2301753ea328f293cd831e8cb90b600810577c90f8bd9a2433bfb03e5df8cd89",
+    "request_prompt_sha256": "e78b87350b68955db897d7dd7449f38d740cf87774a733d89c5999d2b6877e34"
+  },
+  "41_codec_of_programs": {
+    "difficulty": "brutal",
+    "points": 70,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 12000,
+    "category": "write",
+    "family": "composition",
+    "tags": [
+      "composition",
+      "codec",
+      "interpreter"
+    ],
+    "language": "py",
+    "prompt_sha256": "3cdcdffc09232bea9598854f3bead043186c1c2c16aea5e18f71ad1138b1f39d",
+    "request_prompt_sha256": "1ffd09f63d34a87c144b645db342336a7ec26b10424dd738b691526f6e028cd2"
+  },
+  "42_cipher_d12": {
+    "difficulty": "nightmare",
+    "points": 80,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 16000,
+    "category": "write",
+    "family": "inference",
+    "tags": [
+      "inference",
+      "cipher",
+      "depth"
+    ],
+    "language": "py",
+    "prompt_sha256": "485dd0d37a217cc1304256d351f6ece83367673dbfdcbe9c631aed3e081a9614",
+    "request_prompt_sha256": "9c0180739d11bbb37dac82b3d9bbeeb4a3cc7650d2cc11539c80e338f9c794e8"
+  },
+  "43_machine_traces_xxx": {
+    "difficulty": "nightmare",
+    "points": 80,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 16000,
+    "category": "write",
+    "family": "inference",
+    "tags": [
+      "inference",
+      "state",
+      "depth"
+    ],
+    "language": "py",
+    "prompt_sha256": "e5d37f90fd4c1850af5efa08b2367247e6e7226c18fd0ead8dc14658bd0e815f",
+    "request_prompt_sha256": "45abb492cc389d908c40e8f5195192d9df11e1a61bb23020a2d0e39c9059ce57"
+  },
+  "44_midnight_marathon": {
+    "difficulty": "nightmare",
+    "points": 80,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 16000,
+    "category": "write",
+    "family": "composition",
+    "tags": [
+      "parsing",
+      "state",
+      "depth"
+    ],
+    "language": "py",
+    "prompt_sha256": "bd4a4a3d34ac95ca921e2f6efcffe18f5f5b596fc6ed25d9f68aed4f338f5666",
+    "request_prompt_sha256": "c13eeb43cc19d788c6519a4fe29d46237bacbc72552476d1e795c912acc4951f"
+  },
+  "45_cipher_d14": {
+    "difficulty": "nightmare",
+    "points": 80,
+    "scored": true,
+    "unscored_reason": null,
+    "budget": 16000,
+    "category": "write",
+    "family": "inference",
+    "tags": [
+      "inference",
+      "cipher",
+      "depth"
+    ],
+    "language": "py",
+    "prompt_sha256": "679fa2b1899b90a0b439f1e364544c945243e5045f35cd3b09072f4bec9c3d63",
+    "request_prompt_sha256": "3067d10110ba61020383c6ca9b0a22c15434ccb5370ca73c2df26573b1c91aeb"
+  }
+}
