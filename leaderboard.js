@@ -502,7 +502,7 @@ function selectVersion(version, updateURL = false) {
     efforts.map(e => `<option value="${esc(e)}">${esc(e)}</option>`).join("");
   document.getElementById("f-effort").value = efforts.includes(effort) ? effort : "all";
   const count = manifest.tasks.filter(t => t.scored !== false).length;
-  document.getElementById("release-status").textContent = `${config.label} · ${manifest.tasks.length} ${v4 ? 'tasks' : 'public tasks'} · ${count} scored · ${v4 ? 'Astra xhigh result; run details in its post-mortem.' : config.status === 'draft' ? 'Calibration in progress; no certified results yet.' : isV35(manifest) ? 'Saved answers regraded in Docker.' : 'Historical results and scoring preserved.'}`;
+  document.getElementById("release-status").textContent = `${config.label} · ${manifest.tasks.length} ${v4 ? 'tasks' : 'public tasks'} · ${count} scored · ${v4 ? 'Public submissions open; run details in each post-mortem.' : config.status === 'draft' ? 'Calibration in progress; no certified results yet.' : isV35(manifest) ? 'Saved answers regraded in Docker.' : 'Historical results and scoring preserved.'}`;
   document.getElementById('hero-description').innerHTML = v4
     ? '<span id="task-total">72</span> coding tasks across nine families. Debugging, maintenance and exact reasoning. Private, machine-graded results.'
     : '<span id="task-total">27</span> public coding tasks. Hidden systems to reverse-engineer. Private, machine-graded results.';
@@ -512,11 +512,11 @@ function selectVersion(version, updateURL = false) {
     : "Correctness out of 100. Continuous partial credit. Token efficiency measured separately. No judge model.";
   document.getElementById("scoring-method").innerHTML = SCORING_COPY[version];
   const taskDownload = document.getElementById('task-download'), runnerDownload = document.getElementById('runner-download');
-  taskDownload.setAttribute('href', v4 ? 'data/v4/tasks.json' : config.archive || 'deadline.zip');
-  taskDownload.innerHTML = `${v4 ? 'Download task information' : 'Download all tasks'} <span aria-hidden="true">↗</span>`;
-  runnerDownload.setAttribute('href', v4 ? 'how.html#deadline4' : config.archive || 'deadline.zip');
-  runnerDownload.innerHTML = `${v4 ? '4.0 protocol' : 'Download runner'} <span aria-hidden="true">↗</span>`;
-  if (v4) runnerDownload.removeAttribute('download'); else runnerDownload.setAttribute('download', '');
+  taskDownload.setAttribute('href', config.archive || 'deadline.zip');
+  taskDownload.innerHTML = `Download all tasks <span aria-hidden="true">↗</span>`;
+  runnerDownload.setAttribute('href', config.archive || 'deadline.zip');
+  runnerDownload.innerHTML = `Download runner <span aria-hidden="true">↗</span>`;
+  runnerDownload.setAttribute('download', '');
   document.getElementById('hero-submit').setAttribute('href', v4 ? 'submit.html#deadline4' : 'submit.html');
   document.getElementById('hero-submit').innerHTML = `${v4 ? '4.0 submissions' : 'Submit a result'} <span aria-hidden="true">↗</span>`;
   document.getElementById('task-scope').textContent = v4
@@ -526,7 +526,7 @@ function selectVersion(version, updateURL = false) {
     : 'One blind attempt per task, per sample. This benchmark does not measure dependency wrangling or long agentic projects. Task 24 remains available but unscored because its prompt omits required final-state labels.';
   document.getElementById('method-languages').textContent = v4 ? 'Python, JavaScript, TypeScript, Go and SQL under token constraints.' : 'Exact Python, JavaScript, and SQL, under token deadlines.';
   document.getElementById('catalog-note').innerHTML = v4
-    ? 'Draft task information and current agent limits. Public run packages are not released yet. Agent time is not scored. <span>Python · JavaScript · TypeScript · Go · SQL</span>'
+    ? 'Public prompts, supplied project files and runner. Private tests and grading. Agent time is not scored. <span>Python · JavaScript · TypeScript · Go · SQL</span>'
     : 'Every prompt is public. Test cases and grading stay private. <span>Python · JavaScript · SQL</span>';
   document.querySelectorAll('.ticker-languages').forEach(el => { el.textContent = v4 ? 'Python, JavaScript, TypeScript, Go, and SQL' : 'Python, JavaScript, and SQL'; });
   document.getElementById("method-headline").textContent = v4

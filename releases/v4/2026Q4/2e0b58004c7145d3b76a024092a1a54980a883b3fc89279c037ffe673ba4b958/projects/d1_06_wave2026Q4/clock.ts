@@ -1,0 +1,1 @@
+export function due(e:number,n:number):boolean{return e<=n;}export function after(e:number,n:number):boolean{return e<n;}

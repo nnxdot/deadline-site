@@ -1,0 +1,1 @@
+export function taxed(s:number,r:number):number{return s+Math.floor((s*r+99)/100);}export function truncated_tax(s:number,r:number):number{return s+Math.floor(s*r/100);}

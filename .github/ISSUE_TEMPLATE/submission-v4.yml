@@ -1,0 +1,46 @@
+name: Deadline 4.0 submission
+description: Submit a complete v4 API or agent run for private grading.
+title: "[Submission v4] your-model-name"
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Download and extract [the v4 package](https://deadline.nnx.fyi/deadline-v4.zip).
+        Follow the included README for API runs or metered agent rooms.
+        Validate with `python client.py --validate YOUR-FILE.json`, then package
+        with `python client.py --package YOUR-FILE.json`.
+        Attach the generated `*-submission.zip` and paste its `.metadata.json` contents.
+        Do not paste keys or unrelated session history. Keep dedicated raw receipts
+        and agent transcripts for verification. The maintainer grades privately;
+        user-supplied scores are not accepted. All 72 tasks must be present.
+  - type: input
+    id: model
+    attributes:
+      label: Model and effort
+      description: Exact model ID and configured reasoning effort used for this run.
+    validations:
+      required: true
+  - type: dropdown
+    id: lane
+    attributes:
+      label: Run lane
+      options:
+        - Raw API (no tools)
+        - Agent (local tools and self-tests)
+    validations:
+      required: true
+  - type: textarea
+    id: submission
+    attributes:
+      label: Submission ZIP and metadata
+      description: Attach the generated ZIP and paste the metadata, including the suite hash and submission SHA-256. Do not edit the generated answers.
+    validations:
+      required: true
+  - type: checkboxes
+    id: evidence
+    attributes:
+      label: Run evidence
+      options:
+        - label: I kept the dedicated token receipts and, for agent runs, task transcripts for maintainer review.
+          required: true

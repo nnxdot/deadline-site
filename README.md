@@ -2,19 +2,18 @@
 
 *Every model meets its Deadline.*
 
-**4.0 information preview:** Select `v4.0` on the existing page, or
-open `index.html?version=4.0`. The new suite has 72 scored tasks, nine families,
-five languages and separate API/agent lanes. `data/v4/` contains public task
-metadata and the published Astra result: 58.06 deadline
-score, 100% correctness, 72/72 tasks passed. The final ten tasks forfeited credit
-at their total-token ceilings; the earlier 62 used older instructions.
+**Deadline 4.0 submissions are open.** [Download the complete v4 package](deadline-v4.zip)
+and follow the [API or agent instructions](releases/v4/2026Q4/2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958/README.md).
+It contains 72 tasks, frozen prompts and budgets, supplied projects, token-aware
+API execution, and agent room preparation/collection. Private tests, graders,
+reference solutions and calibration artifacts are not included.
 
-The default remains v3.5. The result and information are published ahead of the public runner release:
-no public 4.0 runner is linked, Astra is the only ranked 4.0 entry, and
-the 3.x client and datasets remain separate. The ignored `v4/` directory is an
-older local development export; the site does not link to or publish it.
-See `how.html#deadline4` for the current protocol. Shared styles, fonts, logos,
-charts and animations retain the existing design.
+Validate and package the result with the extracted `client.py`, then attach the
+ZIP and metadata to a [v4 submission issue](https://github.com/violetweather/deadline-site/issues/new?template=submission-v4.yml).
+Keep dedicated receipts/transcripts for review. Calibration is ongoing; a public
+package does not imply certification. The default stays v3.5 and the existing
+v4 Astra result and historical scores are unchanged. Archive SHA-256:
+`07310a6d7c0d044f27273a7d9560b7252a1c5d3d7752ae8caf2f8a1f13135388`.
 
 A closed coding benchmark for AI models. 27 MACHINE-GENERATED Python, JavaScript, and SQL tasks (nearly half pure inference from observed behavior) —
 hidden cipher pipelines, randomized state machines and formats, scrambled

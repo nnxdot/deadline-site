@@ -1,0 +1,1 @@
+export function change(l:any[],a:number[][],sign:number):void{for(const [i,n]of a)l[i].available+=sign*n;}

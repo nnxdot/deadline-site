@@ -1,0 +1,14 @@
+TAG="snapshot-444065"
+def read_version_a(events, queries):
+    d={"events":events,"pages":[queries]}
+    pages=[]
+    for page in d['pages']:
+        answers=[]
+        for q in page:
+            e=None
+            for row in d['events']:
+                if row[1]==q[1] and row[0]<=q[2] and (e is None or row[0]>e[0]): e=row
+            state='absent' if e is None else 'deleted' if e[4] else 'expired' if e[3] is not None and q[3]>=e[3] else 'live'
+            answers.append([q[0],q[1],state,e[2] if state=='live' else None,e[0] if e else None])
+        pages.append(answers)
+    return pages[0]

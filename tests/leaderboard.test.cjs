@@ -52,12 +52,12 @@ class Element {
   assert.ok(elements.get('task-table').innerHTML.includes('Agent total ceiling'));
   assert.ok(elements.get('task-table').innerHTML.includes('Agent 1,750 / API 8,000'));
   assert.ok(!elements.get('task-table').innerHTML.includes('Time budget'));
-  assert.ok(!elements.get('task-table').innerHTML.includes('href='),'unreleased task prompts must not have broken links');
+  assert.ok(elements.get('task-table').innerHTML.includes('/prompts/api/c1_01_wave2026Q4.md'),'released task prompts are linked');
   assert.ok(!/NaN|undefined/.test(elements.get('task-table').innerHTML));
   assert.ok(elements.get('suite-line').textContent.includes('All tasks scored.'));
-  assert.equal(elements.get('task-download').attributes.href,'data/v4/tasks.json');
-  assert.equal(elements.get('runner-download').attributes.href,'how.html#deadline4');
-  assert.equal(elements.get('runner-download').attributes.download,undefined);
+  assert.equal(elements.get('task-download').attributes.href,'deadline-v4.zip');
+  assert.equal(elements.get('runner-download').attributes.href,'deadline-v4.zip');
+  assert.equal(elements.get('runner-download').attributes.download,'');
   const v4row = evaluate('displayed()[0]');
   assert.equal(v4row.model, 'gpt-6-astra');
   assert.equal(v4row.effort, 'xhigh');
@@ -165,7 +165,7 @@ class Element {
   elements.get('task-level').value = '';
   evaluate('renderTasks()');
   assert.ok(!/(?:href|src)=["']v4\//i.test(html), 'never link the stale development export');
-  assert.ok(!/deadline-v4\.zip/i.test(html + script), 'no unreleased 4.0 runner download');
+  assert.ok(fs.existsSync(path.join(root,'deadline-v4.zip')), 'v4 runner archive is released');
   assert.ok(html.includes('<title>Deadline</title>'));
   const minimax = evaluate('results.find(r => r.model === "minimax-m3")');
   assert.ok(minimax && !minimax.official && minimax.verified);

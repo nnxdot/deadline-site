@@ -1,0 +1,1 @@
+export function remember(c:Map<string,any>,k:string,r:any):void{c.set(k,JSON.parse(JSON.stringify(r)));}export function recalled(c:Map<string,any>,k:string):any{return JSON.parse(JSON.stringify(c.get(k)));}

@@ -1,0 +1,1 @@
+export function preview(l:any[],indices:number[],qty:number):number[][]|null{const out:number[][]=[];for(const i of indices){const take=Math.min(qty,l[i].available);if(take){out.push([i,take]);qty-=take;}if(!qty)return out;}return null;}

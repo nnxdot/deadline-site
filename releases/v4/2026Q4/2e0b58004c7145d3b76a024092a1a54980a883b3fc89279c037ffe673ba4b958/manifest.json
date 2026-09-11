@@ -1,0 +1,3066 @@
+{
+  "benchmark_version": "deadline-4.0",
+  "wave": "2026Q4",
+  "suite_hash": "2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958",
+  "task_count": 72,
+  "scored_count": 72,
+  "points": 800,
+  "full_wave": true,
+  "lanes": [
+    "api",
+    "agent"
+  ],
+  "scoring": "equal semantic areas; q^4 - 0.15*(1-q)^2; 60% maintenance/40% classic; API scoring unchanged; agent output-token discount plus total-token ceiling, persistent correct-solve ratchet and sweep-first ranking; penalties unchanged; agent wall time reported only; blanks incomplete",
+  "official_samples_by_lane": {
+    "api": 3,
+    "agent": 1
+  },
+  "status": "development",
+  "release_status": "public",
+  "calibration_status": "ongoing",
+  "certified": false,
+  "tasks": [
+    {
+      "id": "c1_01_wave2026Q4",
+      "design_id": "c1_01",
+      "wave": "2026Q4",
+      "title": "Infer the resettable nonlinear transducer",
+      "family": "c1",
+      "field": "inference",
+      "difficulty": "baseline",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c1_01_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 1750,
+      "agent_total_ceiling": 100000,
+      "prompt_sha256": {
+        "api": "edf888c24328b79cfaa10e7e77b177c8bbd429ef586c0d9cc42b10a5af78e2bc",
+        "agent": "02a50aa8610a0483b2aab39e7d7115475e1ab8d5b5b3f795fe236dccff0ee41d"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 8000,
+          "seconds": 180
+        },
+        "agent": {
+          "tokens": 1750,
+          "seconds": null,
+          "total_ceiling": 100000
+        }
+      }
+    },
+    {
+      "id": "c1_02_wave2026Q4",
+      "design_id": "c1_02",
+      "wave": "2026Q4",
+      "title": "Infer the resettable nonlinear transducer",
+      "family": "c1",
+      "field": "inference",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c1_02_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 1500,
+      "agent_total_ceiling": 875000,
+      "prompt_sha256": {
+        "api": "fcdd4fb42417599206179362e868c87608413a23763dbda972db3752c02aa0b7",
+        "agent": "a149237420304ec1008fb12e244e0c2866f1ae9d9778967ff3495eff64b79db0"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 1500,
+          "seconds": null,
+          "total_ceiling": 875000
+        }
+      }
+    },
+    {
+      "id": "c1_03_wave2026Q4",
+      "design_id": "c1_03",
+      "wave": "2026Q4",
+      "title": "Infer the resettable nonlinear transducer",
+      "family": "c1",
+      "field": "inference",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c1_03_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 1750,
+      "agent_total_ceiling": 900000,
+      "prompt_sha256": {
+        "api": "4a31172d91aed4121ee3ddea46b1789d6a1b0acc03ab641f9faba6c7c1a7a491",
+        "agent": "1ea407e51d76b9d29d44f1bf0f51266a790096e969fac9fd48d7e52a993ab02b"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 1750,
+          "seconds": null,
+          "total_ceiling": 900000
+        }
+      }
+    },
+    {
+      "id": "c1_04_wave2026Q4",
+      "design_id": "c1_04",
+      "wave": "2026Q4",
+      "title": "Infer the resettable nonlinear transducer",
+      "family": "c1",
+      "field": "inference",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c1_04_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 1500,
+      "agent_total_ceiling": 900000,
+      "prompt_sha256": {
+        "api": "7ed8bc0e67b18328c37f4e5a43f1c9c59d23f163456a0519c642f94026c1088e",
+        "agent": "039511eae4973c59c2db8d39a4d1600c7b9d1ec70f366c359b49ed02d6f60756"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 1500,
+          "seconds": null,
+          "total_ceiling": 900000
+        }
+      }
+    },
+    {
+      "id": "c1_05_wave2026Q4",
+      "design_id": "c1_05",
+      "wave": "2026Q4",
+      "title": "Infer the resettable nonlinear transducer",
+      "family": "c1",
+      "field": "inference",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c1_05_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2000,
+      "agent_total_ceiling": 1075000,
+      "prompt_sha256": {
+        "api": "934b55973e11922c8724f95e0ea23b7d0f31a238dd27e2a1989d30748748f58c",
+        "agent": "c709ba4b4ba9ed324e3481a3400607d5722554d47ca0783c8235f623d16e97d8"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 2000,
+          "seconds": null,
+          "total_ceiling": 1075000
+        }
+      }
+    },
+    {
+      "id": "c1_06_wave2026Q4",
+      "design_id": "c1_06",
+      "wave": "2026Q4",
+      "title": "Infer the resettable nonlinear transducer",
+      "family": "c1",
+      "field": "inference",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c1_06_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 1750,
+      "agent_total_ceiling": 875000,
+      "prompt_sha256": {
+        "api": "3696082bc40d9ce35af80877eef4455ca776f25a8f560e9feca74b29157cd7ee",
+        "agent": "e72ed486d39be1a9e5c12440c7b1f411ca18927922f075de9e86487431b1c87d"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 1750,
+          "seconds": null,
+          "total_ceiling": 875000
+        }
+      }
+    },
+    {
+      "id": "c1_07_wave2026Q4",
+      "design_id": "c1_07",
+      "wave": "2026Q4",
+      "title": "Infer the resettable nonlinear transducer",
+      "family": "c1",
+      "field": "inference",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c1_07_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2000,
+      "agent_total_ceiling": 1100000,
+      "prompt_sha256": {
+        "api": "9ccdf89e7722fc8f2ab1e8fd3341ed4911e40aea51a2eb200024b812053de13d",
+        "agent": "0c560b28634b40c5b6999a46838c4db5685c2228bdc7879c71a2ecc43646eaf2"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 2000,
+          "seconds": null,
+          "total_ceiling": 1100000
+        }
+      }
+    },
+    {
+      "id": "c1_08_wave2026Q4",
+      "design_id": "c1_08",
+      "wave": "2026Q4",
+      "title": "Infer the resettable nonlinear transducer",
+      "family": "c1",
+      "field": "inference",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c1_08_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2250,
+      "agent_total_ceiling": 1075000,
+      "prompt_sha256": {
+        "api": "79c229e636f1c6491fcf18f6abe8ce0895e1145bcaebc46379485e23cd76a43b",
+        "agent": "2afecdfb245f9f08c1e5d5e1764530eec3843130998755594577810d97098402"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 2250,
+          "seconds": null,
+          "total_ceiling": 1075000
+        }
+      }
+    },
+    {
+      "id": "c2_01_wave2026Q4",
+      "design_id": "c2_01",
+      "wave": "2026Q4",
+      "title": "Preserve exact effects through deep finalizers",
+      "family": "c2",
+      "field": "exactness-depth",
+      "difficulty": "baseline",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c2_01_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 7250,
+      "agent_total_ceiling": 100000,
+      "prompt_sha256": {
+        "api": "a2df71bed6e784a9f1022b5770e6230fd573b4f3507d9d89da899d2f7932d5ef",
+        "agent": "5b9a344ee63a4853085bdcbfebca43c6dc141223630f11ac6100edcb63932e6e"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 8000,
+          "seconds": 180
+        },
+        "agent": {
+          "tokens": 7250,
+          "seconds": null,
+          "total_ceiling": 100000
+        }
+      }
+    },
+    {
+      "id": "c2_02_wave2026Q4",
+      "design_id": "c2_02",
+      "wave": "2026Q4",
+      "title": "Preserve exact effects through deep finalizers",
+      "family": "c2",
+      "field": "exactness-depth",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c2_02_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4750,
+      "agent_total_ceiling": 1050000,
+      "prompt_sha256": {
+        "api": "e6a2bf9ba9c4b9df4f19cdfacc05d4f0b71a2be188b4b03010a2b35f6d224966",
+        "agent": "8df870b3aba1ed9b0434eb7b6cc155ee3386403bcca8575196de7d862351eb2b"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 4750,
+          "seconds": null,
+          "total_ceiling": 1050000
+        }
+      }
+    },
+    {
+      "id": "c2_03_wave2026Q4",
+      "design_id": "c2_03",
+      "wave": "2026Q4",
+      "title": "Preserve exact effects through deep finalizers",
+      "family": "c2",
+      "field": "exactness-depth",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c2_03_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 5250,
+      "agent_total_ceiling": 1250000,
+      "prompt_sha256": {
+        "api": "9a9c86355fc0c4397ed09caa0fe9a931d272e820f82618cffb46d16f16e7323a",
+        "agent": "cd4cae0b4519b3ea06cf7d77f75a4ad59703c76287c3835ad0b8094263e0da84"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 5250,
+          "seconds": null,
+          "total_ceiling": 1250000
+        }
+      }
+    },
+    {
+      "id": "c2_04_wave2026Q4",
+      "design_id": "c2_04",
+      "wave": "2026Q4",
+      "title": "Preserve exact effects through deep finalizers",
+      "family": "c2",
+      "field": "exactness-depth",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c2_04_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 6500,
+      "agent_total_ceiling": 1775000,
+      "prompt_sha256": {
+        "api": "690ee649070f0bd17e401bca3298110731903e0af595bc785a26fc6cfe4f687c",
+        "agent": "d929413853f1c28d88483ed3fa74cf02a051576cf6dce17a4ca6e97c023f189f"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 6500,
+          "seconds": null,
+          "total_ceiling": 1775000
+        }
+      }
+    },
+    {
+      "id": "c2_05_wave2026Q4",
+      "design_id": "c2_05",
+      "wave": "2026Q4",
+      "title": "Preserve exact effects through deep finalizers",
+      "family": "c2",
+      "field": "exactness-depth",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c2_05_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4750,
+      "agent_total_ceiling": 1425000,
+      "prompt_sha256": {
+        "api": "7ac1d96280a767cc10a3ae7de71dc939ca4ee8b06ee213a01aea436c78ca8c45",
+        "agent": "ad4df18defd5e9eb7c008144bd1848ac7dd363b251baaf00d9ea7d24c7457262"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 4750,
+          "seconds": null,
+          "total_ceiling": 1425000
+        }
+      }
+    },
+    {
+      "id": "c2_06_wave2026Q4",
+      "design_id": "c2_06",
+      "wave": "2026Q4",
+      "title": "Preserve exact effects through deep finalizers",
+      "family": "c2",
+      "field": "exactness-depth",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c2_06_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 5500,
+      "agent_total_ceiling": 1625000,
+      "prompt_sha256": {
+        "api": "087962cafd1ce85548df7fcfb7620e4e18ab8fc6b5a345f146d60459e9c609d8",
+        "agent": "2c2c5d1e70b347cc301f9d857bd5a1571be4b9a0f95e28da6ea15205525533ab"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 5500,
+          "seconds": null,
+          "total_ceiling": 1625000
+        }
+      }
+    },
+    {
+      "id": "c2_07_wave2026Q4",
+      "design_id": "c2_07",
+      "wave": "2026Q4",
+      "title": "Preserve exact effects through deep finalizers",
+      "family": "c2",
+      "field": "exactness-depth",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c2_07_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4250,
+      "agent_total_ceiling": 1225000,
+      "prompt_sha256": {
+        "api": "eaa9f19ee31385749496ba8dd9af75abcf265af7acf539e9c7f492287f9fdd42",
+        "agent": "f546a4a3761f63dd61b903896481dab97f1e49f21899d7b24ac9a45f7af895ba"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 4250,
+          "seconds": null,
+          "total_ceiling": 1225000
+        }
+      }
+    },
+    {
+      "id": "c2_08_wave2026Q4",
+      "design_id": "c2_08",
+      "wave": "2026Q4",
+      "title": "Preserve exact effects through deep finalizers",
+      "family": "c2",
+      "field": "exactness-depth",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c2_08_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4750,
+      "agent_total_ceiling": 1225000,
+      "prompt_sha256": {
+        "api": "cf57b5080d9ac84259850cc8237eeabefe872d1a6289f753ddb4700f8b597c2d",
+        "agent": "f147b24279905cb0c890d56c2b490bc91ef1bad84e59383c096b439036171502"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 4750,
+          "seconds": null,
+          "total_ceiling": 1225000
+        }
+      }
+    },
+    {
+      "id": "c3_01_wave2026Q4",
+      "design_id": "c3_01",
+      "wave": "2026Q4",
+      "title": "Resolve the explicit merge-rule dialect",
+      "family": "c3",
+      "field": "spec-compliance",
+      "difficulty": "baseline",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c3_01_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 10000,
+      "agent_total_ceiling": 100000,
+      "prompt_sha256": {
+        "api": "062d5deb9d90180d3525b2b8b61431bf35f2aa93051fc5f3c509113120878a95",
+        "agent": "28b7315e6f3bdec58acdcd5d013ad50c4cbb4a27577a745ce97fca545dfb9f83"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 8000,
+          "seconds": 180
+        },
+        "agent": {
+          "tokens": 10000,
+          "seconds": null,
+          "total_ceiling": 100000
+        }
+      }
+    },
+    {
+      "id": "c3_02_wave2026Q4",
+      "design_id": "c3_02",
+      "wave": "2026Q4",
+      "title": "Resolve the explicit merge-rule dialect",
+      "family": "c3",
+      "field": "spec-compliance",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c3_02_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 6000,
+      "agent_total_ceiling": 1525000,
+      "prompt_sha256": {
+        "api": "64e3afc81d519f42572fb8bd5d7df6a8dc76e95116504a2ed143e7ea73707ef3",
+        "agent": "78415826367d36da67d99dbd6e0b7c3c6760be26c4d693c209ff01ad46aeea4c"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 6000,
+          "seconds": null,
+          "total_ceiling": 1525000
+        }
+      }
+    },
+    {
+      "id": "c3_03_wave2026Q4",
+      "design_id": "c3_03",
+      "wave": "2026Q4",
+      "title": "Resolve the explicit merge-rule dialect",
+      "family": "c3",
+      "field": "spec-compliance",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c3_03_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 7250,
+      "agent_total_ceiling": 2150000,
+      "prompt_sha256": {
+        "api": "0276add60a0367ee8de092a4bee4d694288247eebcf30bb1d4f9dbae206e6a37",
+        "agent": "4ccc8be438e9bdde591c7918eca01e62868d65b77a95228f9509f6e17200e11f"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 7250,
+          "seconds": null,
+          "total_ceiling": 2150000
+        }
+      }
+    },
+    {
+      "id": "c3_04_wave2026Q4",
+      "design_id": "c3_04",
+      "wave": "2026Q4",
+      "title": "Resolve the explicit merge-rule dialect",
+      "family": "c3",
+      "field": "spec-compliance",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c3_04_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 5250,
+      "agent_total_ceiling": 1300000,
+      "prompt_sha256": {
+        "api": "4132b4f74f823a84c3d586f01bdcb3d03278c2868a4fe482cb07a093c9aad2c2",
+        "agent": "d2d8388bfce13a2ca7bbc8ab3f280bd9ff436012037b03d7ace8606f5dcebf71"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 5250,
+          "seconds": null,
+          "total_ceiling": 1300000
+        }
+      }
+    },
+    {
+      "id": "c3_05_wave2026Q4",
+      "design_id": "c3_05",
+      "wave": "2026Q4",
+      "title": "Resolve the explicit merge-rule dialect",
+      "family": "c3",
+      "field": "spec-compliance",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c3_05_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 5500,
+      "agent_total_ceiling": 1450000,
+      "prompt_sha256": {
+        "api": "edea7926e5ad0aba80888a8f9511f92ccce42b0be238e4daa0eef55a9c9e899b",
+        "agent": "d5e473ee9b91f17c4d553103cf7fa6202a8695f6cf299f96935c67ec0795e4f2"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 5500,
+          "seconds": null,
+          "total_ceiling": 1450000
+        }
+      }
+    },
+    {
+      "id": "c3_06_wave2026Q4",
+      "design_id": "c3_06",
+      "wave": "2026Q4",
+      "title": "Resolve the explicit merge-rule dialect",
+      "family": "c3",
+      "field": "spec-compliance",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c3_06_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 8500,
+      "agent_total_ceiling": 2400000,
+      "prompt_sha256": {
+        "api": "a7a4b8057ba47def7552e1b4c515e528dc4ded61090732259a9d66cd9bc0c6bc",
+        "agent": "9813a51c89e4b71de388db316f3d73187a3ef292fbd0e4525a1f83cef9cd651a"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 8500,
+          "seconds": null,
+          "total_ceiling": 2400000
+        }
+      }
+    },
+    {
+      "id": "c3_07_wave2026Q4",
+      "design_id": "c3_07",
+      "wave": "2026Q4",
+      "title": "Resolve the explicit merge-rule dialect",
+      "family": "c3",
+      "field": "spec-compliance",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c3_07_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4750,
+      "agent_total_ceiling": 1425000,
+      "prompt_sha256": {
+        "api": "c5662bff68b75bb0cc9401da48ebc044f51de162c34faf70a36cfccfcc2decd4",
+        "agent": "aebde4ba33b16209872110890d61033e5a49d3949a53d7eb792f76939168fb49"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 4750,
+          "seconds": null,
+          "total_ceiling": 1425000
+        }
+      }
+    },
+    {
+      "id": "c3_08_wave2026Q4",
+      "design_id": "c3_08",
+      "wave": "2026Q4",
+      "title": "Resolve the explicit merge-rule dialect",
+      "family": "c3",
+      "field": "spec-compliance",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 10,
+      "answer_file": "c3_08_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 6000,
+      "agent_total_ceiling": 1475000,
+      "prompt_sha256": {
+        "api": "13d5299bcc171d7e1355f1911221df6ddfec16f433915116d4bfd82f399b02e4",
+        "agent": "981624fa17d10c72a2d59a43f8cd5211dc3d18129a4bc4e6cfbe835768cdafa0"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 6000,
+          "seconds": null,
+          "total_ceiling": 1475000
+        }
+      }
+    },
+    {
+      "id": "c4_01_wave2026Q4",
+      "design_id": "c4_01",
+      "wave": "2026Q4",
+      "title": "Reconcile revised payments, disputes and credit",
+      "family": "c4",
+      "field": "sql",
+      "difficulty": "baseline",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "sql",
+      "points": 10,
+      "answer_file": "c4_01_wave2026Q4.sql",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 5750,
+      "agent_total_ceiling": 100000,
+      "prompt_sha256": {
+        "api": "ac684db60afc2821a46e785806bfda477f598b9adbce21426ad13d7407707499",
+        "agent": "102689f4d74ad9365b7bcdb1f3649e0fc1835790a9a3208f933ff7d454f48684"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 8000,
+          "seconds": 180
+        },
+        "agent": {
+          "tokens": 5750,
+          "seconds": null,
+          "total_ceiling": 100000
+        }
+      }
+    },
+    {
+      "id": "c4_02_wave2026Q4",
+      "design_id": "c4_02",
+      "wave": "2026Q4",
+      "title": "Reconcile revised payments, disputes and credit",
+      "family": "c4",
+      "field": "sql",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "sql",
+      "points": 10,
+      "answer_file": "c4_02_wave2026Q4.sql",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 5250,
+      "agent_total_ceiling": 100000,
+      "prompt_sha256": {
+        "api": "5c280df32e13558e60cb3701825e45c0ff967c925b1b8ac314be0317c68b931b",
+        "agent": "d9e9c79413297b6b7e7deab23a94355687c97477b73c024a5c21d4a781b163cb"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 5250,
+          "seconds": null,
+          "total_ceiling": 100000
+        }
+      }
+    },
+    {
+      "id": "c4_03_wave2026Q4",
+      "design_id": "c4_03",
+      "wave": "2026Q4",
+      "title": "Reconcile revised payments, disputes and credit",
+      "family": "c4",
+      "field": "sql",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "sql",
+      "points": 10,
+      "answer_file": "c4_03_wave2026Q4.sql",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4250,
+      "agent_total_ceiling": 1450000,
+      "prompt_sha256": {
+        "api": "c633a426eb670938ee368526da99ad754fe9800842a0c42c7e1474e52a94cf31",
+        "agent": "db89434eb0a57cba75b84bb46bf20a7594a36143c7c2d8fac8c03b61fafdfdc9"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 4250,
+          "seconds": null,
+          "total_ceiling": 1450000
+        }
+      }
+    },
+    {
+      "id": "c4_04_wave2026Q4",
+      "design_id": "c4_04",
+      "wave": "2026Q4",
+      "title": "Reconcile revised payments, disputes and credit",
+      "family": "c4",
+      "field": "sql",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "sql",
+      "points": 10,
+      "answer_file": "c4_04_wave2026Q4.sql",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 5000,
+      "agent_total_ceiling": 1250000,
+      "prompt_sha256": {
+        "api": "50325c95b878f7516e41e8ad4e3e1c11e3b668931bcd2c48257972ab1aeafc5b",
+        "agent": "44f2fa45a8f549b7679d97345a1e9aa2dbe60036103c8b9951c26b47bf46572b"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 5000,
+          "seconds": null,
+          "total_ceiling": 1250000
+        }
+      }
+    },
+    {
+      "id": "c4_05_wave2026Q4",
+      "design_id": "c4_05",
+      "wave": "2026Q4",
+      "title": "Reconcile revised payments, disputes and credit",
+      "family": "c4",
+      "field": "sql",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "sql",
+      "points": 10,
+      "answer_file": "c4_05_wave2026Q4.sql",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4250,
+      "agent_total_ceiling": 1225000,
+      "prompt_sha256": {
+        "api": "16c17fe29936d52900ecb60a1804822b05f77e5b9e6e06ec6ae67488ca299a6a",
+        "agent": "d8a8d6320ad9c0222d45eed6bfc21e402057291872bc69f8b14cafc1359d6b9e"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 4250,
+          "seconds": null,
+          "total_ceiling": 1225000
+        }
+      }
+    },
+    {
+      "id": "c4_06_wave2026Q4",
+      "design_id": "c4_06",
+      "wave": "2026Q4",
+      "title": "Reconcile revised payments, disputes and credit",
+      "family": "c4",
+      "field": "sql",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "sql",
+      "points": 10,
+      "answer_file": "c4_06_wave2026Q4.sql",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4750,
+      "agent_total_ceiling": 1675000,
+      "prompt_sha256": {
+        "api": "d614134e49d029ab67f4e7db2510f76cf12591fce3f9bbbd641826fb778e4bfe",
+        "agent": "52474ff3e109994704bc1c94287830b5cf9bd6fca7e64b2ec495c6d19db20218"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 4750,
+          "seconds": null,
+          "total_ceiling": 1675000
+        }
+      }
+    },
+    {
+      "id": "c4_07_wave2026Q4",
+      "design_id": "c4_07",
+      "wave": "2026Q4",
+      "title": "Reconcile revised payments, disputes and credit",
+      "family": "c4",
+      "field": "sql",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "sql",
+      "points": 10,
+      "answer_file": "c4_07_wave2026Q4.sql",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2750,
+      "agent_total_ceiling": 975000,
+      "prompt_sha256": {
+        "api": "bc59f29ecde41c4d04ab817bceb9a5be52eadfe78c7515808546c4c5fe181fbe",
+        "agent": "0cf802fefff3f56e57d47449e0b0a88cf2417e374ec7953d5efc4a16ed093469"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 2750,
+          "seconds": null,
+          "total_ceiling": 975000
+        }
+      }
+    },
+    {
+      "id": "c4_08_wave2026Q4",
+      "design_id": "c4_08",
+      "wave": "2026Q4",
+      "title": "Reconcile revised payments, disputes and credit",
+      "family": "c4",
+      "field": "sql",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "sql",
+      "points": 10,
+      "answer_file": "c4_08_wave2026Q4.sql",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4750,
+      "agent_total_ceiling": 1275000,
+      "prompt_sha256": {
+        "api": "d7583fec4627f6cd1391e2efb55d509fd1e2b822ea50858560a5cbe69ed09171",
+        "agent": "328525bf4a806e5edb505b31bcac11e62683f1f3623ab3111ef249df3ffa399c"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 4750,
+          "seconds": null,
+          "total_ceiling": 1275000
+        }
+      }
+    },
+    {
+      "id": "d1_01_wave2026Q4",
+      "design_id": "d1_01",
+      "wave": "2026Q4",
+      "title": "Repair the orchard reservation coordinator",
+      "family": "d1",
+      "field": "repo-debugging",
+      "difficulty": "baseline",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "go",
+      "points": 12,
+      "answer_file": "d1_01_wave2026Q4.go",
+      "editable": "solution.go",
+      "entry": "solution",
+      "project_files": [
+        "allocation.go",
+        "availability.go",
+        "catalog.go",
+        "clock.go",
+        "ledger.go",
+        "money.go",
+        "normalization.go",
+        "ordering.go",
+        "receipts.go",
+        "replay.go",
+        "shipping.go",
+        "solution.go"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 3750,
+      "agent_total_ceiling": 100000,
+      "prompt_sha256": {
+        "api": "60c3a9d950b384c60d031e7facfc75ca312bc5561b1271da0ebef877c5d8f76d",
+        "agent": "f635f15f2fb282f38e05d832af17a3b2ba232e68f61e7958f8b511e05963417c"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 8000,
+          "seconds": 180
+        },
+        "agent": {
+          "tokens": 3750,
+          "seconds": null,
+          "total_ceiling": 100000
+        }
+      }
+    },
+    {
+      "id": "d1_02_wave2026Q4",
+      "design_id": "d1_02",
+      "wave": "2026Q4",
+      "title": "Repair the spares reservation coordinator",
+      "family": "d1",
+      "field": "repo-debugging",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d1_02_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "allocation.py",
+        "availability.py",
+        "catalog.py",
+        "clock.py",
+        "ledger.py",
+        "money.py",
+        "normalization.py",
+        "ordering.py",
+        "receipts.py",
+        "replay.py",
+        "shipping.py",
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 3250,
+      "agent_total_ceiling": 1275000,
+      "prompt_sha256": {
+        "api": "8eea57e44a1bcbdf25642ea70f341ce7ce017ec3a7966c58d12d915664117505",
+        "agent": "afbaf6ee0fb5307fe8bf2c0e37fc10289476b5aa301a1b66a0b8bf69f7379022"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 3250,
+          "seconds": null,
+          "total_ceiling": 1275000
+        }
+      }
+    },
+    {
+      "id": "d1_03_wave2026Q4",
+      "design_id": "d1_03",
+      "wave": "2026Q4",
+      "title": "Repair the coldstore reservation coordinator",
+      "family": "d1",
+      "field": "repo-debugging",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "ts",
+      "points": 12,
+      "answer_file": "d1_03_wave2026Q4.ts",
+      "editable": "solution.ts",
+      "entry": "solution",
+      "project_files": [
+        "allocation.ts",
+        "availability.ts",
+        "catalog.ts",
+        "clock.ts",
+        "ledger.ts",
+        "money.ts",
+        "normalization.ts",
+        "ordering.ts",
+        "receipts.ts",
+        "replay.ts",
+        "shipping.ts",
+        "solution.ts"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2750,
+      "agent_total_ceiling": 1225000,
+      "prompt_sha256": {
+        "api": "056b95e370377deb987e6cba8296176b2cb2bb141e5aafabbb35d34301daff20",
+        "agent": "90c6379451d2ac0510fd81b067e2d64f8781d992ded5ca5fcb2273de3caef789"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 2750,
+          "seconds": null,
+          "total_ceiling": 1225000
+        }
+      }
+    },
+    {
+      "id": "d1_04_wave2026Q4",
+      "design_id": "d1_04",
+      "wave": "2026Q4",
+      "title": "Repair the pharmacy reservation coordinator",
+      "family": "d1",
+      "field": "repo-debugging",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "go",
+      "points": 12,
+      "answer_file": "d1_04_wave2026Q4.go",
+      "editable": "solution.go",
+      "entry": "solution",
+      "project_files": [
+        "allocation.go",
+        "availability.go",
+        "catalog.go",
+        "clock.go",
+        "ledger.go",
+        "money.go",
+        "normalization.go",
+        "ordering.go",
+        "receipts.go",
+        "replay.go",
+        "shipping.go",
+        "solution.go"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4250,
+      "agent_total_ceiling": 2075000,
+      "prompt_sha256": {
+        "api": "b7d1990ba755bbf3880544e527bbef9078d1aa8d639430c7cb706dd670a278c8",
+        "agent": "2703b3161e3de814ad6104bf0db7042474908cac8b9202c0303fd42526e73004"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 4250,
+          "seconds": null,
+          "total_ceiling": 2075000
+        }
+      }
+    },
+    {
+      "id": "d1_05_wave2026Q4",
+      "design_id": "d1_05",
+      "wave": "2026Q4",
+      "title": "Repair the spares reservation coordinator",
+      "family": "d1",
+      "field": "repo-debugging",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d1_05_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "allocation.py",
+        "availability.py",
+        "catalog.py",
+        "clock.py",
+        "ledger.py",
+        "money.py",
+        "normalization.py",
+        "ordering.py",
+        "receipts.py",
+        "replay.py",
+        "shipping.py",
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2750,
+      "agent_total_ceiling": 1400000,
+      "prompt_sha256": {
+        "api": "8ec019e7de344dbdc112dc7caea6dc89fdabc45bafb674ded4751d513ea9095e",
+        "agent": "2646bd2fa1ff4600b4d7eb689849b6b9c0c828fd53c5eacde7c60fe5f58648eb"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 2750,
+          "seconds": null,
+          "total_ceiling": 1400000
+        }
+      }
+    },
+    {
+      "id": "d1_06_wave2026Q4",
+      "design_id": "d1_06",
+      "wave": "2026Q4",
+      "title": "Repair the pharmacy reservation coordinator",
+      "family": "d1",
+      "field": "repo-debugging",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "ts",
+      "points": 12,
+      "answer_file": "d1_06_wave2026Q4.ts",
+      "editable": "solution.ts",
+      "entry": "solution",
+      "project_files": [
+        "allocation.ts",
+        "availability.ts",
+        "catalog.ts",
+        "clock.ts",
+        "ledger.ts",
+        "money.ts",
+        "normalization.ts",
+        "ordering.ts",
+        "receipts.ts",
+        "replay.ts",
+        "shipping.ts",
+        "solution.ts"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2500,
+      "agent_total_ceiling": 1200000,
+      "prompt_sha256": {
+        "api": "2797c412285c3294b172e3dc784acb009072447180724c8791d481da7c2dd802",
+        "agent": "25291ab9cbeb7a8862f265ff39736279542f79ce9ece12bf4bead51914cac05f"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 2500,
+          "seconds": null,
+          "total_ceiling": 1200000
+        }
+      }
+    },
+    {
+      "id": "d1_07_wave2026Q4",
+      "design_id": "d1_07",
+      "wave": "2026Q4",
+      "title": "Repair the coldstore reservation coordinator",
+      "family": "d1",
+      "field": "repo-debugging",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "go",
+      "points": 12,
+      "answer_file": "d1_07_wave2026Q4.go",
+      "editable": "solution.go",
+      "entry": "solution",
+      "project_files": [
+        "allocation.go",
+        "availability.go",
+        "catalog.go",
+        "clock.go",
+        "ledger.go",
+        "money.go",
+        "normalization.go",
+        "ordering.go",
+        "receipts.go",
+        "replay.go",
+        "shipping.go",
+        "solution.go"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 3250,
+      "agent_total_ceiling": 1750000,
+      "prompt_sha256": {
+        "api": "dc4fb75dfa3502d593f13adaf324bcdbedb0f7a84cd66cb37a715e33e34760bd",
+        "agent": "32a605aa1174a97c277a897a2c8fddffd18b76ed4531901161814a9f4f44ea94"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 3250,
+          "seconds": null,
+          "total_ceiling": 1750000
+        }
+      }
+    },
+    {
+      "id": "d1_08_wave2026Q4",
+      "design_id": "d1_08",
+      "wave": "2026Q4",
+      "title": "Repair the pharmacy reservation coordinator",
+      "family": "d1",
+      "field": "repo-debugging",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d1_08_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "allocation.py",
+        "availability.py",
+        "catalog.py",
+        "clock.py",
+        "ledger.py",
+        "money.py",
+        "normalization.py",
+        "ordering.py",
+        "receipts.py",
+        "replay.py",
+        "shipping.py",
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 3750,
+      "agent_total_ceiling": 1250000,
+      "prompt_sha256": {
+        "api": "bb07c399d6ef7ef1b3f506ca71e9e3158beb5278136c54b2228bb856c65f3eb7",
+        "agent": "d3b5d3b3255619e7621a072c2aa35d49789ec875924dc0fa7cea3258c6d7516b"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 3750,
+          "seconds": null,
+          "total_ceiling": 1250000
+        }
+      }
+    },
+    {
+      "id": "d2_01_wave2026Q4",
+      "design_id": "d2_01",
+      "wave": "2026Q4",
+      "title": "Repair the paginated snapshot refactor",
+      "family": "d2",
+      "field": "regression-finding",
+      "difficulty": "baseline",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "go",
+      "points": 12,
+      "answer_file": "d2_01_wave2026Q4.go",
+      "editable": "solution.go",
+      "entry": "solution",
+      "project_files": [
+        "failure.json",
+        "solution.go",
+        "version_a.py.txt"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2750,
+      "agent_total_ceiling": 100000,
+      "prompt_sha256": {
+        "api": "10de473a84cd9dfd5a97278fbb51003ca340525d96fb8a9d38ea44576d881994",
+        "agent": "02be95db981a74e5ca2ffa0913be3420458480cb933c41841881905d960afbf3"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 8000,
+          "seconds": 180
+        },
+        "agent": {
+          "tokens": 2750,
+          "seconds": null,
+          "total_ceiling": 100000
+        }
+      }
+    },
+    {
+      "id": "d2_02_wave2026Q4",
+      "design_id": "d2_02",
+      "wave": "2026Q4",
+      "title": "Repair the paginated snapshot refactor",
+      "family": "d2",
+      "field": "regression-finding",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d2_02_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "failure.json",
+        "solution.py",
+        "version_a.py.txt"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 1750,
+      "agent_total_ceiling": 750000,
+      "prompt_sha256": {
+        "api": "fb1b82a8619cb77328156738d98c008b56180abeb0d79b2c075434c764a1a232",
+        "agent": "0f68d913a0fffec95a2118b5195584d3698037c83bf6139a4e784402dc3de7c3"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 1750,
+          "seconds": null,
+          "total_ceiling": 750000
+        }
+      }
+    },
+    {
+      "id": "d2_03_wave2026Q4",
+      "design_id": "d2_03",
+      "wave": "2026Q4",
+      "title": "Repair the paginated snapshot refactor",
+      "family": "d2",
+      "field": "regression-finding",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "ts",
+      "points": 12,
+      "answer_file": "d2_03_wave2026Q4.ts",
+      "editable": "solution.ts",
+      "entry": "solution",
+      "project_files": [
+        "failure.json",
+        "solution.ts",
+        "version_a.py.txt"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 1750,
+      "agent_total_ceiling": 1150000,
+      "prompt_sha256": {
+        "api": "181358261350084215098acc4187801fb5b10d61d99a2b4f10058b2067cfeffd",
+        "agent": "bce3e6296110297edffa3f8ab956024de195ad451c2135d9a73aaa3699f9c5b1"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 1750,
+          "seconds": null,
+          "total_ceiling": 1150000
+        }
+      }
+    },
+    {
+      "id": "d2_04_wave2026Q4",
+      "design_id": "d2_04",
+      "wave": "2026Q4",
+      "title": "Repair the paginated snapshot refactor",
+      "family": "d2",
+      "field": "regression-finding",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "go",
+      "points": 12,
+      "answer_file": "d2_04_wave2026Q4.go",
+      "editable": "solution.go",
+      "entry": "solution",
+      "project_files": [
+        "failure.json",
+        "solution.go",
+        "version_a.py.txt"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2500,
+      "agent_total_ceiling": 1350000,
+      "prompt_sha256": {
+        "api": "9e2ff3958d2e3505119dff4db2b43d0301c658c3ededc464f675067aec6362fb",
+        "agent": "b8cc56bea291aeff8cd78238469d06e0f32c9064245b9f221dbd51cb312b5685"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 2500,
+          "seconds": null,
+          "total_ceiling": 1350000
+        }
+      }
+    },
+    {
+      "id": "d2_05_wave2026Q4",
+      "design_id": "d2_05",
+      "wave": "2026Q4",
+      "title": "Repair the paginated snapshot refactor",
+      "family": "d2",
+      "field": "regression-finding",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d2_05_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "failure.json",
+        "solution.py",
+        "version_a.py.txt"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 1750,
+      "agent_total_ceiling": 750000,
+      "prompt_sha256": {
+        "api": "bf05ab66978dce428818f27151033343a8f67645e334f3f9fe3278fd7941b7c4",
+        "agent": "1cea45a1be201c5cedaf4230383aee59b15fa903264bb9a3d13fad7b503d3698"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 1750,
+          "seconds": null,
+          "total_ceiling": 750000
+        }
+      }
+    },
+    {
+      "id": "d2_06_wave2026Q4",
+      "design_id": "d2_06",
+      "wave": "2026Q4",
+      "title": "Repair the paginated snapshot refactor",
+      "family": "d2",
+      "field": "regression-finding",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "ts",
+      "points": 12,
+      "answer_file": "d2_06_wave2026Q4.ts",
+      "editable": "solution.ts",
+      "entry": "solution",
+      "project_files": [
+        "failure.json",
+        "solution.ts",
+        "version_a.py.txt"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 1250,
+      "agent_total_ceiling": 675000,
+      "prompt_sha256": {
+        "api": "ac50d6503c39d328a61825346da36e7c858dc89c8901466c340dd607f1de31aa",
+        "agent": "ba00d62a628467b48d28ee831dd8617862444c44551dabbd7f13baf74d72d181"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 1250,
+          "seconds": null,
+          "total_ceiling": 675000
+        }
+      }
+    },
+    {
+      "id": "d2_07_wave2026Q4",
+      "design_id": "d2_07",
+      "wave": "2026Q4",
+      "title": "Repair the paginated snapshot refactor",
+      "family": "d2",
+      "field": "regression-finding",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "go",
+      "points": 12,
+      "answer_file": "d2_07_wave2026Q4.go",
+      "editable": "solution.go",
+      "entry": "solution",
+      "project_files": [
+        "failure.json",
+        "solution.go",
+        "version_a.py.txt"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2500,
+      "agent_total_ceiling": 1400000,
+      "prompt_sha256": {
+        "api": "4b74ba4993cc6ef1140f77b6ce4756e566957d484aa1d3be2c526b9c19ab2819",
+        "agent": "6deec047a61515860b62d6600a601fde9fcace178bb0004bad5654f83bf3b362"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 2500,
+          "seconds": null,
+          "total_ceiling": 1400000
+        }
+      }
+    },
+    {
+      "id": "d2_08_wave2026Q4",
+      "design_id": "d2_08",
+      "wave": "2026Q4",
+      "title": "Repair the paginated snapshot refactor",
+      "family": "d2",
+      "field": "regression-finding",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d2_08_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "failure.json",
+        "solution.py",
+        "version_a.py.txt"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 1750,
+      "agent_total_ceiling": 750000,
+      "prompt_sha256": {
+        "api": "c3b4a19f0e52e4693db16b1bca889a615f35b1b1358d7826255f748f3337f508",
+        "agent": "4b317b7bef936369ac47675fb4bde191f287826c023f9584d97dbc85e04e107e"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 1750,
+          "seconds": null,
+          "total_ceiling": 750000
+        }
+      }
+    },
+    {
+      "id": "d3_01_wave2026Q4",
+      "design_id": "d3_01",
+      "wave": "2026Q4",
+      "title": "Extend transactions without changing legacy quirks",
+      "family": "d3",
+      "field": "behavior-preserving-refactor",
+      "difficulty": "baseline",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "go",
+      "points": 12,
+      "answer_file": "d3_01_wave2026Q4.go",
+      "editable": "solution.go",
+      "entry": "solution",
+      "project_files": [
+        "solution.go"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 3250,
+      "agent_total_ceiling": 100000,
+      "prompt_sha256": {
+        "api": "da0031f9efa643cdf25d1dfe3b80af75812f61f67469262412b01e2abe9c0988",
+        "agent": "cc0d1273c9879436f5b7966a2fe77b9a14229ee5aa3b6de0fae5215b52dab491"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 8000,
+          "seconds": 180
+        },
+        "agent": {
+          "tokens": 3250,
+          "seconds": null,
+          "total_ceiling": 100000
+        }
+      }
+    },
+    {
+      "id": "d3_02_wave2026Q4",
+      "design_id": "d3_02",
+      "wave": "2026Q4",
+      "title": "Extend transactions without changing legacy quirks",
+      "family": "d3",
+      "field": "behavior-preserving-refactor",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d3_02_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2250,
+      "agent_total_ceiling": 950000,
+      "prompt_sha256": {
+        "api": "a07b6bc5d82478e9b93c18751ca2672bc2a60481e45514b0a6654277569ff70c",
+        "agent": "fbadb8741d4bd84e3f741535ddc7f14def0bd3c66ba0dd66b46b4e6a9c1261c7"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 2250,
+          "seconds": null,
+          "total_ceiling": 950000
+        }
+      }
+    },
+    {
+      "id": "d3_03_wave2026Q4",
+      "design_id": "d3_03",
+      "wave": "2026Q4",
+      "title": "Extend transactions without changing legacy quirks",
+      "family": "d3",
+      "field": "behavior-preserving-refactor",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "ts",
+      "points": 12,
+      "answer_file": "d3_03_wave2026Q4.ts",
+      "editable": "solution.ts",
+      "entry": "solution",
+      "project_files": [
+        "solution.ts"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2250,
+      "agent_total_ceiling": 1150000,
+      "prompt_sha256": {
+        "api": "a4d305a28561acca438e07510e6b8b800fb08016ad3526056267dc5a520c3d80",
+        "agent": "8f877e0759684c653cb0ad240bfbdd26cec3bb720ea8df6813bfb63c6e8bfed8"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 2250,
+          "seconds": null,
+          "total_ceiling": 1150000
+        }
+      }
+    },
+    {
+      "id": "d3_04_wave2026Q4",
+      "design_id": "d3_04",
+      "wave": "2026Q4",
+      "title": "Extend transactions without changing legacy quirks",
+      "family": "d3",
+      "field": "behavior-preserving-refactor",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "go",
+      "points": 12,
+      "answer_file": "d3_04_wave2026Q4.go",
+      "editable": "solution.go",
+      "entry": "solution",
+      "project_files": [
+        "solution.go"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4750,
+      "agent_total_ceiling": 1275000,
+      "prompt_sha256": {
+        "api": "aae5d8ed6ffd1caaee76d662361b80f974808fe91cd6a86d287ce2a739c51a53",
+        "agent": "e00f0b09d1f840a39636481215d62f46daceefe863a511de20460b7cd077afd9"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 4750,
+          "seconds": null,
+          "total_ceiling": 1275000
+        }
+      }
+    },
+    {
+      "id": "d3_05_wave2026Q4",
+      "design_id": "d3_05",
+      "wave": "2026Q4",
+      "title": "Extend transactions without changing legacy quirks",
+      "family": "d3",
+      "field": "behavior-preserving-refactor",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d3_05_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2250,
+      "agent_total_ceiling": 950000,
+      "prompt_sha256": {
+        "api": "bffd678ec972c895f1a5c447245e5d04c2874f03d9077b83cbbe4d57e1298d37",
+        "agent": "fffc6e8dc81c99fb13ec7952c0e3bf19082ba06b9470f190e51da91610d37ee2"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 2250,
+          "seconds": null,
+          "total_ceiling": 950000
+        }
+      }
+    },
+    {
+      "id": "d3_06_wave2026Q4",
+      "design_id": "d3_06",
+      "wave": "2026Q4",
+      "title": "Extend transactions without changing legacy quirks",
+      "family": "d3",
+      "field": "behavior-preserving-refactor",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "ts",
+      "points": 12,
+      "answer_file": "d3_06_wave2026Q4.ts",
+      "editable": "solution.ts",
+      "entry": "solution",
+      "project_files": [
+        "solution.ts"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2500,
+      "agent_total_ceiling": 950000,
+      "prompt_sha256": {
+        "api": "70b480b4955d3b91c3f739b372615fa9bb5019503c68f0db7904e1736806e814",
+        "agent": "c7c325d1722b8026c77bf2da5874a4c4c6bd78a891b4af2c266a7c11de018422"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 2500,
+          "seconds": null,
+          "total_ceiling": 950000
+        }
+      }
+    },
+    {
+      "id": "d3_07_wave2026Q4",
+      "design_id": "d3_07",
+      "wave": "2026Q4",
+      "title": "Extend transactions without changing legacy quirks",
+      "family": "d3",
+      "field": "behavior-preserving-refactor",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "go",
+      "points": 12,
+      "answer_file": "d3_07_wave2026Q4.go",
+      "editable": "solution.go",
+      "entry": "solution",
+      "project_files": [
+        "solution.go"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4500,
+      "agent_total_ceiling": 1300000,
+      "prompt_sha256": {
+        "api": "10fdb59f7aa496b511cbd2d3f9ae7c384ea9e3e6e6aeb0a03e65c6f7b278e852",
+        "agent": "5ed989dd187a44ddf56154d15104fbc276fb845584721712eb2a2511f927addc"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 4500,
+          "seconds": null,
+          "total_ceiling": 1300000
+        }
+      }
+    },
+    {
+      "id": "d3_08_wave2026Q4",
+      "design_id": "d3_08",
+      "wave": "2026Q4",
+      "title": "Extend transactions without changing legacy quirks",
+      "family": "d3",
+      "field": "behavior-preserving-refactor",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d3_08_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 3000,
+      "agent_total_ceiling": 1350000,
+      "prompt_sha256": {
+        "api": "9d2e55b7e7b70ebb96a78a68971da164050b7892290096e55f0dbb390a92485d",
+        "agent": "f38f31fd171b40aba96a0047a9adfc531c54c8d9972121010214d2df89d614c8"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 3000,
+          "seconds": null,
+          "total_ceiling": 1350000
+        }
+      }
+    },
+    {
+      "id": "d4_01_wave2026Q4",
+      "design_id": "d4_01",
+      "wave": "2026Q4",
+      "title": "Diagnose recovery after an interrupted restart",
+      "family": "d4",
+      "field": "diagnosis",
+      "difficulty": "baseline",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d4_01_wave2026Q4.json",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "checksum.py",
+        "framing.py",
+        "incident.json",
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2000,
+      "agent_total_ceiling": 100000,
+      "prompt_sha256": {
+        "api": "8cc6bfc6ba5deae2d1010ba1cd1115afbed205716cb84a2f5abf52134b7e8a09",
+        "agent": "c23fea9095c87f16d9546f7067cbca0038c5f9d4feffb97570a94c31065fc067"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 8000,
+          "seconds": 180
+        },
+        "agent": {
+          "tokens": 2000,
+          "seconds": null,
+          "total_ceiling": 100000
+        }
+      }
+    },
+    {
+      "id": "d4_02_wave2026Q4",
+      "design_id": "d4_02",
+      "wave": "2026Q4",
+      "title": "Diagnose recovery after an interrupted restart",
+      "family": "d4",
+      "field": "diagnosis",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d4_02_wave2026Q4.json",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "checksum.py",
+        "framing.py",
+        "incident.json",
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 1750,
+      "agent_total_ceiling": 1175000,
+      "prompt_sha256": {
+        "api": "a8230e092ef46d3f1668752252022495d2ebe80f10bfda74b3cc87a917009bb3",
+        "agent": "3f6603f99ea8677baa1b3d759261818332f867dae45b61966029b62b02675db1"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 1750,
+          "seconds": null,
+          "total_ceiling": 1175000
+        }
+      }
+    },
+    {
+      "id": "d4_03_wave2026Q4",
+      "design_id": "d4_03",
+      "wave": "2026Q4",
+      "title": "Diagnose recovery after an interrupted restart",
+      "family": "d4",
+      "field": "diagnosis",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d4_03_wave2026Q4.json",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "checksum.py",
+        "framing.py",
+        "incident.json",
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2250,
+      "agent_total_ceiling": 1400000,
+      "prompt_sha256": {
+        "api": "e812833032248eea7ef0af066da209c4f397d81591332322172ff8a6528545f7",
+        "agent": "4f17e0dd2c7c2317b2832f852e7f5ccd850fc892ed26c1b3f51d9ce19315984d"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 2250,
+          "seconds": null,
+          "total_ceiling": 1400000
+        }
+      }
+    },
+    {
+      "id": "d4_04_wave2026Q4",
+      "design_id": "d4_04",
+      "wave": "2026Q4",
+      "title": "Diagnose recovery after an interrupted restart",
+      "family": "d4",
+      "field": "diagnosis",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d4_04_wave2026Q4.json",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "checksum.py",
+        "framing.py",
+        "incident.json",
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2250,
+      "agent_total_ceiling": 1175000,
+      "prompt_sha256": {
+        "api": "770de3f4abd78a48e7453d4db5cbb96c2068ee64baabd636c1f599ff7625148c",
+        "agent": "700cc1c2f7e3552448f09d43991055bdbd8b5f4e56bfd9606a022d7c186603c4"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 2250,
+          "seconds": null,
+          "total_ceiling": 1175000
+        }
+      }
+    },
+    {
+      "id": "d4_05_wave2026Q4",
+      "design_id": "d4_05",
+      "wave": "2026Q4",
+      "title": "Diagnose recovery after an interrupted restart",
+      "family": "d4",
+      "field": "diagnosis",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d4_05_wave2026Q4.json",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "checksum.py",
+        "framing.py",
+        "incident.json",
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2250,
+      "agent_total_ceiling": 1000000,
+      "prompt_sha256": {
+        "api": "069c37782bc48ed81508eb2d5caa172963c369bc31f5013036cd81a69b674fb4",
+        "agent": "8de1d635ec370da3149cd427a4870f114ad63338c6ba2ae3120ffad0c3865cd0"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 2250,
+          "seconds": null,
+          "total_ceiling": 1000000
+        }
+      }
+    },
+    {
+      "id": "d4_06_wave2026Q4",
+      "design_id": "d4_06",
+      "wave": "2026Q4",
+      "title": "Diagnose recovery after an interrupted restart",
+      "family": "d4",
+      "field": "diagnosis",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d4_06_wave2026Q4.json",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "checksum.py",
+        "framing.py",
+        "incident.json",
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2250,
+      "agent_total_ceiling": 1600000,
+      "prompt_sha256": {
+        "api": "9e2ba3909eba2f05e04593395716fbc09a89302a962e860c98b57ff3de4fb7c6",
+        "agent": "3bb5fcf7113551be5187ab901323093c039883a0622c2f67d917bab009787d27"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 2250,
+          "seconds": null,
+          "total_ceiling": 1600000
+        }
+      }
+    },
+    {
+      "id": "d4_07_wave2026Q4",
+      "design_id": "d4_07",
+      "wave": "2026Q4",
+      "title": "Diagnose recovery after an interrupted restart",
+      "family": "d4",
+      "field": "diagnosis",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d4_07_wave2026Q4.json",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "checksum.py",
+        "framing.py",
+        "incident.json",
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2000,
+      "agent_total_ceiling": 1175000,
+      "prompt_sha256": {
+        "api": "6d66665c09310c4a088f19b815b3359d8728c2700935b66bc8b93fe6c285cbf9",
+        "agent": "e9c5095e1c69082fa1b27958530b2b56d5c25fa4dd97687195f2a3828cc072d3"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 2000,
+          "seconds": null,
+          "total_ceiling": 1175000
+        }
+      }
+    },
+    {
+      "id": "d4_08_wave2026Q4",
+      "design_id": "d4_08",
+      "wave": "2026Q4",
+      "title": "Diagnose recovery after an interrupted restart",
+      "family": "d4",
+      "field": "diagnosis",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d4_08_wave2026Q4.json",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "checksum.py",
+        "framing.py",
+        "incident.json",
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2500,
+      "agent_total_ceiling": 1425000,
+      "prompt_sha256": {
+        "api": "7ea9addac42110bf322cda4e11d6dc48fd5c5b03dcda1b4ca6b8c338f2d7d491",
+        "agent": "a98ff4845b5ab36b7a6841ca523b660bcf5177cb88092fa92d97f939eb8a042d"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 2500,
+          "seconds": null,
+          "total_ceiling": 1425000
+        }
+      }
+    },
+    {
+      "id": "d5_01_wave2026Q4",
+      "design_id": "d5_01",
+      "wave": "2026Q4",
+      "title": "Optimize historical windows with replacement",
+      "family": "d5",
+      "field": "performance",
+      "difficulty": "baseline",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d5_01_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 3000,
+      "agent_total_ceiling": 100000,
+      "prompt_sha256": {
+        "api": "a4b52bf866f79fa8a171bac27c8607d749bc8cf4c0eb7c62a47d5352e8c03846",
+        "agent": "2336b48a8be68eb7e2f28dfbc9a8898ea4b9f838d29e467680b61f43a99396a0"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 8000,
+          "seconds": 180
+        },
+        "agent": {
+          "tokens": 3000,
+          "seconds": null,
+          "total_ceiling": 100000
+        }
+      }
+    },
+    {
+      "id": "d5_02_wave2026Q4",
+      "design_id": "d5_02",
+      "wave": "2026Q4",
+      "title": "Optimize historical windows with replacement",
+      "family": "d5",
+      "field": "performance",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "js",
+      "points": 12,
+      "answer_file": "d5_02_wave2026Q4.js",
+      "editable": "solution.js",
+      "entry": "solution",
+      "project_files": [
+        "solution.js"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 3500,
+      "agent_total_ceiling": 1175000,
+      "prompt_sha256": {
+        "api": "a46dde6821ad57e679b8e59fabe30d6ccf0ded461da381bc4d763137cb3222dc",
+        "agent": "8773aeed9dc818b0a376cdb5035b62bbc15cb6f86904ae3393083a9ba0667bd3"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 3500,
+          "seconds": null,
+          "total_ceiling": 1175000
+        }
+      }
+    },
+    {
+      "id": "d5_03_wave2026Q4",
+      "design_id": "d5_03",
+      "wave": "2026Q4",
+      "title": "Optimize historical windows with replacement",
+      "family": "d5",
+      "field": "performance",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d5_03_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4500,
+      "agent_total_ceiling": 1625000,
+      "prompt_sha256": {
+        "api": "00f7d3d731fed112b5675b5d1a7dfc598d7e0b1aed8d40c79b792a56bf6914de",
+        "agent": "b350d89b18d6cbe007f93d36101b1e228fc55219b908770d3f2038e4179eb938"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 4500,
+          "seconds": null,
+          "total_ceiling": 1625000
+        }
+      }
+    },
+    {
+      "id": "d5_04_wave2026Q4",
+      "design_id": "d5_04",
+      "wave": "2026Q4",
+      "title": "Optimize historical windows with replacement",
+      "family": "d5",
+      "field": "performance",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "js",
+      "points": 12,
+      "answer_file": "d5_04_wave2026Q4.js",
+      "editable": "solution.js",
+      "entry": "solution",
+      "project_files": [
+        "solution.js"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 2750,
+      "agent_total_ceiling": 1325000,
+      "prompt_sha256": {
+        "api": "9b206272f0fb188082fab51bc1393c3a3d4ef6eb7e8ab8a9ae93a5f931fc5760",
+        "agent": "c3afe398bf7333f7174e933de170cebecffd67761d497c3b6d379172d9167d0f"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 2750,
+          "seconds": null,
+          "total_ceiling": 1325000
+        }
+      }
+    },
+    {
+      "id": "d5_05_wave2026Q4",
+      "design_id": "d5_05",
+      "wave": "2026Q4",
+      "title": "Optimize historical windows with replacement",
+      "family": "d5",
+      "field": "performance",
+      "difficulty": "hard",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d5_05_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 3000,
+      "agent_total_ceiling": 950000,
+      "prompt_sha256": {
+        "api": "77a87aea1668b8fc9f7f7b5092b8d3d42e24ae0d44fbbdbdf3790f7651b5010e",
+        "agent": "2235f032479126d56342c285b7fb646db0daf6dd4a6877ea06510f0ec473f580"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 16000,
+          "seconds": 450
+        },
+        "agent": {
+          "tokens": 3000,
+          "seconds": null,
+          "total_ceiling": 950000
+        }
+      }
+    },
+    {
+      "id": "d5_06_wave2026Q4",
+      "design_id": "d5_06",
+      "wave": "2026Q4",
+      "title": "Optimize historical windows with replacement",
+      "family": "d5",
+      "field": "performance",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "js",
+      "points": 12,
+      "answer_file": "d5_06_wave2026Q4.js",
+      "editable": "solution.js",
+      "entry": "solution",
+      "project_files": [
+        "solution.js"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 4000,
+      "agent_total_ceiling": 1200000,
+      "prompt_sha256": {
+        "api": "15119725942122c58b7152c8e6de9eb3e3cde2f8867a8a9b027b9584e8fbea48",
+        "agent": "5e6b0215527762ede3fb31bbcdd16c81f5c6d9b8b115ac53ed6510b35076618a"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 4000,
+          "seconds": null,
+          "total_ceiling": 1200000
+        }
+      }
+    },
+    {
+      "id": "d5_07_wave2026Q4",
+      "design_id": "d5_07",
+      "wave": "2026Q4",
+      "title": "Optimize historical windows with replacement",
+      "family": "d5",
+      "field": "performance",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "py",
+      "points": 12,
+      "answer_file": "d5_07_wave2026Q4.py",
+      "editable": "solution.py",
+      "entry": "solution",
+      "project_files": [
+        "solution.py"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 3500,
+      "agent_total_ceiling": 1000000,
+      "prompt_sha256": {
+        "api": "8eaed3df1987cb15cc119b945931d628d8710325709e9f63d6414fa3d56d16e0",
+        "agent": "b9528fd99ceab8a378456df952ad694020a7abf904edfa6104a0dfb16d2788ee"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 3500,
+          "seconds": null,
+          "total_ceiling": 1000000
+        }
+      }
+    },
+    {
+      "id": "d5_08_wave2026Q4",
+      "design_id": "d5_08",
+      "wave": "2026Q4",
+      "title": "Optimize historical windows with replacement",
+      "family": "d5",
+      "field": "performance",
+      "difficulty": "stress",
+      "difficulty_basis": "design target; empirical calibration pending",
+      "language": "js",
+      "points": 12,
+      "answer_file": "d5_08_wave2026Q4.js",
+      "editable": "solution.js",
+      "entry": "solution",
+      "project_files": [
+        "solution.js"
+      ],
+      "execution_limit": 12.0,
+      "compile_limit": 90.0,
+      "agent_budget": 3500,
+      "agent_total_ceiling": 1350000,
+      "prompt_sha256": {
+        "api": "fbf123c234e9c1dc8670eceac02398ec0146807da23516b8d304ad36495af5d5",
+        "agent": "60aa43007a82af27c3e8d17167f78306f2571328f366946085e051b9f7e9deb2"
+      },
+      "budgets": {
+        "api": {
+          "tokens": 24000,
+          "seconds": 900
+        },
+        "agent": {
+          "tokens": 3500,
+          "seconds": null,
+          "total_ceiling": 1350000
+        }
+      }
+    }
+  ],
+  "public_hashes": {
+    "prompts/api/c1_01_wave2026Q4.md": "edf888c24328b79cfaa10e7e77b177c8bbd429ef586c0d9cc42b10a5af78e2bc",
+    "prompts/agent/c1_01_wave2026Q4.md": "02a50aa8610a0483b2aab39e7d7115475e1ab8d5b5b3f795fe236dccff0ee41d",
+    "prompts/api/c1_02_wave2026Q4.md": "fcdd4fb42417599206179362e868c87608413a23763dbda972db3752c02aa0b7",
+    "prompts/agent/c1_02_wave2026Q4.md": "a149237420304ec1008fb12e244e0c2866f1ae9d9778967ff3495eff64b79db0",
+    "prompts/api/c1_03_wave2026Q4.md": "4a31172d91aed4121ee3ddea46b1789d6a1b0acc03ab641f9faba6c7c1a7a491",
+    "prompts/agent/c1_03_wave2026Q4.md": "1ea407e51d76b9d29d44f1bf0f51266a790096e969fac9fd48d7e52a993ab02b",
+    "prompts/api/c1_04_wave2026Q4.md": "7ed8bc0e67b18328c37f4e5a43f1c9c59d23f163456a0519c642f94026c1088e",
+    "prompts/agent/c1_04_wave2026Q4.md": "039511eae4973c59c2db8d39a4d1600c7b9d1ec70f366c359b49ed02d6f60756",
+    "prompts/api/c1_05_wave2026Q4.md": "934b55973e11922c8724f95e0ea23b7d0f31a238dd27e2a1989d30748748f58c",
+    "prompts/agent/c1_05_wave2026Q4.md": "c709ba4b4ba9ed324e3481a3400607d5722554d47ca0783c8235f623d16e97d8",
+    "prompts/api/c1_06_wave2026Q4.md": "3696082bc40d9ce35af80877eef4455ca776f25a8f560e9feca74b29157cd7ee",
+    "prompts/agent/c1_06_wave2026Q4.md": "e72ed486d39be1a9e5c12440c7b1f411ca18927922f075de9e86487431b1c87d",
+    "prompts/api/c1_07_wave2026Q4.md": "9ccdf89e7722fc8f2ab1e8fd3341ed4911e40aea51a2eb200024b812053de13d",
+    "prompts/agent/c1_07_wave2026Q4.md": "0c560b28634b40c5b6999a46838c4db5685c2228bdc7879c71a2ecc43646eaf2",
+    "prompts/api/c1_08_wave2026Q4.md": "79c229e636f1c6491fcf18f6abe8ce0895e1145bcaebc46379485e23cd76a43b",
+    "prompts/agent/c1_08_wave2026Q4.md": "2afecdfb245f9f08c1e5d5e1764530eec3843130998755594577810d97098402",
+    "prompts/api/c2_01_wave2026Q4.md": "a2df71bed6e784a9f1022b5770e6230fd573b4f3507d9d89da899d2f7932d5ef",
+    "prompts/agent/c2_01_wave2026Q4.md": "5b9a344ee63a4853085bdcbfebca43c6dc141223630f11ac6100edcb63932e6e",
+    "prompts/api/c2_02_wave2026Q4.md": "e6a2bf9ba9c4b9df4f19cdfacc05d4f0b71a2be188b4b03010a2b35f6d224966",
+    "prompts/agent/c2_02_wave2026Q4.md": "8df870b3aba1ed9b0434eb7b6cc155ee3386403bcca8575196de7d862351eb2b",
+    "prompts/api/c2_03_wave2026Q4.md": "9a9c86355fc0c4397ed09caa0fe9a931d272e820f82618cffb46d16f16e7323a",
+    "prompts/agent/c2_03_wave2026Q4.md": "cd4cae0b4519b3ea06cf7d77f75a4ad59703c76287c3835ad0b8094263e0da84",
+    "prompts/api/c2_04_wave2026Q4.md": "690ee649070f0bd17e401bca3298110731903e0af595bc785a26fc6cfe4f687c",
+    "prompts/agent/c2_04_wave2026Q4.md": "d929413853f1c28d88483ed3fa74cf02a051576cf6dce17a4ca6e97c023f189f",
+    "prompts/api/c2_05_wave2026Q4.md": "7ac1d96280a767cc10a3ae7de71dc939ca4ee8b06ee213a01aea436c78ca8c45",
+    "prompts/agent/c2_05_wave2026Q4.md": "ad4df18defd5e9eb7c008144bd1848ac7dd363b251baaf00d9ea7d24c7457262",
+    "prompts/api/c2_06_wave2026Q4.md": "087962cafd1ce85548df7fcfb7620e4e18ab8fc6b5a345f146d60459e9c609d8",
+    "prompts/agent/c2_06_wave2026Q4.md": "2c2c5d1e70b347cc301f9d857bd5a1571be4b9a0f95e28da6ea15205525533ab",
+    "prompts/api/c2_07_wave2026Q4.md": "eaa9f19ee31385749496ba8dd9af75abcf265af7acf539e9c7f492287f9fdd42",
+    "prompts/agent/c2_07_wave2026Q4.md": "f546a4a3761f63dd61b903896481dab97f1e49f21899d7b24ac9a45f7af895ba",
+    "prompts/api/c2_08_wave2026Q4.md": "cf57b5080d9ac84259850cc8237eeabefe872d1a6289f753ddb4700f8b597c2d",
+    "prompts/agent/c2_08_wave2026Q4.md": "f147b24279905cb0c890d56c2b490bc91ef1bad84e59383c096b439036171502",
+    "prompts/api/c3_01_wave2026Q4.md": "062d5deb9d90180d3525b2b8b61431bf35f2aa93051fc5f3c509113120878a95",
+    "prompts/agent/c3_01_wave2026Q4.md": "28b7315e6f3bdec58acdcd5d013ad50c4cbb4a27577a745ce97fca545dfb9f83",
+    "prompts/api/c3_02_wave2026Q4.md": "64e3afc81d519f42572fb8bd5d7df6a8dc76e95116504a2ed143e7ea73707ef3",
+    "prompts/agent/c3_02_wave2026Q4.md": "78415826367d36da67d99dbd6e0b7c3c6760be26c4d693c209ff01ad46aeea4c",
+    "prompts/api/c3_03_wave2026Q4.md": "0276add60a0367ee8de092a4bee4d694288247eebcf30bb1d4f9dbae206e6a37",
+    "prompts/agent/c3_03_wave2026Q4.md": "4ccc8be438e9bdde591c7918eca01e62868d65b77a95228f9509f6e17200e11f",
+    "prompts/api/c3_04_wave2026Q4.md": "4132b4f74f823a84c3d586f01bdcb3d03278c2868a4fe482cb07a093c9aad2c2",
+    "prompts/agent/c3_04_wave2026Q4.md": "d2d8388bfce13a2ca7bbc8ab3f280bd9ff436012037b03d7ace8606f5dcebf71",
+    "prompts/api/c3_05_wave2026Q4.md": "edea7926e5ad0aba80888a8f9511f92ccce42b0be238e4daa0eef55a9c9e899b",
+    "prompts/agent/c3_05_wave2026Q4.md": "d5e473ee9b91f17c4d553103cf7fa6202a8695f6cf299f96935c67ec0795e4f2",
+    "prompts/api/c3_06_wave2026Q4.md": "a7a4b8057ba47def7552e1b4c515e528dc4ded61090732259a9d66cd9bc0c6bc",
+    "prompts/agent/c3_06_wave2026Q4.md": "9813a51c89e4b71de388db316f3d73187a3ef292fbd0e4525a1f83cef9cd651a",
+    "prompts/api/c3_07_wave2026Q4.md": "c5662bff68b75bb0cc9401da48ebc044f51de162c34faf70a36cfccfcc2decd4",
+    "prompts/agent/c3_07_wave2026Q4.md": "aebde4ba33b16209872110890d61033e5a49d3949a53d7eb792f76939168fb49",
+    "prompts/api/c3_08_wave2026Q4.md": "13d5299bcc171d7e1355f1911221df6ddfec16f433915116d4bfd82f399b02e4",
+    "prompts/agent/c3_08_wave2026Q4.md": "981624fa17d10c72a2d59a43f8cd5211dc3d18129a4bc4e6cfbe835768cdafa0",
+    "prompts/api/c4_01_wave2026Q4.md": "ac684db60afc2821a46e785806bfda477f598b9adbce21426ad13d7407707499",
+    "prompts/agent/c4_01_wave2026Q4.md": "102689f4d74ad9365b7bcdb1f3649e0fc1835790a9a3208f933ff7d454f48684",
+    "prompts/api/c4_02_wave2026Q4.md": "5c280df32e13558e60cb3701825e45c0ff967c925b1b8ac314be0317c68b931b",
+    "prompts/agent/c4_02_wave2026Q4.md": "d9e9c79413297b6b7e7deab23a94355687c97477b73c024a5c21d4a781b163cb",
+    "prompts/api/c4_03_wave2026Q4.md": "c633a426eb670938ee368526da99ad754fe9800842a0c42c7e1474e52a94cf31",
+    "prompts/agent/c4_03_wave2026Q4.md": "db89434eb0a57cba75b84bb46bf20a7594a36143c7c2d8fac8c03b61fafdfdc9",
+    "prompts/api/c4_04_wave2026Q4.md": "50325c95b878f7516e41e8ad4e3e1c11e3b668931bcd2c48257972ab1aeafc5b",
+    "prompts/agent/c4_04_wave2026Q4.md": "44f2fa45a8f549b7679d97345a1e9aa2dbe60036103c8b9951c26b47bf46572b",
+    "prompts/api/c4_05_wave2026Q4.md": "16c17fe29936d52900ecb60a1804822b05f77e5b9e6e06ec6ae67488ca299a6a",
+    "prompts/agent/c4_05_wave2026Q4.md": "d8a8d6320ad9c0222d45eed6bfc21e402057291872bc69f8b14cafc1359d6b9e",
+    "prompts/api/c4_06_wave2026Q4.md": "d614134e49d029ab67f4e7db2510f76cf12591fce3f9bbbd641826fb778e4bfe",
+    "prompts/agent/c4_06_wave2026Q4.md": "52474ff3e109994704bc1c94287830b5cf9bd6fca7e64b2ec495c6d19db20218",
+    "prompts/api/c4_07_wave2026Q4.md": "bc59f29ecde41c4d04ab817bceb9a5be52eadfe78c7515808546c4c5fe181fbe",
+    "prompts/agent/c4_07_wave2026Q4.md": "0cf802fefff3f56e57d47449e0b0a88cf2417e374ec7953d5efc4a16ed093469",
+    "prompts/api/c4_08_wave2026Q4.md": "d7583fec4627f6cd1391e2efb55d509fd1e2b822ea50858560a5cbe69ed09171",
+    "prompts/agent/c4_08_wave2026Q4.md": "328525bf4a806e5edb505b31bcac11e62683f1f3623ab3111ef249df3ffa399c",
+    "prompts/api/d1_01_wave2026Q4.md": "60c3a9d950b384c60d031e7facfc75ca312bc5561b1271da0ebef877c5d8f76d",
+    "prompts/agent/d1_01_wave2026Q4.md": "f635f15f2fb282f38e05d832af17a3b2ba232e68f61e7958f8b511e05963417c",
+    "projects/d1_01_wave2026Q4/allocation.go": "e93d87a1faa51d66886b2d435497d705003c967aa2b6bc1de376f61901553983",
+    "projects/d1_01_wave2026Q4/availability.go": "fd0ee1a529deabbe662483a2e697fbed81181a3750388cf1893d556d34ede0fc",
+    "projects/d1_01_wave2026Q4/catalog.go": "6480859ebd9c86e149f540e80fd3e835c0785fccfb751983905a9b101c4da91a",
+    "projects/d1_01_wave2026Q4/clock.go": "9ecdb0bf2523c7ece8981d9d376c2c5377f10403279267a042d20a98d800b571",
+    "projects/d1_01_wave2026Q4/ledger.go": "f34c4cdcf9b2d418f89f44d2e86d872de5e06ae24010522d38c68b19d4baae7c",
+    "projects/d1_01_wave2026Q4/money.go": "1264e151d67092c907572bd78594743d0fed0687ddeb1dedd648e4c506a14e01",
+    "projects/d1_01_wave2026Q4/normalization.go": "991d723ec0752893ec0a2a873c95c7049ff620c56261d3587d1fd30c02d805a6",
+    "projects/d1_01_wave2026Q4/ordering.go": "4499df717a8284bcbb1cada69fbffccc95fe4ff997d5a16af679d258ef4f9915",
+    "projects/d1_01_wave2026Q4/receipts.go": "e41cdd222221976a20bda172e7c2a84b2ecbd344d9d21f23b93a7f2bbcfec5a8",
+    "projects/d1_01_wave2026Q4/replay.go": "8bec803550ca15cf8eca9fb91defe38677199a53c37374253117ad0749041166",
+    "projects/d1_01_wave2026Q4/shipping.go": "967f20f8409736abfd7a20fd0fed0c5dff4106bb20ac9f716cb3ad2cfba92fb7",
+    "projects/d1_01_wave2026Q4/solution.go": "32ea8d8220fb0a1a793644d31e28b1b4827242312a30ea132ac3d1672534b3a8",
+    "prompts/api/d1_02_wave2026Q4.md": "8eea57e44a1bcbdf25642ea70f341ce7ce017ec3a7966c58d12d915664117505",
+    "prompts/agent/d1_02_wave2026Q4.md": "afbaf6ee0fb5307fe8bf2c0e37fc10289476b5aa301a1b66a0b8bf69f7379022",
+    "projects/d1_02_wave2026Q4/allocation.py": "f26163466615cf387493c330eabe032348ea36f6b578f4ac27c8d03b39ed060f",
+    "projects/d1_02_wave2026Q4/availability.py": "553225b2c272760baff3084cdd11b28487348ceaa3188945c072df9d99e95091",
+    "projects/d1_02_wave2026Q4/catalog.py": "022e1a8abb361247497d71d32492173fd6585e5ac2c8ba0f7124f02f61ed7551",
+    "projects/d1_02_wave2026Q4/clock.py": "f353a9c3faad46cce89f47a7795e32cf4ee6044ff529fc539d6b54a2548a6e56",
+    "projects/d1_02_wave2026Q4/ledger.py": "e7cd6b997b1c6e4edc08425fe7f533752f1672e12fb5afe736d2329e40b89959",
+    "projects/d1_02_wave2026Q4/money.py": "41bd0ec342f615ad1845c1556baff1ac9e65c245d5f44a25e00f1fccee31e1a6",
+    "projects/d1_02_wave2026Q4/normalization.py": "26f099baebebd955b9e4ea4e4a1f8f4d3338b7f520107177d614bf83141d861b",
+    "projects/d1_02_wave2026Q4/ordering.py": "5fff14bb08a36a930f463da1c0b4a9bcb9d610a09fddfe2868f64f2c27af0b31",
+    "projects/d1_02_wave2026Q4/receipts.py": "47b6db576fdb720c57d9832004873c3ba453628edb2afb18e9c060c7eae407f4",
+    "projects/d1_02_wave2026Q4/replay.py": "39fe336311a4ac611075d4bf4c9d5533a46fd0bfad48978195ea12d6c2c7e0cc",
+    "projects/d1_02_wave2026Q4/shipping.py": "df86b82b44cda9f44645795773e1f9aa6a9f9670fbc36d95c56041d8a9716a6b",
+    "projects/d1_02_wave2026Q4/solution.py": "d4381c7ffd799aa1841591ce8d788c0e52f42a71b552826374be9d526f76385c",
+    "prompts/api/d1_03_wave2026Q4.md": "056b95e370377deb987e6cba8296176b2cb2bb141e5aafabbb35d34301daff20",
+    "prompts/agent/d1_03_wave2026Q4.md": "90c6379451d2ac0510fd81b067e2d64f8781d992ded5ca5fcb2273de3caef789",
+    "projects/d1_03_wave2026Q4/allocation.ts": "41650fdde32b488e357b25892bb03f21f85bb866e48d0f8f39864d4dc2828722",
+    "projects/d1_03_wave2026Q4/availability.ts": "29e2761781764dd293cc2cfd55488d59404f8bcf4d0fa4508091a843779f27d5",
+    "projects/d1_03_wave2026Q4/catalog.ts": "8c976f5c45a99f295e300aa163f1097e78dc122efa8d7a0b0c2420095650095f",
+    "projects/d1_03_wave2026Q4/clock.ts": "822c5fe798025729b736bb60873ae49c6fd3b1f9f755702a6a714c8220ad8e94",
+    "projects/d1_03_wave2026Q4/ledger.ts": "65754fe9deecfe65ede6f47ccd7db2b3f69f0ba0990acceaa9489cc53eab3939",
+    "projects/d1_03_wave2026Q4/money.ts": "0d771d7253fe005234221ec84b841ec1cad6d7edeaf555875e51de1e0061db83",
+    "projects/d1_03_wave2026Q4/normalization.ts": "8c1a263c44361bb112a60a795cd48f6c486ef0e826d6e51b84e5c4cded22f506",
+    "projects/d1_03_wave2026Q4/ordering.ts": "592801f2e4e669c884e6b773849210f5f43f962d398169f0779bdaa93d3cac82",
+    "projects/d1_03_wave2026Q4/receipts.ts": "0425222e8458639c76c54562dcff88c1aabd409dd1cd57a017d7e0669eb80900",
+    "projects/d1_03_wave2026Q4/replay.ts": "2d41053ef3d5de2797d16021a76f5405e3961fb55c235b7e6c3bd58044346368",
+    "projects/d1_03_wave2026Q4/shipping.ts": "9b01ce8a9095477278c98af5c83221d8fbc48addeb3c37afcc7e1cbf2925c407",
+    "projects/d1_03_wave2026Q4/solution.ts": "76fc638faa9de80e47fc98b6d4cd9b00f56e92e115a3f5708d510e5755874ecf",
+    "prompts/api/d1_04_wave2026Q4.md": "b7d1990ba755bbf3880544e527bbef9078d1aa8d639430c7cb706dd670a278c8",
+    "prompts/agent/d1_04_wave2026Q4.md": "2703b3161e3de814ad6104bf0db7042474908cac8b9202c0303fd42526e73004",
+    "projects/d1_04_wave2026Q4/allocation.go": "e93d87a1faa51d66886b2d435497d705003c967aa2b6bc1de376f61901553983",
+    "projects/d1_04_wave2026Q4/availability.go": "fd0ee1a529deabbe662483a2e697fbed81181a3750388cf1893d556d34ede0fc",
+    "projects/d1_04_wave2026Q4/catalog.go": "6480859ebd9c86e149f540e80fd3e835c0785fccfb751983905a9b101c4da91a",
+    "projects/d1_04_wave2026Q4/clock.go": "9ecdb0bf2523c7ece8981d9d376c2c5377f10403279267a042d20a98d800b571",
+    "projects/d1_04_wave2026Q4/ledger.go": "f34c4cdcf9b2d418f89f44d2e86d872de5e06ae24010522d38c68b19d4baae7c",
+    "projects/d1_04_wave2026Q4/money.go": "1264e151d67092c907572bd78594743d0fed0687ddeb1dedd648e4c506a14e01",
+    "projects/d1_04_wave2026Q4/normalization.go": "991d723ec0752893ec0a2a873c95c7049ff620c56261d3587d1fd30c02d805a6",
+    "projects/d1_04_wave2026Q4/ordering.go": "4499df717a8284bcbb1cada69fbffccc95fe4ff997d5a16af679d258ef4f9915",
+    "projects/d1_04_wave2026Q4/receipts.go": "e41cdd222221976a20bda172e7c2a84b2ecbd344d9d21f23b93a7f2bbcfec5a8",
+    "projects/d1_04_wave2026Q4/replay.go": "8bec803550ca15cf8eca9fb91defe38677199a53c37374253117ad0749041166",
+    "projects/d1_04_wave2026Q4/shipping.go": "967f20f8409736abfd7a20fd0fed0c5dff4106bb20ac9f716cb3ad2cfba92fb7",
+    "projects/d1_04_wave2026Q4/solution.go": "c2018a72ddbbf5b8983b254bf6228d7b1104c0f77803ea4cf555576dac282c9b",
+    "prompts/api/d1_05_wave2026Q4.md": "8ec019e7de344dbdc112dc7caea6dc89fdabc45bafb674ded4751d513ea9095e",
+    "prompts/agent/d1_05_wave2026Q4.md": "2646bd2fa1ff4600b4d7eb689849b6b9c0c828fd53c5eacde7c60fe5f58648eb",
+    "projects/d1_05_wave2026Q4/allocation.py": "f26163466615cf387493c330eabe032348ea36f6b578f4ac27c8d03b39ed060f",
+    "projects/d1_05_wave2026Q4/availability.py": "553225b2c272760baff3084cdd11b28487348ceaa3188945c072df9d99e95091",
+    "projects/d1_05_wave2026Q4/catalog.py": "022e1a8abb361247497d71d32492173fd6585e5ac2c8ba0f7124f02f61ed7551",
+    "projects/d1_05_wave2026Q4/clock.py": "f353a9c3faad46cce89f47a7795e32cf4ee6044ff529fc539d6b54a2548a6e56",
+    "projects/d1_05_wave2026Q4/ledger.py": "e7cd6b997b1c6e4edc08425fe7f533752f1672e12fb5afe736d2329e40b89959",
+    "projects/d1_05_wave2026Q4/money.py": "41bd0ec342f615ad1845c1556baff1ac9e65c245d5f44a25e00f1fccee31e1a6",
+    "projects/d1_05_wave2026Q4/normalization.py": "26f099baebebd955b9e4ea4e4a1f8f4d3338b7f520107177d614bf83141d861b",
+    "projects/d1_05_wave2026Q4/ordering.py": "5fff14bb08a36a930f463da1c0b4a9bcb9d610a09fddfe2868f64f2c27af0b31",
+    "projects/d1_05_wave2026Q4/receipts.py": "47b6db576fdb720c57d9832004873c3ba453628edb2afb18e9c060c7eae407f4",
+    "projects/d1_05_wave2026Q4/replay.py": "39fe336311a4ac611075d4bf4c9d5533a46fd0bfad48978195ea12d6c2c7e0cc",
+    "projects/d1_05_wave2026Q4/shipping.py": "df86b82b44cda9f44645795773e1f9aa6a9f9670fbc36d95c56041d8a9716a6b",
+    "projects/d1_05_wave2026Q4/solution.py": "f4d0d1cd49e487ab99e2e20cfa0f0deb800e3b307cfd9d89c1e0eebdac1be647",
+    "prompts/api/d1_06_wave2026Q4.md": "2797c412285c3294b172e3dc784acb009072447180724c8791d481da7c2dd802",
+    "prompts/agent/d1_06_wave2026Q4.md": "25291ab9cbeb7a8862f265ff39736279542f79ce9ece12bf4bead51914cac05f",
+    "projects/d1_06_wave2026Q4/allocation.ts": "41650fdde32b488e357b25892bb03f21f85bb866e48d0f8f39864d4dc2828722",
+    "projects/d1_06_wave2026Q4/availability.ts": "29e2761781764dd293cc2cfd55488d59404f8bcf4d0fa4508091a843779f27d5",
+    "projects/d1_06_wave2026Q4/catalog.ts": "8c976f5c45a99f295e300aa163f1097e78dc122efa8d7a0b0c2420095650095f",
+    "projects/d1_06_wave2026Q4/clock.ts": "822c5fe798025729b736bb60873ae49c6fd3b1f9f755702a6a714c8220ad8e94",
+    "projects/d1_06_wave2026Q4/ledger.ts": "65754fe9deecfe65ede6f47ccd7db2b3f69f0ba0990acceaa9489cc53eab3939",
+    "projects/d1_06_wave2026Q4/money.ts": "0d771d7253fe005234221ec84b841ec1cad6d7edeaf555875e51de1e0061db83",
+    "projects/d1_06_wave2026Q4/normalization.ts": "8c1a263c44361bb112a60a795cd48f6c486ef0e826d6e51b84e5c4cded22f506",
+    "projects/d1_06_wave2026Q4/ordering.ts": "592801f2e4e669c884e6b773849210f5f43f962d398169f0779bdaa93d3cac82",
+    "projects/d1_06_wave2026Q4/receipts.ts": "0425222e8458639c76c54562dcff88c1aabd409dd1cd57a017d7e0669eb80900",
+    "projects/d1_06_wave2026Q4/replay.ts": "2d41053ef3d5de2797d16021a76f5405e3961fb55c235b7e6c3bd58044346368",
+    "projects/d1_06_wave2026Q4/shipping.ts": "9b01ce8a9095477278c98af5c83221d8fbc48addeb3c37afcc7e1cbf2925c407",
+    "projects/d1_06_wave2026Q4/solution.ts": "34566e59d4c374bf0620b2d89edadd73600ee496a88d3deca1201e6a9dacaea5",
+    "prompts/api/d1_07_wave2026Q4.md": "dc4fb75dfa3502d593f13adaf324bcdbedb0f7a84cd66cb37a715e33e34760bd",
+    "prompts/agent/d1_07_wave2026Q4.md": "32a605aa1174a97c277a897a2c8fddffd18b76ed4531901161814a9f4f44ea94",
+    "projects/d1_07_wave2026Q4/allocation.go": "e93d87a1faa51d66886b2d435497d705003c967aa2b6bc1de376f61901553983",
+    "projects/d1_07_wave2026Q4/availability.go": "fd0ee1a529deabbe662483a2e697fbed81181a3750388cf1893d556d34ede0fc",
+    "projects/d1_07_wave2026Q4/catalog.go": "6480859ebd9c86e149f540e80fd3e835c0785fccfb751983905a9b101c4da91a",
+    "projects/d1_07_wave2026Q4/clock.go": "9ecdb0bf2523c7ece8981d9d376c2c5377f10403279267a042d20a98d800b571",
+    "projects/d1_07_wave2026Q4/ledger.go": "f34c4cdcf9b2d418f89f44d2e86d872de5e06ae24010522d38c68b19d4baae7c",
+    "projects/d1_07_wave2026Q4/money.go": "1264e151d67092c907572bd78594743d0fed0687ddeb1dedd648e4c506a14e01",
+    "projects/d1_07_wave2026Q4/normalization.go": "991d723ec0752893ec0a2a873c95c7049ff620c56261d3587d1fd30c02d805a6",
+    "projects/d1_07_wave2026Q4/ordering.go": "4499df717a8284bcbb1cada69fbffccc95fe4ff997d5a16af679d258ef4f9915",
+    "projects/d1_07_wave2026Q4/receipts.go": "e41cdd222221976a20bda172e7c2a84b2ecbd344d9d21f23b93a7f2bbcfec5a8",
+    "projects/d1_07_wave2026Q4/replay.go": "8bec803550ca15cf8eca9fb91defe38677199a53c37374253117ad0749041166",
+    "projects/d1_07_wave2026Q4/shipping.go": "967f20f8409736abfd7a20fd0fed0c5dff4106bb20ac9f716cb3ad2cfba92fb7",
+    "projects/d1_07_wave2026Q4/solution.go": "b92432d446651ef1e9d4e21e7ca9031ddfc23612ef55896efaf99dd1e0a8f83b",
+    "prompts/api/d1_08_wave2026Q4.md": "bb07c399d6ef7ef1b3f506ca71e9e3158beb5278136c54b2228bb856c65f3eb7",
+    "prompts/agent/d1_08_wave2026Q4.md": "d3b5d3b3255619e7621a072c2aa35d49789ec875924dc0fa7cea3258c6d7516b",
+    "projects/d1_08_wave2026Q4/allocation.py": "f26163466615cf387493c330eabe032348ea36f6b578f4ac27c8d03b39ed060f",
+    "projects/d1_08_wave2026Q4/availability.py": "553225b2c272760baff3084cdd11b28487348ceaa3188945c072df9d99e95091",
+    "projects/d1_08_wave2026Q4/catalog.py": "022e1a8abb361247497d71d32492173fd6585e5ac2c8ba0f7124f02f61ed7551",
+    "projects/d1_08_wave2026Q4/clock.py": "f353a9c3faad46cce89f47a7795e32cf4ee6044ff529fc539d6b54a2548a6e56",
+    "projects/d1_08_wave2026Q4/ledger.py": "e7cd6b997b1c6e4edc08425fe7f533752f1672e12fb5afe736d2329e40b89959",
+    "projects/d1_08_wave2026Q4/money.py": "41bd0ec342f615ad1845c1556baff1ac9e65c245d5f44a25e00f1fccee31e1a6",
+    "projects/d1_08_wave2026Q4/normalization.py": "26f099baebebd955b9e4ea4e4a1f8f4d3338b7f520107177d614bf83141d861b",
+    "projects/d1_08_wave2026Q4/ordering.py": "5fff14bb08a36a930f463da1c0b4a9bcb9d610a09fddfe2868f64f2c27af0b31",
+    "projects/d1_08_wave2026Q4/receipts.py": "47b6db576fdb720c57d9832004873c3ba453628edb2afb18e9c060c7eae407f4",
+    "projects/d1_08_wave2026Q4/replay.py": "39fe336311a4ac611075d4bf4c9d5533a46fd0bfad48978195ea12d6c2c7e0cc",
+    "projects/d1_08_wave2026Q4/shipping.py": "df86b82b44cda9f44645795773e1f9aa6a9f9670fbc36d95c56041d8a9716a6b",
+    "projects/d1_08_wave2026Q4/solution.py": "53423015d0b75756b6b74cd71df2d2c3631d4d37b30a69e415754202440d3283",
+    "prompts/api/d2_01_wave2026Q4.md": "10de473a84cd9dfd5a97278fbb51003ca340525d96fb8a9d38ea44576d881994",
+    "prompts/agent/d2_01_wave2026Q4.md": "02be95db981a74e5ca2ffa0913be3420458480cb933c41841881905d960afbf3",
+    "projects/d2_01_wave2026Q4/failure.json": "02df572a1c45656b8c28f3e460f46da0f6c5e707fd21f2f8a8a40a20635ddff3",
+    "projects/d2_01_wave2026Q4/solution.go": "b8c1af46dd838ba37eda629d19ded4ea178bb50a2a65c5f86d8b57b55fe09ac2",
+    "projects/d2_01_wave2026Q4/version_a.py.txt": "bd6cd2d1362a223d540b02f993bfbfa1c82fe38a30ad0eb6f00e18f10f5c6d12",
+    "prompts/api/d2_02_wave2026Q4.md": "fb1b82a8619cb77328156738d98c008b56180abeb0d79b2c075434c764a1a232",
+    "prompts/agent/d2_02_wave2026Q4.md": "0f68d913a0fffec95a2118b5195584d3698037c83bf6139a4e784402dc3de7c3",
+    "projects/d2_02_wave2026Q4/failure.json": "4722eeaf3a1b1c444c5d4b366274be48be45898cb79e10e39717165b1c4a94e4",
+    "projects/d2_02_wave2026Q4/solution.py": "80c7ec9c685165e1d3f4d7de162f50f23a71f0ecb3ff8f9c1b2a00c890a6bf8b",
+    "projects/d2_02_wave2026Q4/version_a.py.txt": "017bf06ac485aac995fc7a7ab014d765fba59f85b9bd870efaa61fb37ebb5e29",
+    "prompts/api/d2_03_wave2026Q4.md": "181358261350084215098acc4187801fb5b10d61d99a2b4f10058b2067cfeffd",
+    "prompts/agent/d2_03_wave2026Q4.md": "bce3e6296110297edffa3f8ab956024de195ad451c2135d9a73aaa3699f9c5b1",
+    "projects/d2_03_wave2026Q4/failure.json": "2628ad771bcf73dcb6f3e88b22771f3668c7bf09789a30a7d0a5b36b34564992",
+    "projects/d2_03_wave2026Q4/solution.ts": "7645287a86dc1c198d73c669c34eca784b3521959b908cfeeea7d4519bbfca4b",
+    "projects/d2_03_wave2026Q4/version_a.py.txt": "1eb5b394d46eea4caff8b3cdd4f3ff3a559a6617686fa51a838b3897d4bcfaaf",
+    "prompts/api/d2_04_wave2026Q4.md": "9e2ff3958d2e3505119dff4db2b43d0301c658c3ededc464f675067aec6362fb",
+    "prompts/agent/d2_04_wave2026Q4.md": "b8cc56bea291aeff8cd78238469d06e0f32c9064245b9f221dbd51cb312b5685",
+    "projects/d2_04_wave2026Q4/failure.json": "cd5b23b330030e32b5cbb80704c393b8e6cee6bf2c980c7711809cb1feed5270",
+    "projects/d2_04_wave2026Q4/solution.go": "8710124946c6768b936c83d85e414e5bbcb946662192455fb48f125b0846fab0",
+    "projects/d2_04_wave2026Q4/version_a.py.txt": "a91327215fcb54b10d3689be4f88b617688341f780badc0f0fa10ad0046f70ea",
+    "prompts/api/d2_05_wave2026Q4.md": "bf05ab66978dce428818f27151033343a8f67645e334f3f9fe3278fd7941b7c4",
+    "prompts/agent/d2_05_wave2026Q4.md": "1cea45a1be201c5cedaf4230383aee59b15fa903264bb9a3d13fad7b503d3698",
+    "projects/d2_05_wave2026Q4/failure.json": "60d0728207edb2475ae2b523afc2d665a018ed7bc382ff4a5c2c09b7fe12a495",
+    "projects/d2_05_wave2026Q4/solution.py": "661c97993d3aa305d92c36787e7dbbc6d6bbc53a1f512e5e3b0b1e1e4822e0b8",
+    "projects/d2_05_wave2026Q4/version_a.py.txt": "66466d21e8ff6278d850f071a4fac1005e4e28f9fb501e5d2132c2eca7062d97",
+    "prompts/api/d2_06_wave2026Q4.md": "ac50d6503c39d328a61825346da36e7c858dc89c8901466c340dd607f1de31aa",
+    "prompts/agent/d2_06_wave2026Q4.md": "ba00d62a628467b48d28ee831dd8617862444c44551dabbd7f13baf74d72d181",
+    "projects/d2_06_wave2026Q4/failure.json": "0df1ef51d86eb8f833b8427b0ba143f8e359f193d58f4977229f950e44abc304",
+    "projects/d2_06_wave2026Q4/solution.ts": "3f195345eec9795a98a2db7d2d67138bcc08ea7d763271500c94024b8586ba4c",
+    "projects/d2_06_wave2026Q4/version_a.py.txt": "a57231205e3e26b032516d5e78b89e7ac476fb7765bf96a8adb98a54be88551d",
+    "prompts/api/d2_07_wave2026Q4.md": "4b74ba4993cc6ef1140f77b6ce4756e566957d484aa1d3be2c526b9c19ab2819",
+    "prompts/agent/d2_07_wave2026Q4.md": "6deec047a61515860b62d6600a601fde9fcace178bb0004bad5654f83bf3b362",
+    "projects/d2_07_wave2026Q4/failure.json": "0703c2766d9b09f85269b91653b8e4116ba8a14093b1a1526e2cfbba8b882d26",
+    "projects/d2_07_wave2026Q4/solution.go": "26117fabe910007474c64bcabdb440d7ae7f687fd9daa7621fabba650f94c2df",
+    "projects/d2_07_wave2026Q4/version_a.py.txt": "4118dd3812b0be4ebda1d1f3484f447f145a7a1115acc475184224dfd7a1b672",
+    "prompts/api/d2_08_wave2026Q4.md": "c3b4a19f0e52e4693db16b1bca889a615f35b1b1358d7826255f748f3337f508",
+    "prompts/agent/d2_08_wave2026Q4.md": "4b317b7bef936369ac47675fb4bde191f287826c023f9584d97dbc85e04e107e",
+    "projects/d2_08_wave2026Q4/failure.json": "c3111335efac96d71d5a92ac96a67a605e7e22eb562bc0fad856e0c46cbda2d4",
+    "projects/d2_08_wave2026Q4/solution.py": "84079070fe960899dd9cb3df88f4f488ede2a7b71f5ef25e6ea19b80365a67a9",
+    "projects/d2_08_wave2026Q4/version_a.py.txt": "3a64a6ab1d1713885fb3ba661d05fef617a8d978e048e802d6289fb85c3ffa2d",
+    "prompts/api/d3_01_wave2026Q4.md": "da0031f9efa643cdf25d1dfe3b80af75812f61f67469262412b01e2abe9c0988",
+    "prompts/agent/d3_01_wave2026Q4.md": "cc0d1273c9879436f5b7966a2fe77b9a14229ee5aa3b6de0fae5215b52dab491",
+    "projects/d3_01_wave2026Q4/solution.go": "83a80d804e5c4844b67307c0b5ebd89ed7d0fbc25dab16077478c9e3cf594d2d",
+    "prompts/api/d3_02_wave2026Q4.md": "a07b6bc5d82478e9b93c18751ca2672bc2a60481e45514b0a6654277569ff70c",
+    "prompts/agent/d3_02_wave2026Q4.md": "fbadb8741d4bd84e3f741535ddc7f14def0bd3c66ba0dd66b46b4e6a9c1261c7",
+    "projects/d3_02_wave2026Q4/solution.py": "29493aed633897b20d870ec9661100f4c084d3a330df34afcd3524f67a757f6e",
+    "prompts/api/d3_03_wave2026Q4.md": "a4d305a28561acca438e07510e6b8b800fb08016ad3526056267dc5a520c3d80",
+    "prompts/agent/d3_03_wave2026Q4.md": "8f877e0759684c653cb0ad240bfbdd26cec3bb720ea8df6813bfb63c6e8bfed8",
+    "projects/d3_03_wave2026Q4/solution.ts": "1000b9e64723d9a8447dcb0a8ab33db905c5a3ed0f6f44d89e9109a980920376",
+    "prompts/api/d3_04_wave2026Q4.md": "aae5d8ed6ffd1caaee76d662361b80f974808fe91cd6a86d287ce2a739c51a53",
+    "prompts/agent/d3_04_wave2026Q4.md": "e00f0b09d1f840a39636481215d62f46daceefe863a511de20460b7cd077afd9",
+    "projects/d3_04_wave2026Q4/solution.go": "153d43dcb2b76de13c0af4f6fec8151e840b0f79664be01f17cb44182982d173",
+    "prompts/api/d3_05_wave2026Q4.md": "bffd678ec972c895f1a5c447245e5d04c2874f03d9077b83cbbe4d57e1298d37",
+    "prompts/agent/d3_05_wave2026Q4.md": "fffc6e8dc81c99fb13ec7952c0e3bf19082ba06b9470f190e51da91610d37ee2",
+    "projects/d3_05_wave2026Q4/solution.py": "2b07ae450553aa2530a52ed301897dfb1c5d3b86fe5bab1e61823fad13084782",
+    "prompts/api/d3_06_wave2026Q4.md": "70b480b4955d3b91c3f739b372615fa9bb5019503c68f0db7904e1736806e814",
+    "prompts/agent/d3_06_wave2026Q4.md": "c7c325d1722b8026c77bf2da5874a4c4c6bd78a891b4af2c266a7c11de018422",
+    "projects/d3_06_wave2026Q4/solution.ts": "6f4efb044a13510663ee7989d3b99992f9c06cd6a863b7f3c1f2e2fbf4bcd4ac",
+    "prompts/api/d3_07_wave2026Q4.md": "10fdb59f7aa496b511cbd2d3f9ae7c384ea9e3e6e6aeb0a03e65c6f7b278e852",
+    "prompts/agent/d3_07_wave2026Q4.md": "5ed989dd187a44ddf56154d15104fbc276fb845584721712eb2a2511f927addc",
+    "projects/d3_07_wave2026Q4/solution.go": "48186c4cf1bee94c38cdb8dac648aaa483ade6e3e7d039d23a7f5b6583dd21aa",
+    "prompts/api/d3_08_wave2026Q4.md": "9d2e55b7e7b70ebb96a78a68971da164050b7892290096e55f0dbb390a92485d",
+    "prompts/agent/d3_08_wave2026Q4.md": "f38f31fd171b40aba96a0047a9adfc531c54c8d9972121010214d2df89d614c8",
+    "projects/d3_08_wave2026Q4/solution.py": "3619a0e243534696dccb6987967218c0e422e2db2cd5594b656e7caf6725b5c7",
+    "prompts/api/d4_01_wave2026Q4.md": "8cc6bfc6ba5deae2d1010ba1cd1115afbed205716cb84a2f5abf52134b7e8a09",
+    "prompts/agent/d4_01_wave2026Q4.md": "c23fea9095c87f16d9546f7067cbca0038c5f9d4feffb97570a94c31065fc067",
+    "projects/d4_01_wave2026Q4/checksum.py": "25b2b7461fca2f69b24d10b1f5bb8c5bee7cd9dd25880ed26b41825e7c9d182e",
+    "projects/d4_01_wave2026Q4/framing.py": "a11116c1ce5719dc70a609ce4e7557da5340e7299767dd963dc51fac572874ce",
+    "projects/d4_01_wave2026Q4/incident.json": "d51faa9e24fbcfcab544da1bbded059232092a604e4e0c8cba3bdf6ff8b5a5b7",
+    "projects/d4_01_wave2026Q4/solution.py": "a7fb63cd78eef0ae9cc97d5680eb284cdaf461d2b5ea7a78691990b8ce0db745",
+    "prompts/api/d4_02_wave2026Q4.md": "a8230e092ef46d3f1668752252022495d2ebe80f10bfda74b3cc87a917009bb3",
+    "prompts/agent/d4_02_wave2026Q4.md": "3f6603f99ea8677baa1b3d759261818332f867dae45b61966029b62b02675db1",
+    "projects/d4_02_wave2026Q4/checksum.py": "3768c9f64f5892f93038b14bf905498063d8192e568401df4a2ce9d95b010029",
+    "projects/d4_02_wave2026Q4/framing.py": "a5580684c2e4ac3b5f80f134ba5671599a484dda2464677d0e28f3ad3c2f204e",
+    "projects/d4_02_wave2026Q4/incident.json": "c42c3c70a2c1ac96e7df4a7add0ebbe6dd341651a46062bff14925d3bdf84689",
+    "projects/d4_02_wave2026Q4/solution.py": "bba0ca3071ca74024e488bdc424627d2f84a7d89cc4e0560b311651df615c819",
+    "prompts/api/d4_03_wave2026Q4.md": "e812833032248eea7ef0af066da209c4f397d81591332322172ff8a6528545f7",
+    "prompts/agent/d4_03_wave2026Q4.md": "4f17e0dd2c7c2317b2832f852e7f5ccd850fc892ed26c1b3f51d9ce19315984d",
+    "projects/d4_03_wave2026Q4/checksum.py": "16e0df16bdf254aabeaab7f2aad3db0f9d129c0117bf50faf7de7c81593eea63",
+    "projects/d4_03_wave2026Q4/framing.py": "72694edc0a240853d2aa3c6aac21881dfe0eb38472d3b8e53323ff933f091c41",
+    "projects/d4_03_wave2026Q4/incident.json": "ff521e526ee6a8884e6d17f5d02ea4cd4301dd1ae3f119add98581ee12c8da17",
+    "projects/d4_03_wave2026Q4/solution.py": "6a29c4c7cf7faf2d92e120b4ccaa91a1b241a1adc6cf2d5e55330b8e48fd448d",
+    "prompts/api/d4_04_wave2026Q4.md": "770de3f4abd78a48e7453d4db5cbb96c2068ee64baabd636c1f599ff7625148c",
+    "prompts/agent/d4_04_wave2026Q4.md": "700cc1c2f7e3552448f09d43991055bdbd8b5f4e56bfd9606a022d7c186603c4",
+    "projects/d4_04_wave2026Q4/checksum.py": "5ea1cb5ccc385638e9b4a5486250d4c263b312c063cd8a743cf39d500dc4d070",
+    "projects/d4_04_wave2026Q4/framing.py": "2a8efed30aa6c8a678f057ed1fa9e67e2f30fda9f5423fefd8ce239671b3ac98",
+    "projects/d4_04_wave2026Q4/incident.json": "431a8585413d64460c60ba20ff0efe009c6c8b311f29626742efa5c5adf24b38",
+    "projects/d4_04_wave2026Q4/solution.py": "c21ed25cc8ded41dde1ea0c06268428f444702aa936768c325e7f3f93bd5e550",
+    "prompts/api/d4_05_wave2026Q4.md": "069c37782bc48ed81508eb2d5caa172963c369bc31f5013036cd81a69b674fb4",
+    "prompts/agent/d4_05_wave2026Q4.md": "8de1d635ec370da3149cd427a4870f114ad63338c6ba2ae3120ffad0c3865cd0",
+    "projects/d4_05_wave2026Q4/checksum.py": "03ef96190e11953620c3148946e7f62b61b819550c6df730f657f15d5fc5d908",
+    "projects/d4_05_wave2026Q4/framing.py": "ba8796731343e7ed0c28cf9541091923a7f86eb4df55f687e86e710d6ce37ddb",
+    "projects/d4_05_wave2026Q4/incident.json": "a5d5da24dce13378e2dacf52611131062033c929559af55e780eaa28f5ac30dc",
+    "projects/d4_05_wave2026Q4/solution.py": "e845869eeb48c3163db07d78077d88cff2de63a703ba341260ded0e82df300de",
+    "prompts/api/d4_06_wave2026Q4.md": "9e2ba3909eba2f05e04593395716fbc09a89302a962e860c98b57ff3de4fb7c6",
+    "prompts/agent/d4_06_wave2026Q4.md": "3bb5fcf7113551be5187ab901323093c039883a0622c2f67d917bab009787d27",
+    "projects/d4_06_wave2026Q4/checksum.py": "529034fe3f8696637513ff47fd75c0b49db0fde0fbcfff638108b9c46cf22cbb",
+    "projects/d4_06_wave2026Q4/framing.py": "362e15fa187de0888cb30194616addffbbd926a23cc8d1fe80bd075d8ab3feb6",
+    "projects/d4_06_wave2026Q4/incident.json": "f7db83f5fc9a95c0abeb20f666877e34a7abeaf9f2abc1c94eed35056fdcf6a9",
+    "projects/d4_06_wave2026Q4/solution.py": "92d507485482ad8c7fbff828d46ae7940f0e0104a2a585c9f95400387285f4db",
+    "prompts/api/d4_07_wave2026Q4.md": "6d66665c09310c4a088f19b815b3359d8728c2700935b66bc8b93fe6c285cbf9",
+    "prompts/agent/d4_07_wave2026Q4.md": "e9c5095e1c69082fa1b27958530b2b56d5c25fa4dd97687195f2a3828cc072d3",
+    "projects/d4_07_wave2026Q4/checksum.py": "79d2807e2b1c760496b7709f82ff046b0a076de557892a3b32e3cb6445ee14a1",
+    "projects/d4_07_wave2026Q4/framing.py": "e6ab97f7ba04fcf347a91fabc9a596b7cc831ec00627e3c7d0e9895e2ef13f8b",
+    "projects/d4_07_wave2026Q4/incident.json": "7dceff06432c4deef4eb6f3c161fab35f351d33682227ff97b473938e4d89a3c",
+    "projects/d4_07_wave2026Q4/solution.py": "52aa53f296b05498223c809ab2d8ca507705acccd230c98757a4163ead05d3fa",
+    "prompts/api/d4_08_wave2026Q4.md": "7ea9addac42110bf322cda4e11d6dc48fd5c5b03dcda1b4ca6b8c338f2d7d491",
+    "prompts/agent/d4_08_wave2026Q4.md": "a98ff4845b5ab36b7a6841ca523b660bcf5177cb88092fa92d97f939eb8a042d",
+    "projects/d4_08_wave2026Q4/checksum.py": "39cfc812b7c487a1e17cb62cdf7073693f26e04a62830bc6001d44c47ba04321",
+    "projects/d4_08_wave2026Q4/framing.py": "c7eedf0830278dc190db0f562f720f244f08422bf14861a334233bed6415d530",
+    "projects/d4_08_wave2026Q4/incident.json": "27755889fc4ca079cadbe80b6f432418b78eac675e0c178e9f28ab19dc3ef117",
+    "projects/d4_08_wave2026Q4/solution.py": "3ba5dadd14d71786aa0756d14f7428fd1cdbe9c3540f6e74d06e571bc6151d39",
+    "prompts/api/d5_01_wave2026Q4.md": "a4b52bf866f79fa8a171bac27c8607d749bc8cf4c0eb7c62a47d5352e8c03846",
+    "prompts/agent/d5_01_wave2026Q4.md": "2336b48a8be68eb7e2f28dfbc9a8898ea4b9f838d29e467680b61f43a99396a0",
+    "projects/d5_01_wave2026Q4/solution.py": "56dece646f59f45bad559f50154033b7baf5eaac44c39f52774e9067c5277a16",
+    "prompts/api/d5_02_wave2026Q4.md": "a46dde6821ad57e679b8e59fabe30d6ccf0ded461da381bc4d763137cb3222dc",
+    "prompts/agent/d5_02_wave2026Q4.md": "8773aeed9dc818b0a376cdb5035b62bbc15cb6f86904ae3393083a9ba0667bd3",
+    "projects/d5_02_wave2026Q4/solution.js": "e9dae0a7080345ba89d13466c18c31b49ca7f55bebd94688540c73ed0369af18",
+    "prompts/api/d5_03_wave2026Q4.md": "00f7d3d731fed112b5675b5d1a7dfc598d7e0b1aed8d40c79b792a56bf6914de",
+    "prompts/agent/d5_03_wave2026Q4.md": "b350d89b18d6cbe007f93d36101b1e228fc55219b908770d3f2038e4179eb938",
+    "projects/d5_03_wave2026Q4/solution.py": "33ae730e4ce047854d5986298e5d8046614d1b52f1b18f2f6020879d2b1bc132",
+    "prompts/api/d5_04_wave2026Q4.md": "9b206272f0fb188082fab51bc1393c3a3d4ef6eb7e8ab8a9ae93a5f931fc5760",
+    "prompts/agent/d5_04_wave2026Q4.md": "c3afe398bf7333f7174e933de170cebecffd67761d497c3b6d379172d9167d0f",
+    "projects/d5_04_wave2026Q4/solution.js": "ae34a666d3a4ded167e7d1db31a61bd8445f5075212a5d49c0e5fa2cf961ee2d",
+    "prompts/api/d5_05_wave2026Q4.md": "77a87aea1668b8fc9f7f7b5092b8d3d42e24ae0d44fbbdbdf3790f7651b5010e",
+    "prompts/agent/d5_05_wave2026Q4.md": "2235f032479126d56342c285b7fb646db0daf6dd4a6877ea06510f0ec473f580",
+    "projects/d5_05_wave2026Q4/solution.py": "41a4d2d78cb50646bbb53991f105a07b5ecc1f4829076b57f735818b87aa03e7",
+    "prompts/api/d5_06_wave2026Q4.md": "15119725942122c58b7152c8e6de9eb3e3cde2f8867a8a9b027b9584e8fbea48",
+    "prompts/agent/d5_06_wave2026Q4.md": "5e6b0215527762ede3fb31bbcdd16c81f5c6d9b8b115ac53ed6510b35076618a",
+    "projects/d5_06_wave2026Q4/solution.js": "57ac7880a62b7f087430385be5a28e24f113c3fd1b17a772eaa8ab80a244e948",
+    "prompts/api/d5_07_wave2026Q4.md": "8eaed3df1987cb15cc119b945931d628d8710325709e9f63d6414fa3d56d16e0",
+    "prompts/agent/d5_07_wave2026Q4.md": "b9528fd99ceab8a378456df952ad694020a7abf904edfa6104a0dfb16d2788ee",
+    "projects/d5_07_wave2026Q4/solution.py": "851c24fc00267841a4ab122272fc2d57b324f395ae59a6fc814e2881ed316e60",
+    "prompts/api/d5_08_wave2026Q4.md": "fbf123c234e9c1dc8670eceac02398ec0146807da23516b8d304ad36495af5d5",
+    "prompts/agent/d5_08_wave2026Q4.md": "60aa43007a82af27c3e8d17167f78306f2571328f366946085e051b9f7e9deb2",
+    "projects/d5_08_wave2026Q4/solution.js": "d1423d66f87f0193f404be25d933896ea3275d0e5ebba1d37a6bb9c1661ec4f5"
+  }
+}

@@ -1,0 +1,1 @@
+export function receipt(e:string,o:string,s:string,a:number):any[]{return [e,o,s,a];}

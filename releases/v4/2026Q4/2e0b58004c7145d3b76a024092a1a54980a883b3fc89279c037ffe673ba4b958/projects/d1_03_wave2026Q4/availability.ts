@@ -1,0 +1,1 @@
+export function eligible(l:any,s:string,n:number):boolean{return l.sku===s&&l.expires>n&&l.available>0;}export function inclusive(l:any,s:string,n:number):boolean{return l.sku===s&&l.expires>=n&&l.available>0;}

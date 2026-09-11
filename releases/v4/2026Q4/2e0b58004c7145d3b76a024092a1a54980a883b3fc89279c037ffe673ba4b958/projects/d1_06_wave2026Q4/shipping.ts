@@ -1,0 +1,1 @@
+export function shipping(s:number,t:number,f:number):number{return s>=t?0:f;}

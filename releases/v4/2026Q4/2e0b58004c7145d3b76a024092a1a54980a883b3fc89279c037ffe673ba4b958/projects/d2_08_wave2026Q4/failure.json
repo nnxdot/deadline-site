@@ -1,0 +1,114 @@
+{
+  "input": {
+    "events": [
+      [
+        3,
+        "a",
+        7,
+        null,
+        true
+      ],
+      [
+        1,
+        "a",
+        9,
+        null,
+        false
+      ],
+      [
+        2,
+        "b",
+        4,
+        10,
+        false
+      ]
+    ],
+    "pages": [
+      [
+        [
+          "first",
+          "a",
+          3,
+          10
+        ],
+        [
+          "second",
+          "b",
+          2,
+          10
+        ]
+      ],
+      [
+        [
+          "old",
+          "a",
+          1,
+          10
+        ]
+      ],
+      []
+    ]
+  },
+  "expected_B": {
+    "generation": "snapshot-867223",
+    "pages": [
+      [
+        [
+          "first",
+          "a",
+          "deleted",
+          null,
+          3
+        ],
+        [
+          "second",
+          "b",
+          "expired",
+          null,
+          2
+        ]
+      ],
+      [
+        [
+          "old",
+          "a",
+          "live",
+          9,
+          1
+        ]
+      ],
+      []
+    ]
+  },
+  "observed_B": {
+    "generation": "snapshot-867223",
+    "pages": [
+      [
+        [
+          "first",
+          "a",
+          "live",
+          7,
+          3
+        ],
+        [
+          "second",
+          "b",
+          "live",
+          4,
+          2
+        ]
+      ],
+      [
+        [
+          "old",
+          "a",
+          "live",
+          9,
+          1
+        ]
+      ],
+      []
+    ]
+  }
+}

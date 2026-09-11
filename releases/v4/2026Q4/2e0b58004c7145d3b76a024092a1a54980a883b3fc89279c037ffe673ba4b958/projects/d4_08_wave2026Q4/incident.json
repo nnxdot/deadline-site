@@ -1,0 +1,27 @@
+{
+  "input": {
+    "chunks": [
+      "fad221007b226c736e223a312c227478223a2261222c2274797065223a2262",
+      "6567696e227d923a5e66fad23c007b226b6579223a22696e636964656e74222c226c736e",
+      "223a322c227478223a2261222c2274797065223a227772697465222c2276616c7565223a337d20",
+      "6d7916fad22e007b226c736e22",
+      "3a332c227374617465223a7b2262617365223a347d2c2274797065",
+      "223a22736e617073686f74227ddc",
+      "0042a8fad222007b226c736e223a34",
+      "2c227478223a2261222c2274797065223a22636f6d6d69",
+      "74227df9329720"
+    ]
+  },
+  "observed": {
+    "generation": "recovery-729874",
+    "state": {
+      "base": 4,
+      "incident": 3
+    },
+    "commits": [
+      4
+    ],
+    "open": []
+  },
+  "symptom": "state after restart differs from the durable transaction history"
+}

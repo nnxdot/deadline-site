@@ -21,10 +21,15 @@
       "status": "calibration",
       "certified_results": false,
       "overview": "data/v4/overview.json",
-      "task_info_only": true,
+      "task_info_only": false,
       "published_run_ids": [
         "astra-full72-final10-20260910-v2-calibration"
-      ]
+      ],
+      "prompts": "releases/v4/2026Q4/2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958/prompts/api",
+      "archive": "deadline-v4.zip",
+      "public_manifest": "releases/v4/2026Q4/2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958/manifest.json",
+      "runner_readme": "releases/v4/2026Q4/2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958/README.md",
+      "submission_open": true
     }
   }
 }

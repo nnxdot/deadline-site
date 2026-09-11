@@ -1,0 +1,1 @@
+export function normalize(s:string):string{return s.replace(/^ +| +$/g,'').toUpperCase();}export function literal(s:string):string{return s;}
