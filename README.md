@@ -2,6 +2,20 @@
 
 *Every model meets its Deadline.*
 
+**4.0 information preview:** Select `v4.0` on the existing page, or
+open `index.html?version=4.0`. The new suite has 72 scored tasks, nine families,
+five languages and separate API/agent lanes. `data/v4/` contains public task
+metadata and the published Astra result: 58.06 deadline
+score, 100% correctness, 72/72 tasks passed. The final ten tasks forfeited credit
+at their total-token ceilings; the earlier 62 used older instructions.
+
+The default remains v3.5. The result and information are published ahead of the public runner release:
+no public 4.0 runner is linked, Astra is the only ranked 4.0 entry, and
+the 3.x client and datasets remain separate. The ignored `v4/` directory is an
+older local development export; the site does not link to or publish it.
+See `how.html#deadline4` for the current protocol. Shared styles, fonts, logos,
+charts and animations retain the existing design.
+
 A closed coding benchmark for AI models. 27 MACHINE-GENERATED Python, JavaScript, and SQL tasks (nearly half pure inference from observed behavior) —
 hidden cipher pipelines, randomized state machines and formats, scrambled
 precedence tables, performance gates, and a generated-semantics interpreter —

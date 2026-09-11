@@ -58,8 +58,10 @@ const preciseScore = r => r.score_analysis?.score_unrounded ?? r.score;
    `correctness` is the undiscounted score. Earlier versions used correctness
    as the headline. */
 const isV35 = r => r.benchmark_version === "deadline-3.5";
-const headlineOf = r => isV35(r) ? (Number.isFinite(r.score) ? r.score : null) : preciseScore(r);
-const correctnessOf = r => isV35(r) ? (r.score_analysis?.score_unrounded ?? r.correctness) : preciseScore(r);
+const isV4 = r => r?.benchmark_version === "deadline-4.0";
+const tokenScored = r => isV35(r) || isV4(r);
+const headlineOf = r => isV4(r) ? (r.score_unrounded ?? r.score) : isV35(r) ? (Number.isFinite(r.score) ? r.score : null) : preciseScore(r);
+const correctnessOf = r => isV4(r) ? (r.correctness_unrounded ?? r.correctness) : isV35(r) ? (r.score_analysis?.score_unrounded ?? r.correctness) : preciseScore(r);
 const rankKey = r => headlineOf(r);
 const fmtCount = n => new Intl.NumberFormat("en", {notation:"compact", maximumFractionDigits:1}).format(n);
 function modeOf(r) { return r.mode || (r.tokens_out || r.cost_usd != null ? "api" : "sub"); }
@@ -97,22 +99,28 @@ let versions = {}, datasets = {}, selectedVersion = "3.5";
 
 /* suite guard: entries graded against a different version or suite hash never mix in */
 function displayed() {
-  if (!manifest || !Array.isArray(results)) return [];
+  if (!manifest || manifest.info_only || !Array.isArray(results)) return [];
   const effort = document.getElementById("f-effort").value;
+  const publishedV4 = r => isV4(r) && manifest.published_run_ids?.includes(r.id) && r.publication_override?.ranked === true;
   return results.filter(r => r && r.benchmark_version === manifest.benchmark_version &&
     r.suite_hash === manifest.suite_hash && r.measurement_status !== "incomplete" &&
-    r.complete !== false && r.pilot !== true && r.leaderboard_eligible !== false &&
+    r.complete !== false && (publishedV4(r) || (r.pilot !== true && r.calibration_only !== true && r.calibration_regrade !== true && r.leaderboard_eligible !== false)) &&
     (Number.isFinite(r.score) || Number.isFinite(r.correctness)) &&
     (cohort === "all" || cohortOf(r) === cohort || cohortOf(r).startsWith(cohort + "/")) &&
     (effort === "all" || r.effort === effort));
 }
 
 function compareEntries(a, b) {
+  if (isV4(a) && isV4(b) && sortKey === 'score' && !sortAsc) return compareV4Rank(a, b);
   const get = SORTS[sortKey].get, va = get(a), vb = get(b);
   if (va == null && vb == null) return (correctnessOf(b) ?? -1) - (correctnessOf(a) ?? -1);
   if (va == null) return 1;   /* nulls last regardless of direction */
   if (vb == null) return -1;
   return sortAsc ? va - vb : vb - va;
+}
+function compareV4Rank(a, b) {
+  return Number(b.swept === true) - Number(a.swept === true) ||
+    headlineOf(b) - headlineOf(a) || correctnessOf(b) - correctnessOf(a);
 }
 function grouped(rows) {
   const groups = [];
@@ -125,12 +133,12 @@ function grouped(rows) {
 
 function scoreCellHTML(r) {
   if (!Number.isFinite(r.score)) {
-    return isV35(r)
+    return tokenScored(r)
       ? '<span class="score-v null" title="Headline is token-discounted; this run lacks complete token measurements">unmetered</span>'
       : '<span class="score-v null">—</span>';
   }
   const err = Number.isFinite(r.score_err) ? `<span class="err">±${r.score_err}</span>` : "";
-  const value = isV35(r) ? r.score : (Number.isFinite(preciseScore(r)) ? preciseScore(r) : r.score);
+  const value = isV4(r) ? headlineOf(r) : isV35(r) ? r.score : (Number.isFinite(preciseScore(r)) ? preciseScore(r) : r.score);
   const fill = Math.max(0, Math.min(100, value));
   const estimated = isV35(r) && r.score_estimated;
   return `<span class="score-gauge" style="--score-color:${providerOf(r.model).color}"><span class="score-number"><span class="score-v" title="${estimated ? 'Estimated from recorded usage and reconstructed interrupted output; details in the post-mortem' : 'Unrounded: ' + value}">${estimated ? '≈' : ''}${fmtScore(r.score)}</span>${err}</span><span class="score-track" aria-hidden="true"><span class="score-fill" style="width:${fill}%"></span></span></span>`;
@@ -185,7 +193,7 @@ function renderLeaderboard() {
   const th = (k, tip) => `<th scope="col" class="num sortable${sortKey === k ? " on" : ""}" data-sort="${k}" aria-sort="${sortKey === k ? (sortAsc ? "ascending" : "descending") : "none"}"><button type="button" class="sort-button" title="${tip} — click to sort">${SORTS[k].label}${arrow(k)}</button></th>`;
   const head = `<thead><tr><th></th><th>Model</th>
     ${th("score", "Headline: token-discounted correctness from 3.5; earlier versions list correctness here")}
-    ${isV35(manifest) ? th("correctness", "Undiscounted correctness using published task points") : th("dscore", "Correctness discounted by output-token usage")}
+    ${tokenScored(manifest) ? th("correctness", "Undiscounted correctness using published task points") : th("dscore", "Correctness discounted by output-token usage")}
     <th class="num">Tasks</th>
     ${th("tdl", "Descriptive time-discounted estimate; timing assumptions in each post-mortem")}<th class="num">Out tok</th><th class="num">Cost</th><th class="num">Time</th><th>Date</th></tr></thead>`;
   let body = "";
@@ -193,10 +201,10 @@ function renderLeaderboard() {
     if (grouped(rows).length > 1) body += `<tr class="cohort-tr"><td colspan="${COLS}">${COHORT_LABEL[key]} — ranked within this cohort only</td></tr>`;
     members.forEach((r, i) => {
       body += `<tr class="click-row" title="click for the breakdown">
-        <td class="rank"><button class="detail-toggle" aria-expanded="false" aria-label="Show details for ${esc(r.model)} ${esc(r.effort || "")}"><span class="chev">▸</span></button>${rankKey(r) == null ? '—' : String(1 + members.filter(other => rankKey(other) != null && rankKey(other) > rankKey(r) + 1e-10).length).padStart(2, "0")}</td>
+        <td class="rank"><button class="detail-toggle" aria-expanded="false" aria-label="Show details for ${esc(r.model)} ${esc(r.effort || "")}"><span class="chev">▸</span></button>${rankKey(r) == null ? '—' : String(1 + members.filter(other => rankKey(other) != null && (isV4(r) ? compareV4Rank(other, r) < 0 : rankKey(other) > rankKey(r) + 1e-10)).length).padStart(2, "0")}</td>
         <td class="mname">${logoHTML(r.model)}${esc(r.model)}${r.effort ? `<span class="eff">[${esc(r.effort)}]</span>` : ""}</td>
         <td class="num">${scoreCellHTML(r)}</td>
-        <td class="num">${isV35(r) ? (headlineOf(r) == null ? scoreCellHTML({model:r.model,score:r.correctness}) : '<span class="score-v alt">' + fmtScore(r.correctness) + '</span>') : tokenScoreCellHTML(r)}</td>
+        <td class="num">${tokenScored(r) ? (headlineOf(r) == null ? scoreCellHTML({model:r.model,score:r.correctness}) : '<span class="score-v alt">' + fmtScore(r.correctness) + '</span>') : tokenScoreCellHTML(r)}</td>
         <td class="num">${Number(r.passed)}/${Number(r.total)}</td>
         <td class="num"><span class="score-v alt">${fmtScore(r.tdl_score)}</span></td>
         <td class="num">${METRICS.tokens.get(r) != null ? (r.tokens_out_estimated ? '<span title="Estimated output tokens; assumptions in the post-mortem">≈' + r.tokens_out.toLocaleString("en-US") + '</span>' : r.tokens_out.toLocaleString("en-US")) : "—"}</td>
@@ -385,6 +393,7 @@ function renderHardest() {
 
 /* ---- task browser (count-agnostic: everything derives from the manifest) ---- */
 function renderTasks() {
+  const v4 = isV4(manifest);
   const family = document.getElementById("task-family").value;
   const level = document.getElementById("task-level").value;
   const query = (document.getElementById("task-search")?.value || "").trim().toLowerCase();
@@ -392,12 +401,12 @@ function renderTasks() {
   const tasks = all.filter(t => (!family || t.family === family) && (!level || t.difficulty === level) &&
     (!query || `${t.id} ${t.title} ${t.family} ${t.language}`.toLowerCase().includes(query)));
   document.getElementById("task-count").textContent = `${tasks.length} / ${all.length} tasks`;
-  const body = tasks.map(t => `<tr><td class="task-no">${esc(String(t.id).split("_")[0])}</td>
-    <td><a href="prompts/${encodeURIComponent(t.id)}.md">${esc(t.title)}</a></td>
+  const body = tasks.map(t => `<tr><td class="task-no">${esc(v4 ? t.id.replace(/_wave.*$/, '') : String(t.id).split("_")[0])}</td>
+    <td>${manifest.info_only || manifest.task_info_only ? esc(t.title) : `<a href="${manifest.prompts || 'prompts'}/${encodeURIComponent(t.id)}.md">${esc(t.title)}</a>`}</td>
     <td>${esc(t.family)}</td><td>${esc(t.difficulty)}</td><td>${esc(t.language)}</td>
-    <td class="num" title="${esc(t.unscored_reason || "Published task points")}">${t.scored === false ? "UNSCORED" : Number(t.points)}</td><td class="num">${Number(t.budget).toLocaleString("en-US")}</td><td class="num">${Number(t.time_budget)}s</td></tr>`).join("");
+    <td class="num" title="${esc(t.unscored_reason || "Published task points")}">${t.scored === false ? "UNSCORED" : Number(t.points)}</td><td class="num">${v4 ? `Agent ${Number(t.budget).toLocaleString('en-US')} / API ${Number(t.api_budget).toLocaleString('en-US')}` : Number(t.budget).toLocaleString("en-US")}</td><td class="num">${v4 ? Number(t.agent_total_ceiling).toLocaleString('en-US') : Number(t.time_budget) + 's'}</td></tr>`).join("");
   document.getElementById("task-table").innerHTML =
-    '<caption class="visually-hidden">Public tasks and budgets</caption><thead><tr><th>#</th><th>Task</th><th>Family</th><th>Level</th><th>Lang</th><th class="num">Points</th><th class="num">Token budget</th><th class="num">Time budget</th></tr></thead><tbody>' +
+    `<caption class="visually-hidden">Task information and budgets</caption><thead><tr><th>#</th><th>Task</th><th>Family</th><th>Level</th><th>Lang</th><th class="num">Points</th><th class="num">${v4 ? 'Output budgets' : 'Token budget'}</th><th class="num">${v4 ? 'Agent total ceiling' : 'Time budget'}</th></tr></thead><tbody>` +
     (body || '<tr><td colspan="8" class="empty">No tasks match these filters.</td></tr>') + "</tbody>";
 }
 
@@ -414,7 +423,7 @@ function renderStats() {
   document.querySelectorAll(".ticker-task-count").forEach(el => { el.textContent = tasks.length; });
   const line = document.getElementById("suite-line");
   const unscored = tasks.filter(t => t.scored === false).map(t => Number(t.id.slice(0, 2)));
-  if (line) line.textContent = `${families} families. ${tasks.filter(t => t.scored !== false).length} scored tasks, totaling ${tasks.reduce((sum, t) => sum + t.points, 0).toLocaleString("en-US")} points. ${unscored.length === 1 ? 'Task' : 'Tasks'} ${unscored.join(', ')} unscored.`;
+  if (line) line.textContent = `${families} families. ${tasks.filter(t => t.scored !== false).length} scored tasks, totaling ${tasks.reduce((sum, t) => sum + t.points, 0).toLocaleString("en-US")} points. ${unscored.length ? `${unscored.length === 1 ? 'Task' : 'Tasks'} ${unscored.join(', ')} unscored.` : 'All tasks scored. Difficulty labels are design targets.'}`;
 }
 
 function renderBoards() { renderLeaderboard(); renderFrontier(); renderHardest(); }
@@ -462,6 +471,7 @@ function wire() {
 }
 
 const SCORING_COPY = {
+  "4.0": `<p>Deadline 4.0 is a separate 72-task suite across nine families and five languages. The 800 task points weight debugging and maintenance at 60%, and inference, exactness, specification compliance and SQL at 40%. API and agent runs are separate lanes.</p><p>Partial credit is q⁴ − 0.15(1 − q)², with q balanced across semantic areas. Every case must pass for full credit. Invalid execution receives −15%; skips earn zero; missing or truncated answers remain incomplete.</p><p>For agents, positive credit is multiplied by min(1, output-token budget / output tokens). Exceeding a task's total-token ceiling forfeits positive credit; negative penalties stay unchanged. Input includes cached reads counted once at face value. Wall time is reported, never scored.</p><p>Output deadlines derive from two thirds of the cheapest observed fully correct solve, rounded up to 250 tokens with a 1,000-token floor. Total ceilings derive from ten times that solve's total tokens, rounded up to 25,000 with a 100,000 floor. Existing limits can only tighten for unchanged tasks. A task without a correct solve starts with no output discount and a payload-based total ceiling; that ceiling also persists under the ratchet.</p><p>Official agent rankings put complete sweeps without ceiling forfeitures first, then deadline score, then correctness. Raw API runs keep a separate output-token scoring regime. Release requires completed calibration, followed by fresh attempts with limits printed beforehand: one full agent sample or three independent API samples. The published Astra entry uses saved calibration answers; its generation and certification details are in the post-mortem.</p>`,
   "3.5": `<p>The headline <b>Score</b> is correctness discounted by output-token usage. Undiscounted Correctness stays visible. Runs without complete usage show “unmetered”; reconstructed estimates are marked ≈.</p><p>The 24 scored tasks total <b>1,050 points</b>. Completed answers earn q⁴ − 0.15(1 − q)² credit, with q balanced across semantic areas and functions. A 90% matched fraction earns 65.46% task credit. Every case must pass for full credit. Invalid execution receives −15%; skips earn zero; unresolved answers remain incomplete.</p><p>Tasks 19, 22 and 24 remain available but unscored. Token discounts affect positive credit only. TIME-DL stays a separate descriptive estimate from archived intervals.</p>`,
   "3.4": `<p>The headline <b>Correctness</b> uses 26 scored tasks totaling <b>1,205 points</b>. Completed answers earn q² − 0.15(1 − q)² credit, with q balanced across semantic areas and functions. Every case must pass for full credit. Invalid execution receives −15%; skips earn zero; unresolved answers remain incomplete.</p><p>Task 24 is unscored. Token DL separately discounts positive credit by output-token usage; TIME-DL uses archived intervals. The historical results and original 3.4 scoring are preserved.</p>`,
 };
@@ -471,28 +481,56 @@ function selectVersion(version, updateURL = false) {
   selectedVersion = version;
   const data = datasets[version], config = versions[version];
   const timeBudgets = {medium:60, hard:120, brutal:240, nightmare:450};
-  manifest = {...config, tasks: Object.entries(data.tasks).map(([id, task]) => ({...task, id, title:id,
-    language: id.includes("_js_") ? "JavaScript" : id.includes("_sql_") ? "SQL" : "Python",
+  const languageNames = {py:'Python', js:'JavaScript', ts:'TypeScript', go:'Go', sql:'SQL'};
+  manifest = {...config, tasks: Object.entries(data.tasks).map(([id, task]) => ({...task, id, title:task.title || id,
+    language: isV4(config) ? languageNames[task.language] : id.includes("_js_") ? "JavaScript" : id.includes("_sql_") ? "SQL" : "Python",
     time_budget: timeBudgets[task.difficulty]}))};
+  const v4 = isV4(manifest);
   results = [...data.official, ...data.community];
   sortKey = "score"; sortAsc = false;
-  SORTS.score.label = isV35(manifest) ? "Score" : "Correctness";
+  SORTS.score.label = isV35(manifest) || v4 ? "Score" : "Correctness";
   document.getElementById("benchmark-version").value = version;
   document.getElementById("task-family").innerHTML = '<option value="">All families</option>' +
     [...new Set(manifest.tasks.map(t => t.family))].sort().map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join("");
   document.getElementById("task-family").value = "";
+  document.getElementById('task-level').innerHTML = '<option value="">All levels</option>' +
+    (v4 ? ['baseline','hard','stress'] : ['medium','hard','brutal','nightmare']).map(level => `<option>${level}</option>`).join('');
+  document.getElementById('task-level').value = '';
   const effort = document.getElementById("f-effort").value;
   const efforts = [...new Set(results.map(r => r.effort).filter(Boolean))].sort();
   document.getElementById("f-effort").innerHTML = '<option value="all">All efforts</option>' +
     efforts.map(e => `<option value="${esc(e)}">${esc(e)}</option>`).join("");
   document.getElementById("f-effort").value = efforts.includes(effort) ? effort : "all";
   const count = manifest.tasks.filter(t => t.scored !== false).length;
-  document.getElementById("release-status").textContent = `${config.label} · ${manifest.tasks.length} public tasks · ${count} scored · ${isV35(manifest) ? 'Saved answers regraded in Docker.' : 'Historical results and scoring preserved.'}`;
-  document.getElementById("hero-score-note").textContent = isV35(manifest)
+  document.getElementById("release-status").textContent = `${config.label} · ${manifest.tasks.length} ${v4 ? 'tasks' : 'public tasks'} · ${count} scored · ${v4 ? 'Astra xhigh result; run details in its post-mortem.' : config.status === 'draft' ? 'Calibration in progress; no certified results yet.' : isV35(manifest) ? 'Saved answers regraded in Docker.' : 'Historical results and scoring preserved.'}`;
+  document.getElementById('hero-description').innerHTML = v4
+    ? '<span id="task-total">72</span> coding tasks across nine families. Debugging, maintenance and exact reasoning. Private, machine-graded results.'
+    : '<span id="task-total">27</span> public coding tasks. Hidden systems to reverse-engineer. Private, machine-graded results.';
+  document.getElementById("hero-score-note").textContent = v4
+    ? 'Agent token deadlines and total-token ceilings. Correctness alongside the score. Private machine grading.' : isV35(manifest)
     ? "Token-discounted score. Correctness alongside it. Continuous partial credit. No judge model."
     : "Correctness out of 100. Continuous partial credit. Token efficiency measured separately. No judge model.";
   document.getElementById("scoring-method").innerHTML = SCORING_COPY[version];
-  document.getElementById("method-headline").textContent = isV35(manifest)
+  const taskDownload = document.getElementById('task-download'), runnerDownload = document.getElementById('runner-download');
+  taskDownload.setAttribute('href', v4 ? 'data/v4/tasks.json' : config.archive || 'deadline.zip');
+  taskDownload.innerHTML = `${v4 ? 'Download task information' : 'Download all tasks'} <span aria-hidden="true">↗</span>`;
+  runnerDownload.setAttribute('href', v4 ? 'how.html#deadline4' : config.archive || 'deadline.zip');
+  runnerDownload.innerHTML = `${v4 ? '4.0 protocol' : 'Download runner'} <span aria-hidden="true">↗</span>`;
+  if (v4) runnerDownload.removeAttribute('download'); else runnerDownload.setAttribute('download', '');
+  document.getElementById('hero-submit').setAttribute('href', v4 ? 'submit.html#deadline4' : 'submit.html');
+  document.getElementById('hero-submit').innerHTML = `${v4 ? '4.0 submissions' : 'Submit a result'} <span aria-hidden="true">↗</span>`;
+  document.getElementById('task-scope').textContent = v4
+    ? '72 tasks: eight per family. Python, JavaScript, TypeScript, Go and SQLite SQL. Families cover repository debugging, regression finding, behavior-preserving refactoring, diagnosis, performance, inference, exactness, specification compliance and SQL.' : '27 public Python, JavaScript and SQLite tasks. Most infer hidden behavior from observations; two repair generated projects. Retired tasks and scoring rules follow the selected version.';
+  document.getElementById('scope-limitations').textContent = v4
+    ? 'One attempt per task, per sample. Agents may use local tools and self-tests in a public task room; private graders remain outside it. Raw API attempts use no tools. Design difficulty labels are not empirical difficulty claims. The 4.0 tasks are new and cannot reuse 3.x answers.'
+    : 'One blind attempt per task, per sample. This benchmark does not measure dependency wrangling or long agentic projects. Task 24 remains available but unscored because its prompt omits required final-state labels.';
+  document.getElementById('method-languages').textContent = v4 ? 'Python, JavaScript, TypeScript, Go and SQL under token constraints.' : 'Exact Python, JavaScript, and SQL, under token deadlines.';
+  document.getElementById('catalog-note').innerHTML = v4
+    ? 'Draft task information and current agent limits. Public run packages are not released yet. Agent time is not scored. <span>Python · JavaScript · TypeScript · Go · SQL</span>'
+    : 'Every prompt is public. Test cases and grading stay private. <span>Python · JavaScript · SQL</span>';
+  document.querySelectorAll('.ticker-languages').forEach(el => { el.textContent = v4 ? 'Python, JavaScript, TypeScript, Go, and SQL' : 'Python, JavaScript, and SQL'; });
+  document.getElementById("method-headline").textContent = v4
+    ? 'Separate API and agent lanes. Private, deterministic grading. Correctness and token efficiency reported together.' : isV35(manifest)
     ? "Public prompts. Private, deterministic grading. Token-discounted correctness is the headline."
     : "Public prompts. Private, deterministic grading. Correctness is the headline score.";
   for (const name of ["official", "community"]) {
@@ -520,7 +558,8 @@ async function init() {
       ["tasks", "official", "community"].map(name => fetchJSON(config.base + "/" + name + ".json")));
     if (!tasks || Array.isArray(tasks) || !Object.keys(tasks).length ||
         !Array.isArray(official) || !Array.isArray(community)) throw new Error("Invalid result data");
-    datasets[version] = {tasks, official, community};
+    const overview=config.overview ? await fetchJSON(config.overview) : null;
+    datasets[version] = {tasks, official, community, overview};
   }));
   document.getElementById("benchmark-version").innerHTML = Object.entries(versions)
     .map(([version, config]) => `<option value="${esc(version)}">${esc(config.label)}</option>`).join("");

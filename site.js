@@ -6,7 +6,7 @@
   if (track) {
     const phrases = ["Every model meets its deadline", '<b class="ticker-task-count">27</b> public coding tasks',
       "Every task has a token deadline", "No judge model", "Hidden tests", "Scores out of 100",
-      "Submit before midnight", "Python, JavaScript, and SQL"];
+      "Submit before midnight", '<span class="ticker-languages">Python, JavaScript, and SQL</span>'];
     const half = phrases.map(p => `<span>${p}</span>`).join("");
     track.innerHTML = half + half;
   }

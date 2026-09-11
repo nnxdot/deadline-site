@@ -16,6 +16,7 @@ class Element {
   get innerHTML() { return this.html || ''; }
   addEventListener(event, callback) { this.listeners[event] = callback; }
   setAttribute(name, value) { (this.attributes ||= {})[name] = value; }
+  removeAttribute(name) { if (this.attributes) delete this.attributes[name]; }
   appendChild() {}
   querySelectorAll() { return []; }
 }
@@ -39,6 +40,52 @@ class Element {
   assert.equal(evaluate('selectedVersion'), '3.5', 'new version is the default');
   assert.equal(evaluate('JSON.stringify(results)'), JSON.stringify(currentResults));
   assert.equal(evaluate('displayed().length'), 11);
+  evaluate('selectVersion("4.0")');
+  assert.equal(evaluate('manifest.tasks.length'),72);
+  assert.equal(evaluate('manifest.tasks.reduce((s,t) => s+t.points,0)'),800);
+  assert.equal(evaluate('new Set(manifest.tasks.map(t => t.family)).size'),9);
+  assert.equal(evaluate('new Set(manifest.tasks.map(t => t.language)).size'),5);
+  assert.equal(evaluate('manifest.tasks.filter(t => t.language === "Go").length'),9);
+  assert.equal(evaluate('manifest.tasks.filter(t => t.language === "TypeScript").length'),6);
+  assert.equal(evaluate('displayed().length'),1,'Astra is the only published 4.0 model');
+  assert.ok(elements.get('task-table').innerHTML.includes('Infer the resettable nonlinear transducer'));
+  assert.ok(elements.get('task-table').innerHTML.includes('Agent total ceiling'));
+  assert.ok(elements.get('task-table').innerHTML.includes('Agent 1,750 / API 8,000'));
+  assert.ok(!elements.get('task-table').innerHTML.includes('Time budget'));
+  assert.ok(!elements.get('task-table').innerHTML.includes('href='),'unreleased task prompts must not have broken links');
+  assert.ok(!/NaN|undefined/.test(elements.get('task-table').innerHTML));
+  assert.ok(elements.get('suite-line').textContent.includes('All tasks scored.'));
+  assert.equal(elements.get('task-download').attributes.href,'data/v4/tasks.json');
+  assert.equal(elements.get('runner-download').attributes.href,'how.html#deadline4');
+  assert.equal(elements.get('runner-download').attributes.download,undefined);
+  const v4row = evaluate('displayed()[0]');
+  assert.equal(v4row.model, 'gpt-6-astra');
+  assert.equal(v4row.effort, 'xhigh');
+  assert.equal(v4row.score, 58.06);
+  assert.equal(v4row.correctness, 100);
+  assert.equal(v4row.passed, 72);
+  assert.equal(v4row.certified, false);
+  assert.equal(v4row.official_eligible, false, 'publication does not rewrite certification history');
+  assert.ok(elements.get('leaderboard').innerHTML.includes('POST-MORTEM'));
+  assert.ok(elements.get('leaderboard').innerHTML.includes('9,625,810'));
+  assert.ok(elements.get('leaderboard').innerHTML.includes('>100.00<'));
+  assert.ok(elements.get('leaderboard').innerHTML.includes('>58.06<'));
+  assert.ok(elements.get('leaderboard').innerHTML.includes('</button>01</td>'));
+  assert.equal((elements.get('leaderboard').innerHTML.match(/class="td-row"/g)||[]).length,72);
+  assert.ok(!elements.get('leaderboard').innerHTML.includes('NaN'));
+  assert.equal(evaluate('correctnessOf(displayed()[0])'),100);
+  assert.equal(evaluate('headlineOf(displayed()[0])'),v4row.score_unrounded);
+  assert.ok(Math.abs(Object.values(v4row.task_detail).reduce((s,t)=>s+t.contribution,0)-v4row.score_unrounded)<1e-10);
+  assert.ok(evaluate('compareV4Rank({swept:true,score:50,correctness:100},{swept:false,score:80,correctness:100})')<0);
+  evaluate('results.push({...results[0], id:"unapproved"})');
+  assert.equal(evaluate('displayed().length'),1,'unapproved pilots stay excluded');
+  evaluate('results.pop(); results[0].suite_hash="wrong-suite"');
+  assert.equal(evaluate('displayed().length'),0,'publication never bypasses suite checks');
+  evaluate('results[0].suite_hash=manifest.suite_hash');
+  elements.get('task-family').value='performance'; elements.get('task-level').value='stress';
+  evaluate('renderTasks()');
+  assert.equal(elements.get('task-count').textContent,'3 / 72 tasks');
+  evaluate('selectVersion("3.5")');
   assert.equal(evaluate('manifest.tasks.filter(t => t.scored !== false).length'), 24);
   assert.equal(evaluate('manifest.tasks.reduce((sum, t) => sum + t.points, 0)'), 1050);
   assert.equal(evaluate('grouped(displayed()).find(([key]) => key === "official/agent")[1][0].model'), 'gpt-6-astra');
@@ -117,7 +164,8 @@ class Element {
   assert.ok(!elements.get('task-table').innerHTML.includes('01_cipher_d2'));
   elements.get('task-level').value = '';
   evaluate('renderTasks()');
-  assert.ok(!/Version 4|DEADLINE 4|deadline-v4|v4\//i.test(html + script));
+  assert.ok(!/(?:href|src)=["']v4\//i.test(html), 'never link the stale development export');
+  assert.ok(!/deadline-v4\.zip/i.test(html + script), 'no unreleased 4.0 runner download');
   assert.ok(html.includes('<title>Deadline</title>'));
   const minimax = evaluate('results.find(r => r.model === "minimax-m3")');
   assert.ok(minimax && !minimax.official && minimax.verified);

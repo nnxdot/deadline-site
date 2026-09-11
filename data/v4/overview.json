@@ -1,0 +1,39 @@
+{
+  "benchmark_version": "deadline-4.0",
+  "suite_hash": "2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958",
+  "wave": "2026Q4",
+  "status": "calibration",
+  "task_count": 72,
+  "scored_count": 72,
+  "points": 800,
+  "family_count": 9,
+  "languages": [
+    "Python",
+    "JavaScript",
+    "TypeScript",
+    "Go",
+    "SQLite SQL"
+  ],
+  "scoring_policy": "agent-token-ratchet-v2",
+  "calibration": {
+    "model": "gpt-6-astra",
+    "score": 58.06,
+    "correctness": 100.0,
+    "tasks_passed": 72,
+    "task_count": 72,
+    "tokens_in": 9232680,
+    "tokens_out": 393130,
+    "total_tokens": 9625810,
+    "seconds": 13407.4636,
+    "ceiling_exceeded_tasks": 10,
+    "effort": "xhigh",
+    "leaderboard_eligible": true,
+    "calibration_only": true,
+    "description": "Original 62 answers plus ten new tasks; one selected attempt per task. The original 62 used older instructions and the final ten saw v2 limits. One v2 profile is applied retrospectively. All 72 passed private Docker tests; the final ten exceeded their printed 100,000-total-token ceilings and forfeited positive credit. This is not a fresh official run under one shared set of printed instructions.",
+    "limitation": "The score reduction reflects token penalties. Astra still solved every task; this result does not demonstrate lower raw correctness or distinguish models.",
+    "publication_override": {
+      "ranked": true,
+      "basis": "Maintainer explicitly requested leaderboard publication of this saved calibration result."
+    }
+  }
+}
