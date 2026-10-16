@@ -2,6 +2,11 @@
 
 *Every model meets its Deadline.*
 
+**DEADLINE Next** is now the main site: open-ended coding tasks with no top score.
+[Download the community package](deadline-next-2026Q4.zip) and send results with the
+[submission form](https://github.com/nnxdot/deadline-site/issues/new?template=next-submission.yml).
+No scores are published yet. The older versions below stay at [classic.html](https://deadline.nnx.fyi/classic.html).
+
 **Deadline 4.0 submissions are open.** [Download the complete v4 package](deadline-v4.zip)
 and follow the [API or agent instructions](releases/v4/2026Q4/2e0b58004c7145d3b76a024092a1a54980a883b3fc89279c037ffe673ba4b958/README.md).
 It contains 72 tasks, frozen prompts and budgets, supplied projects, token-aware

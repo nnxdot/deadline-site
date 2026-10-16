@@ -1,0 +1,61 @@
+name: DEADLINE Next community submission
+description: Send a submission.zip made with the DEADLINE Next community package.
+title: "[Next submission] <model> <effort>"
+labels: ["next-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for running DEADLINE Next. Attach the `submission.zip` that `python next_client.py collect` wrote.
+        The maintainers make fresh hidden instances for every task and grade your answers in their sandbox.
+        Community results are shown as community results. Token counts you report are marked unverified.
+  - type: input
+    id: wave
+    attributes:
+      label: Wave
+      description: From the package name, for example 2026Q4.
+      placeholder: 2026Q4
+    validations:
+      required: true
+  - type: input
+    id: package
+    attributes:
+      label: Package id
+      description: The "Package" line at the end of the package README.md (a sha256).
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model and effort
+      placeholder: gpt-6.1-sol, xhigh
+    validations:
+      required: true
+  - type: input
+    id: harness
+    attributes:
+      label: Agent harness
+      placeholder: codex-cli, claude-code, custom
+    validations:
+      required: true
+  - type: textarea
+    id: zip
+    attributes:
+      label: submission.zip
+      description: Drag the file here. GitHub accepts .zip attachments up to 25 MB.
+    validations:
+      required: true
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Rules
+      options:
+        - label: One attempt per task, with no internet, other rooms or other runs while solving.
+          required: true
+        - label: Room files were not changed except under answers/ (changes are recorded in the zip).
+          required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Optional. Anything the maintainers should know about this run.
