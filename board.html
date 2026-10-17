@@ -10,6 +10,7 @@
 <script src="theme-init.js"></script>
 <link rel="preload" href="fonts/geist-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="next.css?v=12">
+<link rel="stylesheet" href="board.css?v=1">
 </head>
 <body data-page="board">
 <a class="skip" href="#main">Skip to content</a>
@@ -31,8 +32,60 @@
     <h1>The board.</h1>
     <p class="lead">Each model runs all <span data-fact="tasks">24</span> tasks three times. The headline is 100 times the mean over task kinds. 100 means as good as our reference, and higher is possible.</p>
   </div></div>
-  <section><div class="wrap board">
-    <div data-board-main></div>
+  <section class="bd-sec"><div class="wrap">
+    <div class="bd-head">
+      <div><h2>Ranking</h2><p>Click any column to sort. Switch the view to see task kinds or effort.</p></div>
+      <div class="bd-controls">
+        <div class="seg" data-seg="view" role="group" aria-label="Columns">
+          <button type="button" data-value="overview" aria-pressed="true">Overview</button>
+          <button type="button" data-value="families" aria-pressed="false">Task kinds</button>
+          <button type="button" data-value="effort" aria-pressed="false">Effort</button>
+        </div>
+      </div>
+    </div>
+    <div class="bd-panel tbl-wrap" data-rank data-bd></div>
+    <p class="bd-note" data-rank-note></p>
+  </div></section>
+
+  <section class="bd-sec"><div class="wrap">
+    <div class="bd-head">
+      <div><h2>Every task</h2><p>Blue beats the reference, red falls short, grey is about equal. Hover a cell for each run.</p></div>
+      <div class="bd-controls">
+        <div class="seg" data-seg="cell" role="group" aria-label="Cell value">
+          <button type="button" data-value="mean" aria-pressed="true">Mean</button>
+          <button type="button" data-value="best" aria-pressed="false">Best run</button>
+          <button type="button" data-value="worst" aria-pressed="false">Worst run</button>
+        </div>
+      </div>
+    </div>
+    <div class="bd-panel pad">
+      <div class="heat-wrap"><div class="heat" data-heat data-bd></div></div>
+      <div class="legend-bar"><span>Score</span><div><div class="ramp" data-ramp></div><div class="marks" data-marks></div></div></div>
+    </div>
+  </div></section>
+
+  <section class="bd-sec"><div class="wrap">
+    <div class="bd-head">
+      <div><h2>Score against effort</h2><p>Each small dot is one run. The large dot is the mean of three runs.</p></div>
+      <div class="bd-controls">
+        <span><span class="seg-label">Across</span><span class="seg" data-seg="x" role="group" aria-label="Horizontal axis">
+          <button type="button" data-value="tokens" aria-pressed="true">New tokens</button>
+          <button type="button" data-value="wall" aria-pressed="false">Wall time</button>
+        </span></span>
+      </div>
+    </div>
+    <div class="two">
+      <div class="bd-panel pad"><svg class="chart" data-scatter viewBox="0 0 760 420" role="img" aria-label="Headline score against effort, one dot per run"></svg></div>
+      <div class="bd-panel pad">
+        <div class="key" data-key></div>
+        <p class="bd-note"><b>Up</b> is a better score. <b>Left</b> is less effort.</p>
+        <p class="bd-note">The dashed line is the reference, 100. Dots above it beat our own solver on average.</p>
+        <p class="bd-note">Effort is per run: the sum over all 24 tasks. Cached re-reads are not counted as new tokens.</p>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="bd-sec"><div class="wrap">
     <aside class="pilot" data-pilot></aside>
   </div></section>
 </main>
@@ -44,5 +97,6 @@
   </div>
 </footer>
 <script src="site.js?v=12" defer></script>
+<script src="board.js?v=1" defer></script>
 </body>
 </html>
