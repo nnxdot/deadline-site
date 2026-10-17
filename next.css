@@ -137,6 +137,8 @@ h2 { font-size: clamp(30px, 3.4vw, 44px); line-height: 1.08; letter-spacing: -.0
 
 /* Board. */
 .board { display: grid; grid-template-columns: 7fr 5fr; gap: 24px; align-items: stretch; }
+.board:has(table.results) { grid-template-columns: 1fr; }  /* a filled board is wide: the table gets the whole row */
+.board:has(table.results) .pilot { max-width: 640px; }
 .empty { border: 1.5px dashed var(--line); border-radius: var(--radius); padding: 36px; display: flex; flex-direction: column; justify-content: center; gap: 12px; min-height: 260px; }
 .empty h3, .empty .h3 { margin: 0; font-size: 22px; letter-spacing: -.02em; max-width: none; }
 .empty p { margin: 0; color: var(--muted); max-width: 52ch; }
@@ -151,6 +153,7 @@ h2 { font-size: clamp(30px, 3.4vw, 44px); line-height: 1.08; letter-spacing: -.0
 table.results { width: 100%; border-collapse: collapse; font-size: 15px; }
 table.results th { text-align: left; font-weight: 500; color: var(--muted); font-size: 13px; padding: 0 12px 10px 0; border-bottom: 1px solid var(--line); }
 table.results td { padding: 14px 12px 14px 0; border-bottom: 1px solid var(--line); }
+table.results th, table.results td { white-space: nowrap; }
 table.results td.num { font-family: "Geist Mono", monospace; text-align: right; }
 
 /* Fair play: grouped list in two columns, icon + text. */
