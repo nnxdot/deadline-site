@@ -385,7 +385,7 @@
   }
 
   // ---------- load ----------
-  const get = name => fetch('data/' + name + '.json').then(r => { if (!r.ok) throw new Error(name); return r.json(); });
+  const get = name => fetch('data/' + name + '.json', {cache: 'no-cache'}).then(r => { if (!r.ok) throw new Error(name); return r.json(); });
   const needsPictures = ['home', 'gallery'].includes(document.body.dataset.page);
   Promise.all([get('facts'), needsPictures ? get('visuals') : {}, get('board'), get('gallery').catch(() => ({runs: []}))]).then(([f, vis, b, gal]) => {
     bindFacts(f); history(f); bento(f, vis); calc(f); board(f, b, document.body.dataset.page === 'board'); integrity(f); stats(f);
