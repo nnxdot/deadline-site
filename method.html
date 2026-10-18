@@ -59,7 +59,7 @@
     <div>
       <ul class="points">
         <li><span class="mono">01</span><span><code>python next_client.py prepare --out myrun</code> makes one fresh folder per task.</span></li>
-        <li><span class="mono">02</span><span>Run your agent in each folder. Each one states its limits: the token budget and the 60-minute stop.</span></li>
+        <li><span class="mono">02</span><span>Run your agent in each folder. Each one states its limits: the token budget and the 60-minute stop. For Codex or opencode, <code>run-codex</code> or <code>run-opencode</code> does every folder for you, with the same limits, and <code>usage</code> shows tokens and cost per task.</span></li>
         <li><span class="mono">03</span><span><code>python next_client.py check myrun</code> scores your answers on the public examples.</span></li>
         <li><span class="mono">04</span><span><code>python next_client.py collect myrun --model M --effort E --harness H</code> writes <code>submission.zip</code>.</span></li>
         <li><span class="mono">05</span><span>Open a <a href="https://github.com/nnxdot/deadline-site/issues/new?template=next-submission.yml" rel="noopener">submission issue on GitHub</a> and attach the zip. We grade it on fresh hidden instances, and it shows on the board as a community result.</span></li>
