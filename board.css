@@ -2,9 +2,9 @@
    Model identity uses the first three categorical slots of a colour-blind-checked palette (blue, orange, aqua; validated
    all-pairs in both themes), always beside the model name. Task scores use a diverging red - grey - blue scale centred
    on the reference (1.0). */
-:root { --m0: #2a78d6; --m1: #eb6834; --m2: #1baf7a; --grid: #e4e7ec; --axis: #c3c8d0;
+:root { --m0: #2a78d6; --m1: #eb6834; --m2: #1baf7a; --m3: #8a63d2; --m4: #c2417f; --m5: #b8901c; --m6: #00a0c0; --m7: #a35a2b; --grid: #e4e7ec; --axis: #c3c8d0;
         --div-lo: #b8322f; --div-mid: #eceef1; --div-hi: #184f95; --on-strong: #fbfbfc; }
-:root[data-theme="dark"] { --m0: #3987e5; --m1: #d95926; --m2: #199e70; --grid: #232830; --axis: #343a44;
+:root[data-theme="dark"] { --m0: #3987e5; --m1: #d95926; --m2: #199e70; --m3: #9b7ae6; --m4: #e0609f; --m5: #ad861a; --m6: #0898b4; --m7: #c47640; --grid: #232830; --axis: #343a44;
         --div-lo: #e66767; --div-mid: #2a2f37; --div-hi: #6da7ec; --on-strong: #0e1014; }
 
 section.bd-sec { padding: 44px 0; }
@@ -98,3 +98,13 @@ table.board-t { width: 100%; border-collapse: collapse; font-size: 15px; }
 
 @media (max-width: 900px) { .two, .bd-pkg { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .tip, .seg button, .heat .cell { transition: none; } }
+
+/* filter bar: search, cohort, count (applies to the table, the heatmap and the chart) */
+.bd-filter { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin: 0 0 14px; }
+.bd-filter input { font: 400 14px/1 "Geist", sans-serif; color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--pill); padding: 10px 14px; width: 240px; max-width: 100%; }
+.bd-filter input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.bd-filter .count { font-size: 13px; color: var(--muted); margin-left: auto; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.bd-none { padding: 22px; color: var(--muted); font-size: 15px; }
+@media (max-width: 640px) { .bd-filter .count { margin-left: 0; width: 100%; } .bd-filter input { width: 100%; } }

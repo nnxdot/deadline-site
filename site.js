@@ -205,11 +205,11 @@
         const num = (v, d) => v === null || v === undefined ? '-' : Number(v).toFixed(d);
         main.innerHTML = `<div style="overflow-x:auto"><table class="results"><thead><tr><th>Model</th><th>Provider</th><th>Cohort</th><th>Effort</th><th>Runs</th>
           <th style="text-align:right">Headline</th><th style="text-align:right">Spread</th><th style="text-align:right">Valid</th>${full ? f.families.map(x => `<th style="text-align:right">${esc(x.id.toUpperCase())}</th>`).join('') : ''}
-          <th style="text-align:right">Tokens</th><th style="text-align:right">Wall time</th><th style="text-align:right">Cost</th></tr></thead><tbody>${
+          <th style="text-align:right">Tokens / run</th><th style="text-align:right">Wall / run</th><th style="text-align:right">Cost</th></tr></thead><tbody>${
           b.entries.slice().sort((p, q) => q.headline - p.headline).map(e => `<tr><td>${esc(e.model)}</td><td>${esc(e.provider || '-')}</td><td>${esc(e.cohort || '-')}</td><td>${esc(e.effort)}</td><td class="num">${e.runs}</td>
-            <td class="num">${num(e.headline, 1)}</td><td class="num">${e.spread ? num(e.spread[0], 1) + ' to ' + num(e.spread[1], 1) : '-'}</td><td class="num">${e.valid === undefined ? '-' : num(100 * e.valid, 0) + '%'}</td>${
+            <td class="num">${num(e.headline, 1)}</td><td class="num">${e.spread && e.runs > 1 ? num(e.spread[0], 1) + ' to ' + num(e.spread[1], 1) : '-'}</td><td class="num">${e.valid === undefined ? '-' : num(100 * e.valid, 1) + '%'}</td>${
             full ? f.families.map(x => `<td class="num">${e.families && x.id in e.families ? (100 * e.families[x.id]).toFixed(0) : '-'}</td>`).join('') : ''}
-            <td class="num">${e.tokens ? fmt(e.tokens) : '-'}</td><td class="num">${e.wall_seconds ? Math.round(e.wall_seconds / 60) + ' min' : '-'}</td><td class="num">${e.cost_usd ? '$' + num(e.cost_usd, 2) : '-'}</td></tr>`).join('')}</tbody></table></div>`;
+            <td class="num">${e.tokens ? fmt(e.tokens) : '-'}</td><td class="num">${e.wall_seconds ? (e.wall_seconds / 3600).toFixed(1) + ' h' : '-'}</td><td class="num">${e.cost_usd ? '$' + num(e.cost_usd, 2) : '-'}</td></tr>`).join('')}</tbody></table></div>`;
       }
     }
     if (pilot && !b.pilot && f.package) {

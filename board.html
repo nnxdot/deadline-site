@@ -10,7 +10,7 @@
 <script src="theme-init.js"></script>
 <link rel="preload" href="fonts/geist-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="next.css?v=12">
-<link rel="stylesheet" href="board.css?v=1">
+<link rel="stylesheet" href="board.css?v=2">
 </head>
 <body data-page="board">
 <a class="skip" href="#main">Skip to content</a>
@@ -30,11 +30,11 @@
 <main id="main">
   <div class="page-head"><div class="wrap">
     <h1>The board.</h1>
-    <p class="lead">Each model runs all <span data-fact="tasks">24</span> tasks three times. The headline is 100 times the mean over task kinds. 100 means as good as our reference, and higher is possible.</p>
+    <p class="lead">Pilot models run all <span data-fact="tasks">24</span> tasks three times; community results are one run. The headline is 100 times the mean over task kinds. 100 means as good as our reference, and higher is possible.</p>
   </div></div>
   <section class="bd-sec"><div class="wrap">
     <div class="bd-head">
-      <div><h2>Ranking</h2><p>Click any column to sort. Switch the view to see task kinds or effort.</p></div>
+      <div><h2>Ranking</h2><p>Click any column to sort. Search and the cohort filter also narrow the heatmap and the chart.</p></div>
       <div class="bd-controls">
         <div class="seg" data-seg="view" role="group" aria-label="Columns">
           <button type="button" data-value="overview" aria-pressed="true">Overview</button>
@@ -42,6 +42,11 @@
           <button type="button" data-value="effort" aria-pressed="false">Effort</button>
         </div>
       </div>
+    </div>
+    <div class="bd-filter">
+      <label><span class="sr">Find a model</span><input type="search" placeholder="Find a model or provider" data-q autocomplete="off"></label>
+      <div class="seg" data-seg="cohort" role="group" aria-label="Cohort"></div>
+      <span class="count" data-count aria-live="polite"></span>
     </div>
     <div class="bd-panel tbl-wrap" data-rank data-bd></div>
     <p class="bd-note" data-rank-note></p>
@@ -66,7 +71,7 @@
 
   <section class="bd-sec"><div class="wrap">
     <div class="bd-head">
-      <div><h2>Score against effort</h2><p>Each small dot is one run. The large dot is the mean of three runs.</p></div>
+      <div><h2>Score against effort</h2><p>Each small dot is one run. A filled dot is the mean of three pilot runs; a ring is a single community run.</p></div>
       <div class="bd-controls">
         <span><span class="seg-label">Across</span><span class="seg" data-seg="x" role="group" aria-label="Horizontal axis">
           <button type="button" data-value="tokens" aria-pressed="true">New tokens</button>
@@ -96,7 +101,7 @@
     <nav aria-label="Footer"><a href="board.html">Board</a><a href="gallery.html">Gallery</a><a href="tasks.html">Tasks</a><a href="method.html">Method</a><a href="classic.html">Older versions</a></nav>
   </div>
 </footer>
-<script src="site.js?v=13" defer></script>
-<script src="board.js?v=1" defer></script>
+<script src="site.js?v=14" defer></script>
+<script src="board.js?v=2" defer></script>
 </body>
 </html>
