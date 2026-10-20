@@ -297,10 +297,45 @@
       f.style.width = w + 'px'; f.style.height = box.clientHeight / k + 'px'; f.style.transform = `scale(${k})`; });
   }
   const NOTE = "No model answers yet. After the pilot, each model's answer to this example appears here, with its cost and score.";
-  function galleryPanel(fam, v, runs) {
-    const mine = runs.filter(r => r.family === fam.id);
-    const models = mine.length ? `<div class="compare">${mine.map(r => shot(`${r.model} ${r.effort}`, `cost ${r.cost}`, '<canvas data-run></canvas>')).join('')}</div>`
-                               : `<div class="empty models"><h3>Models</h3><p>${esc(NOTE)}</p></div>`;
+  const COST = {o1: n => `${n} nodes`, o2: n => `cost ${Math.round(n)}`, o3: n => `height ${n}`, o4: n => `cost ${n}`, o5: n => `cost ${n}`,
+                o6: n => `${n.toFixed(4)} s`, o7: n => `${Math.round(n).toLocaleString('en-US')} bytes`, o8: n => `${Math.round(n)} px`};
+  const o2Won = r => { const last = r.frames && r.frames[r.frames.length - 1]; return !!last && r.cost != null && last.hp[1 - r.side] <= 0; };
+  function costText(r) {
+    if (r.cost == null) return 'not valid';
+    if (r.family === 'o2') return o2Won(r) ? `won on turn ${r.cost}` : `no win, cost ${Math.round(r.cost)}`;
+    return COST[r.family](r.cost);
+  }
+  function modelsSection(fam, mine, who) {  // one row per model: its cost and score on this example; a row picks what is drawn below
+    if (!mine.length) return `<div class="empty models"><h3>Models</h3><p>${esc(NOTE)}</p></div>`;
+    const rows = mine.map(r => { const m = who[r.model] || {model: r.model};
+      return `<tr><td class="who"><button type="button" class="pick" data-pick="${esc(r.model)}" aria-pressed="false"><b>${esc(m.model)}</b>
+        <span class="sub">${esc(m.provider || '-')} · ${esc(m.effort || '')} · ${esc(m.cohort || '')}${m.cohort === 'pilot' ? ', run ' + esc(m.run) : ''}</span></button></td>
+        <td class="num">${esc(costText(r))}</td><td class="num">${r.score.toFixed(2)}</td></tr>`; }).join('');
+    const say = fam.id === 'o2' ? 'Pick a model to load its match in the player above.' : 'Pick a model to draw its answer next to ours.';
+    return `<section class="models"><h3>Model answers</h3><p>Each model's own answer, run in the grading sandbox on this same example. ${say}
+      Score 0 is the lazy answer and 1 is our reference. This is one example; the board scores 30 hidden instances per task.</p>
+      <div class="gal-wrap"><table class="results gal"><thead><tr><th>Model</th><th style="text-align:right">On this example</th><th style="text-align:right">Score</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>${fam.id === 'o2' ? '' : '<div data-model-view></div>'}</section>`;
+  }
+  function modelView(fam, v, r, m) {  // the picked model's answer beside our reference, on the same scale
+    const name = m ? m.model : r.model, cost = costText(r);
+    if (r.cost == null) return `<div class="compare one">${shot(name, cost, `<p class="why">This answer was not valid on this example: ${esc(r.reason || 'no reason given')}.</p>`)}</div>`;
+    const canvas = (k, label) => `<canvas data-m="${k}" role="img" aria-label="${esc(label)}"></canvas>`;
+    if (fam.id === 'o1') return `<div class="compare">${shot(name + "'s recipe", cost, `<ul class="outline">${outline(r.tree).join('')}</ul>`)
+      + shot('Our reference recipe', `${v.ref} nodes`, `<ul class="outline">${outline(v.ref_tree).join('')}</ul>`, true)}</div>`;
+    const ours = {o3: `height ${v.ref}`, o4: `cost ${v.ref}`, o5: `cost ${v.ref}`};
+    if (ours[fam.id]) return `<div class="compare">${shot(name, cost, canvas('m', name + "'s answer"))}${shot('Our reference', ours[fam.id], canvas('r', 'Our reference'), true)}</div>`;
+    if (fam.id === 'o6') { const t = v[0];
+      return `<div class="compare">${shot(name + "'s rewrite", `${cost} · ${(r.floor / r.cost).toFixed(0)}x faster than slow`, `<pre class="codebox">${esc(r.code)}</pre>`)
+        + shot('Our faster rewrite', `${r.ref.toFixed(4)} s · ${(r.floor / r.ref).toFixed(0)}x`, `<pre class="codebox">${esc(t.fast)}</pre>`, true)}</div>`; }
+    if (fam.id === 'o7') return `<div class="compare one">${shot(name + "'s compressor", `${cost} · ${(r.floor / r.cost).toFixed(1)}x smaller than raw · best standard compressor ${Math.round(r.ref).toLocaleString('en-US')} bytes`,
+      `<pre class="codebox">${esc(r.code)}</pre>`)}</div>`;
+    if (fam.id === 'o8') { const t = v[0];
+      return `<div class="compare">${shot(name + "'s layout", cost, framed(r.html, t.page))}${shot('Our reference layout', `${t.ref[0]} px`, framed(t.ref_html, t.page), true)}</div>`; }
+    return '';
+  }
+  function galleryPanel(fam, v, mine, who) {
+    const models = modelsSection(fam, mine, who);
     const head = `<h2>${icon(fam.icon)}${esc(fam.name)}</h2><p class="lead">${esc(fam.asks)} Lazy answer: ${esc(fam.floor)}. Reference: ${esc(fam.ref)}.</p>`;
     if (fam.id === 'o2') {
       return head + `<div class="player"><canvas data-player width="640" height="640" role="img" aria-label="Match replay"></canvas>
@@ -327,6 +362,7 @@
   function gallery(f, vis, gal) {
     const el = $('[data-gallery]'); if (!el) return;
     const runs = (gal && gal.runs) || [];
+    const who = Object.fromEntries(((gal && gal.models) || []).map(m => [m.id, m]));
     el.innerHTML = `<div class="tabs" role="tablist" aria-label="Task kinds">${f.families.map(fam =>
       `<button role="tab" type="button" id="tab-${fam.id}" data-tab="${fam.id}" aria-selected="false" aria-controls="panel" tabindex="-1">${icon(fam.icon)}${esc(fam.name)}</button>`).join('')}</div>
       <div class="panel" id="panel" role="tabpanel" data-panel></div>`;
@@ -336,8 +372,34 @@
       $$('[data-tab]', el).forEach(b => { const on = b.dataset.tab === fam.id; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
       $('[data-panel]', el).setAttribute('aria-labelledby', 'tab-' + fam.id);
       stop(); stop = () => {};
-      const panel = $('[data-panel]', el); panel.innerHTML = galleryPanel(fam, vis[fam.id], runs);
-      const v = vis[fam.id];
+      const mine = runs.filter(r => r.family === fam.id);
+      let v = vis[fam.id];
+      if (fam.id === 'o2') v = {...v, replays: v.replays.concat(mine.filter(r => r.frames && r.frames.length).map(r => {  // model matches join the ladder replays
+        const name = (who[r.model] || {model: r.model}).model;
+        return {model: r.model, players: r.side ? [r.opponent, name] : [name, r.opponent], frames: r.frames};
+      }))};
+      const panel = $('[data-panel]', el); panel.innerHTML = galleryPanel(fam, v, mine, who);
+      let picked = null;
+      const paintModel = () => {
+        if (!picked) return;
+        const m = name => $(`[data-m="${name}"]`, panel);
+        if (fam.id === 'o3' && m('m')) { pictures.o3(m('m'), {boxes: picked.boxes}); pictures.o3(m('r'), v); }
+        if (fam.id === 'o4' && m('m')) { pictures.o4(m('m'), {...v, routes: picked.routes}); pictures.o4(m('r'), v); }
+        if (fam.id === 'o5' && m('m')) { const end = Math.max(...v.floor_runs.map(r => r[2]), ...picked.runs.map(r => r[2]), ...v.runs.map(r => r[2]));
+          pictures.o5(m('m'), {...v, runs: picked.runs, end}); pictures.o5(m('r'), {...v, end}); }
+      };
+      const pick = id => {
+        picked = mine.find(r => r.model === id) || null;
+        $$('[data-pick]', panel).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.pick === id)));
+        if (fam.id === 'o2') {
+          const i = v.replays.findIndex(r => r.model === id), sel = $('[data-match]', panel);
+          if (i >= 0 && sel) { sel.value = String(i); sel.dispatchEvent(new Event('change')); }
+          return;
+        }
+        const view = $('[data-model-view]', panel);
+        if (view && picked) { view.innerHTML = modelView(fam, v, picked, who[id]); paintModel(); scaleFrames(view); }
+      };
+      $$('[data-pick]', panel).forEach(b => b.addEventListener('click', () => pick(b.dataset.pick)));
       const draw = () => {
         const c = name => $(`[data-g="${name}"]`, panel);
         if (c('o1')) pictures.o1(c('o1'), v);
@@ -346,10 +408,12 @@
         if (c('o5f')) { const end = Math.max(...v.floor_runs.map(r => r[2]));  // one time axis for both, so lengths compare
           pictures.o5(c('o5f'), {...v, runs: v.floor_runs, end}); pictures.o5(c('o5r'), {...v, end}); }
         if (c('o7')) pictures.o7(c('o7'), v);
-        scaleFrames(panel);
+        paintModel(); scaleFrames(panel);
       };
       draw(); redraws.splice(0, redraws.length, draw);
       if (fam.id === 'o2') stop = player(panel, v);
+      const first = mine.find(r => r.cost != null);  // start on the first valid answer, in board order
+      if (first && fam.id !== 'o2') pick(first.model);
       if (location.hash !== '#' + fam.id) window.history.replaceState(null, '', '#' + fam.id);
     };
     const tabs = $$('[data-tab]', el);

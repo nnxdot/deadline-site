@@ -256,7 +256,22 @@ footer a:hover { color: var(--ink); }
 .outline { margin: 0; padding: 0; font: 13px/1.7 "Geist Mono", monospace; max-height: 340px; overflow: auto; }
 .outline li { list-style: none; white-space: nowrap; }
 .outline .k { color: var(--accent); }
-.models { margin-top: 20px; }
+.models { margin-top: 56px; }
+section.models { padding: 0; }
+.models h3 { font-size: 22px; letter-spacing: -.02em; margin: 0 0 6px; }
+.models > p { margin: 0 0 18px; color: var(--muted); max-width: 70ch; }
+.gal-wrap { overflow-x: auto; }
+table.gal td.who { padding: 4px 12px 4px 0; }
+.pick { all: unset; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 10px; width: 100%; }
+.pick .sub { font-size: 12.5px; color: var(--muted); }
+.pick:hover { background: var(--sunken); }
+.pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+table.gal tr:has(.pick[aria-pressed="true"]) { background: var(--sunken); }
+.pick[aria-pressed="true"] { box-shadow: inset 3px 0 0 var(--accent); }
+.pick[aria-pressed="true"]:hover { background: transparent; }
+table.gal td:last-child { padding-right: 12px; }
+.compare.one { grid-template-columns: 1fr; }
+.shot .why { margin: 0; color: var(--muted); }
 .player { display: grid; grid-template-columns: 3fr 2fr; gap: 28px; align-items: start; margin-top: 28px; }
 .player > * { min-width: 0; }
 .player canvas { width: 100%; height: auto; aspect-ratio: 1; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; }
@@ -272,5 +287,6 @@ footer a:hover { color: var(--ink); }
 @media (max-width: 767px) {
   .compare, .player { grid-template-columns: 1fr; }
   .shot canvas, .shot .frame { height: 260px; }
+  table.gal td.who { white-space: normal; }
 }
 .pilot code { overflow-wrap: anywhere; font-size: 12px; }
