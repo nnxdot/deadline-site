@@ -77,7 +77,7 @@
       tokens: {label: 'Tokens / run', get: m => m.tokens, html: m => fmtTok(m.tokens), num: true, asc: true, tip: 'New tokens over all 24 tasks; cached re-reads not counted'},
       perTask: {label: 'Tokens / task', get: m => m.tokens / tasks.length, html: m => fmtTok(m.tokens / tasks.length), num: true, asc: true},
       wall: {label: 'Wall / run', get: m => m.wall_seconds, html: m => fmtTime(m.wall_seconds), num: true, asc: true, tip: 'Recorded, never scored'},
-      cost: {label: 'Cost / run', get: m => m.cost_usd ?? Infinity, html: m => m.cost_usd == null ? '<span class="sub">not reported</span>' : '$' + m.cost_usd.toFixed(2), num: true, asc: true, tip: 'Reported by the harness; opencode runs report it'},
+      cost: {label: 'Cost / run', get: m => m.cost_usd ?? Infinity, html: m => m.free ? '<span class="sub">free tier</span>' : m.cost_usd == null ? '<span class="sub">not reported</span>' : '$' + m.cost_usd.toFixed(2), num: true, asc: true, tip: 'Reported by the harness; opencode runs report it'},
       pts: {label: 'Points / 1M tokens', get: m => m.headline / (m.tokens / 1e6), html: m => (m.headline / (m.tokens / 1e6)).toFixed(1), num: true},
     };
     fams.forEach((f, i) => { C[f.id] = {label: f.id.toUpperCase(), get: m => m.fam[f.id], html: m => fcell(m, f), num: true, tip: f.name, grp: i === 0}; });
