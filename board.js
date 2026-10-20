@@ -46,7 +46,7 @@
     let q = '', cohort = 'all';
     const shown = () => models.filter(m => (cohort === 'all' || m.cohort === cohort) &&
       (!q || (m.model + ' ' + (m.provider || '') + ' ' + m.effort).toLowerCase().includes(q)));
-    const key = () => $$('[data-key]').forEach(el => { el.innerHTML = shown().map(m => `<span><i class="sw" style="background:${m.color}"></i>${esc(m.model)}</span>`).join(''); });
+    const key = () => $$('[data-key]').forEach(el => { el.innerHTML = shown().map(m => `<span><i class="sw" style="background:${m.color}"></i>${window.providerLogo(m.provider)}${esc(m.model)}</span>`).join(''); });
     const cohorts = [...new Set(models.map(m => m.cohort || 'other'))];
     $('[data-seg="cohort"]').innerHTML = [['all', 'All', models.length], ...cohorts.map(c => [c, c[0].toUpperCase() + c.slice(1), models.filter(m => m.cohort === c).length])]
       .map(([v, l, n], i) => `<button type="button" data-value="${esc(v)}" aria-pressed="${i ? 'false' : 'true'}">${esc(l)} ${n}</button>`).join('');
@@ -69,7 +69,7 @@
     const C = {
       rank: {label: '#', get: m => rankOf.get(m.id), html: m => String(rankOf.get(m.id)).padStart(2, '0'), cls: 'rank', asc: true},
       model: {label: 'Model', get: m => m.model, text: true, asc: true,
-              html: m => `<span class="model"><i class="sw" style="background:${m.color}"></i><span>${esc(m.model)}<br><span class="sub">${esc(m.provider || '-')} · ${esc(m.effort)} · ${esc(m.cohort)}${m.runs !== 3 ? `, ${m.runs} run${m.runs === 1 ? '' : 's'}` : ''}</span></span></span>`},
+              html: m => `<span class="model"><i class="sw" style="background:${m.color}"></i><span>${window.providerLogo(m.provider)}${esc(m.model)}<br><span class="sub">${esc(m.provider || '-')} · ${esc(m.effort)} · ${esc(m.cohort)}${m.runs !== 3 ? `, ${m.runs} run${m.runs === 1 ? '' : 's'}` : ''}</span></span></span>`},
       headline: {label: 'Headline', get: m => m.headline, html: m => `<span class="big">${m.headline.toFixed(1)}</span>`, num: true},
       runs: {label: 'Runs (mean ±4)', get: m => m.spreadPts, html: strip, asc: true, tip: 'Each run against the model mean; the centre line is the mean'},
       spread: {label: 'Spread', get: m => m.runs > 1 ? m.spreadPts : Infinity, html: m => m.runs > 1 ? m.spreadPts.toFixed(2) : '<span class="sub">1 run</span>', num: true, asc: true, tip: 'Best run minus worst run, in headline points'},
@@ -121,10 +121,10 @@
     const pick = runs => { const s = runs.map(r => r.score); return cellMode === 'best' ? Math.max(...s) : cellMode === 'worst' ? Math.min(...s) : mean(s); };
     const heatEl = $('[data-heat]');
     function heat() {
-      heatEl.style.gridTemplateColumns = `118px repeat(${tasks.length}, minmax(34px, 1fr))`;
+      heatEl.style.gridTemplateColumns = `max-content repeat(${tasks.length}, minmax(34px, 1fr))`;
       let h = '<div></div>' + fams.map(f => `<div class="h-fam" style="grid-column:span 3" title="${esc(f.name)}"><b>${esc(f.id.toUpperCase())}</b> ${esc(f.name)}</div>`).join('');
       h += '<div></div>' + tasks.map(t => `<div class="h-size" title="${esc(t.split('_')[1])}">${t.split('_')[1][0].toUpperCase()}</div>`).join('');
-      shown().forEach(m => { h += `<div class="h-model"><i class="sw" style="background:${m.color}"></i>${esc(m.model)}</div>`;
+      shown().forEach(m => { h += `<div class="h-model"><i class="sw" style="background:${m.color}"></i>${window.providerLogo(m.provider)}${esc(m.model)}</div>`;
         tasks.forEach(t => { const v = pick(m.tasks[t]), [bg, k] = fill(v);
           h += `<div class="cell" data-cell="${esc(t)}|${esc(m.id)}" style="background:${bg};color:${k > .55 ? 'var(--on-strong)' : 'var(--ink)'}">${v.toFixed(2)}</div>`; }); });
       heatEl.innerHTML = h;

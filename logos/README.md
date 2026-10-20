@@ -17,5 +17,6 @@ The SVG artwork is unchanged. Color variants retain the brand colors; monochrome
 | `gemini.svg` | [gemini-color.svg](https://unpkg.com/@lobehub/icons-static-svg@1.95.0/icons/gemini-color.svg) |
 | `deepseek.svg` | [deepseek-color.svg](https://unpkg.com/@lobehub/icons-static-svg@1.95.0/icons/deepseek-color.svg) |
 | `minimax.svg` | [minimax-color.svg](https://unpkg.com/@lobehub/icons-static-svg@1.95.0/icons/minimax-color.svg) |
+| `zai.svg` | [zai.svg](https://unpkg.com/@lobehub/icons-static-svg@1.95.0/icons/zai.svg) (added 2026-10-20) |
 
 The icon collection is MIT licensed; see [LICENSE.lobehub](LICENSE.lobehub). Brand names and marks belong to their respective owners. `generic.svg` is the existing fallback for an unrecognized model.

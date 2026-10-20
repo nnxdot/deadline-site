@@ -85,6 +85,7 @@
   // ---------- family pictures (each from a real public instance) ----------
   const pictures = {
     o1(c, v) { drawIso(c, v.cells.map(([x, y, z]) => [x, y, z, 1, 1, 1, 0]), () => css('--accent')); },
+    o1parts(c, parts) { drawIso(c, parts.map(([x, y, z, k]) => [x, y, z, 1, 1, 1, k]), k => k < 0 ? css('--dim') : partColor(k)); },
     o2(c, v) { drawArena(c, v, v.frames[Math.floor(v.frames.length * 0.55)] || v.frames[0]); },
     o3(c, v) {
       // One shade of the accent per delivery stop: later stops darker (they ride deeper in the truck).
@@ -206,10 +207,10 @@
         main.innerHTML = `<div style="overflow-x:auto"><table class="results"><thead><tr><th>Model</th><th>Provider</th><th>Cohort</th><th>Effort</th><th>Runs</th>
           <th style="text-align:right">Headline</th><th style="text-align:right">Spread</th><th style="text-align:right">Valid</th>${full ? f.families.map(x => `<th style="text-align:right">${esc(x.id.toUpperCase())}</th>`).join('') : ''}
           <th style="text-align:right">Tokens / run</th><th style="text-align:right">Wall / run</th><th style="text-align:right">Cost</th></tr></thead><tbody>${
-          b.entries.slice().sort((p, q) => q.headline - p.headline).map(e => `<tr><td>${esc(e.model)}</td><td>${esc(e.provider || '-')}</td><td>${esc(e.cohort || '-')}</td><td>${esc(e.effort)}</td><td class="num">${e.runs}</td>
+          b.entries.slice().sort((p, q) => q.headline - p.headline).map(e => `<tr><td>${window.providerLogo(e.provider)}${esc(e.model)}</td><td>${esc(e.provider || '-')}</td><td>${esc(e.cohort || '-')}</td><td>${esc(e.effort)}</td><td class="num">${e.runs}</td>
             <td class="num">${num(e.headline, 1)}</td><td class="num">${e.spread && e.runs > 1 ? num(e.spread[0], 1) + ' to ' + num(e.spread[1], 1) : '-'}</td><td class="num">${e.valid === undefined ? '-' : num(100 * e.valid, 1) + '%'}</td>${
             full ? f.families.map(x => `<td class="num">${e.families && x.id in e.families ? (100 * e.families[x.id]).toFixed(0) : '-'}</td>`).join('') : ''}
-            <td class="num">${e.tokens ? fmt(e.tokens) : '-'}</td><td class="num">${e.wall_seconds ? (e.wall_seconds / 3600).toFixed(1) + ' h' : '-'}</td><td class="num">${e.cost_usd ? '$' + num(e.cost_usd, 2) : '-'}</td></tr>`).join('')}</tbody></table></div>`;
+            <td class="num">${e.tokens ? fmt(e.tokens) : '-'}</td><td class="num">${e.wall_seconds ? (e.wall_seconds / 3600).toFixed(1) + ' h' : '-'}</td><td class="num">${e.free ? 'free tier' : e.cost_usd ? '$' + num(e.cost_usd, 2) : '-'}</td></tr>`).join('')}</tbody></table></div>`;
       }
     }
     if (pilot && !b.pilot && f.package) {
@@ -278,12 +279,19 @@
   }
 
   // ---------- gallery (gallery.html) ----------
-  function outline(node, depth = 0, out = []) {  // a recipe tree as indented lines: type and its numbers
+  // Recipe solids are told apart by colour: 8 hues, then the same hues darker, then lighter.
+  const partVar = k => { const c = `var(--c${k % 8})`, t = Math.floor(k / 8) % 3;
+    return t === 0 ? c : `color-mix(in srgb, ${c} ${t === 1 ? 65 : 55}%, ${t === 1 ? 'black' : 'white'})`; };
+  const partColor = k => { const t = Math.floor(k / 8) % 3; return shade(css('--c' + (k % 8)), [1, 0.65, 1.45][t]); };
+  function outline(node, depth = 0, out = [], parts = null) {  // a recipe tree as indented lines: type and its numbers
     const kids = node.children || (node.child ? [node.child] : []);
     const nums = Object.entries(node).filter(([k]) => !['type', 'children', 'child'].includes(k))
       .map(([k, v]) => `${k} ${Array.isArray(v) ? v.join(',') : v}`).join('  ');
-    out.push(`<li style="padding-left:${depth * 18}px"><span class="k">${esc(node.type)}</span> <span class="muted">${esc(nums)}</span></li>`);
-    kids.forEach(k => outline(k, depth + 1, out));
+    let mark = '';  // with parts: a swatch per solid, in the same colour as its cells in the picture
+    if (parts && !node.children && !node.child) { const k = parts.k++;
+      mark = parts.roles[k] === 'cut' ? '<span class="psw cut" title="cuts material away"></span>' : `<span class="psw" style="background:${partVar(k)}"></span>`; }
+    out.push(`<li style="padding-left:${depth * 18}px">${mark}<span class="k">${esc(node.type)}</span> <span class="muted">${esc(nums)}</span></li>`);
+    kids.forEach(k => outline(k, depth + 1, out, parts));
     return out;
   }
   function shot(label, cost, inner, ref) {
@@ -308,7 +316,7 @@
   function modelsSection(fam, mine, who) {  // one row per model: its cost and score on this example; a row picks what is drawn below
     if (!mine.length) return `<div class="empty models"><h3>Models</h3><p>${esc(NOTE)}</p></div>`;
     const rows = mine.map(r => { const m = who[r.model] || {model: r.model};
-      return `<tr><td class="who"><button type="button" class="pick" data-pick="${esc(r.model)}" aria-pressed="false"><b>${esc(m.model)}</b>
+      return `<tr><td class="who"><button type="button" class="pick" data-pick="${esc(r.model)}" aria-pressed="false"><b>${window.providerLogo(m.provider)}${esc(m.model)}</b>
         <span class="sub">${esc(m.provider || '-')} · ${esc(m.effort || '')} · ${esc(m.cohort || '')}${m.cohort === 'pilot' ? ', run ' + esc(m.run) : ''}</span></button></td>
         <td class="num">${esc(costText(r))}</td><td class="num">${r.score.toFixed(2)}</td></tr>`; }).join('');
     const say = fam.id === 'o2' ? 'Pick a model to load its match in the player above.' : 'Pick a model to draw its answer next to ours.';
@@ -321,8 +329,11 @@
     const name = m ? m.model : r.model, cost = costText(r);
     if (r.cost == null) return `<div class="compare one">${shot(name, cost, `<p class="why">This answer was not valid on this example: ${esc(r.reason || 'no reason given')}.</p>`)}</div>`;
     const canvas = (k, label) => `<canvas data-m="${k}" role="img" aria-label="${esc(label)}"></canvas>`;
-    if (fam.id === 'o1') return `<div class="compare">${shot(name + "'s recipe", cost, `<ul class="outline">${outline(r.tree).join('')}</ul>`)
-      + shot('Our reference recipe', `${v.ref} nodes`, `<ul class="outline">${outline(v.ref_tree).join('')}</ul>`, true)}</div>`;
+    if (fam.id === 'o1') {  // the same shape, coloured by the solid that makes each cell, above the recipe with matching swatches
+      const recipe = (tree, roles) => `<ul class="outline short">${outline(tree, 0, [], roles ? {roles, k: 0} : null).join('')}</ul>`;
+      return `<div class="compare">${shot(name + "'s recipe", cost, (r.parts ? canvas('m', name + "'s shape, coloured by recipe solid") : '') + recipe(r.tree, r.roles))
+        + shot('Our reference recipe', `${v.ref} nodes`, (v.ref_parts ? canvas('r', 'Our reference shape, coloured by recipe solid') : '') + recipe(v.ref_tree, v.ref_parts && v.ref_parts.roles), true)}</div>`;
+    }
     const ours = {o3: `height ${v.ref}`, o4: `cost ${v.ref}`, o5: `cost ${v.ref}`};
     if (ours[fam.id]) return `<div class="compare">${shot(name, cost, canvas('m', name + "'s answer"))}${shot('Our reference', ours[fam.id], canvas('r', 'Our reference'), true)}</div>`;
     if (fam.id === 'o6') { const t = v[0];
@@ -374,6 +385,7 @@
       stop(); stop = () => {};
       const mine = runs.filter(r => r.family === fam.id);
       let v = vis[fam.id];
+      if (fam.id === 'o1' && gal && gal.ref && gal.ref.o1) v = {...v, ref_parts: gal.ref.o1};
       if (fam.id === 'o2') v = {...v, replays: v.replays.concat(mine.filter(r => r.frames && r.frames.length).map(r => {  // model matches join the ladder replays
         const name = (who[r.model] || {model: r.model}).model;
         return {model: r.model, players: r.side ? [r.opponent, name] : [name, r.opponent], frames: r.frames};
@@ -383,6 +395,7 @@
       const paintModel = () => {
         if (!picked) return;
         const m = name => $(`[data-m="${name}"]`, panel);
+        if (fam.id === 'o1' && m('m')) { pictures.o1parts(m('m'), picked.parts); if (m('r')) pictures.o1parts(m('r'), v.ref_parts.parts); }
         if (fam.id === 'o3' && m('m')) { pictures.o3(m('m'), {boxes: picked.boxes}); pictures.o3(m('r'), v); }
         if (fam.id === 'o4' && m('m')) { pictures.o4(m('m'), {...v, routes: picked.routes}); pictures.o4(m('r'), v); }
         if (fam.id === 'o5' && m('m')) { const end = Math.max(...v.floor_runs.map(r => r[2]), ...picked.runs.map(r => r[2]), ...v.runs.map(r => r[2]));
